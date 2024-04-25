@@ -1,7 +1,127 @@
-import React from 'react';
+import { useState } from 'react';
+import './styles.css';
 
 const CreateRecipe = () => {
-	return <div>CreateRecipe</div>;
+	const [recipeName, setRecipeName] = useState('');
+
+	const [ingredients, setIngredients] = useState([{ ingredient: '' }]);
+	// const [ingredients, setIngredients] = useState([]);
+
+	const [instructions, setInstructions] = useState([{ instruction: '' }]);
+	// const [instructions, setInstructions] = useState([]);
+
+	const handleClickIngredient = (e) => {
+		e.preventDefault();
+		setIngredients([...ingredients, { ingredient: '' }]);
+	};
+
+	const handleClickInstruction = (e) => {
+		e.preventDefault();
+		setInstructions([...instructions, { instruction: '' }]);
+	};
+
+	const handleRecipeChange = (e) => {
+		const { value } = e.target;
+		setRecipeName(value);
+	};
+
+	const handleIngredientChange = (e, i) => {
+		const { name, value } = e.target;
+		const onchangeVal = [...ingredients];
+		onchangeVal[i][name] = value;
+		setIngredients(onchangeVal);
+	};
+	const handleInstructionChange = (e, i) => {
+		const { name, value } = e.target;
+		const onchangeVal = [...instructions];
+		onchangeVal[i][name] = value;
+		setInstructions(onchangeVal);
+	};
+
+	const handleDeleteInstruction = (i) => {
+		const deleteVal = [...instructions];
+		deleteVal.splice(i, 1);
+		setInstructions(deleteVal);
+	};
+
+	const handleDeleteIngredient = (i) => {
+		const deleteVal = [...ingredients];
+		deleteVal.splice(i, 1);
+		setIngredients(deleteVal);
+	};
+
+	const submitHandler = (e) => {
+		e.preventDefault();
+		console.log(recipeName);
+		console.log('======================================');
+		console.log(ingredients);
+		console.log('======================================');
+		console.log(instructions);
+	};
+
+	return (
+		<>
+			<h1>Create Your Recipe!</h1>
+			<div className="recipe-form">
+				<form onSubmit={submitHandler}>
+					<h2>Recipe Name</h2>
+					<input
+						name="recipe"
+						value={recipeName}
+						onChange={handleRecipeChange}
+					/>
+
+					<h2>Ingredients</h2>
+					{ingredients.map((val, i) => (
+						<div key={i}>
+							<input
+								name="ingredient"
+								value={val.ingredient}
+								onChange={(e) => handleIngredientChange(e, i)}
+							/>
+							{i !== 0 ? (
+								<button type="button" onClick={() => handleDeleteIngredient(i)}>
+									Delete
+								</button>
+							) : null}
+							{/* <button onClick={() => handleDeleteIngredient(i)}>Delete</button> */}
+						</div>
+					))}
+					<button type="button" onClick={handleClickIngredient}>
+						Add More
+					</button>
+
+					<h2>Instructions</h2>
+					{instructions.map((val, i) => (
+						<div key={i}>
+							<input
+								name="instruction"
+								value={val.instruction}
+								onChange={(e) => handleInstructionChange(e, i)}
+							/>
+							{i !== 0 ? (
+								<button
+									type="button"
+									onClick={() => handleDeleteInstruction(i)}
+								>
+									Delete
+								</button>
+							) : null}
+							{/* <button onClick={() => handleDeleteInstruction(i)}>Delete</button> */}
+						</div>
+					))}
+
+					<button type="button" onClick={handleClickInstruction}>
+						Add More
+					</button>
+
+					<div className="submit-btn">
+						<button>Submit</button>
+					</div>
+				</form>
+			</div>
+		</>
+	);
 };
 
 export default CreateRecipe;

@@ -1,6 +1,7 @@
 // import { useState } from 'react';
 // import reactLogo from './assets/react.svg';
 // import viteLogo from '/vite.svg';
+import './App.css';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar/index.jsx';
 import CreateRecipe from './pages/CreateRecipe/index.jsx';
