@@ -1,0 +1,18 @@
+.recipe-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* .ingredient-field {
+	display: flex;
+} */
+
+.submit-btn {
+	display: flex;
+	flex-direction: column;
+}
+
+.submit-btn button {
+	width: 100%;
+}
