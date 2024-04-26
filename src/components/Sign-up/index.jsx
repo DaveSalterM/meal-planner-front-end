@@ -42,7 +42,7 @@ function SignupForm ({setHaveAccount}) {
                 <p>
                     Already have an account? 
                     <a 
-                        href="#login"
+                        href="#sign-up"
                         onClick={() => setHaveAccount(true)}
                     >
                         Log in

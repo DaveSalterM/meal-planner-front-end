@@ -26,7 +26,7 @@ const Login = ({setHaveAccount}) => {
                     <input type="submit" value="Log In" />
                 <p>
                     Don't have an account?
-                    <a href="#login" onClick={() => setHaveAccount(false)}>
+                    <a href="" onClick={() => setHaveAccount(false)}>
                         Sign up
                     </a>
                 </p>
