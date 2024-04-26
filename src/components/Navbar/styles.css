@@ -2,20 +2,21 @@
     margin: 0;
     padding: 0;
 
-    --background-color: #289945;
-    --text-color: #fff;
+    --header-background-color: #289945;
+    --header-text-color: #fff;
 }
 
-.container {
+#banner {
     display: flex;
-    background-color: var(--background-color);
+    background-color: var(--header-background-color);
     height: 80px;
     justify-content: space-between;
+    z-index: 100;
 }
 
-h1 {
+#header-title {
     text-align: left;
-    color: var(--text-color);
+    color: var(--header-text-color);
     margin-left: 2rem;
     margin-top: 1.3rem;
 }
@@ -31,8 +32,8 @@ ul{
     justify-content: space-around;
 }
 
-a {
+.nav-link{
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--header-text-color);
     font-weight: bold;
 }

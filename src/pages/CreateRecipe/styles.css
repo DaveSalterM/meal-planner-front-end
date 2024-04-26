@@ -16,3 +16,29 @@
 .submit-btn button {
 	width: 100%;
 }
+
+.unit-dropdown{
+	width: 3rem;
+}
+
+.ingredient-field{
+	display: flex;
+}
+
+.myControlClassName{
+	padding: 4px 15px 4px 5px !important;
+}
+
+.dropdown-menu{
+	width: 65px;
+	text-align: center;
+}
+
+.myArrowClassName{
+	right: 4px !important;
+	top: 11px !important;
+}
+
+.myMenuClassName{
+	width: 65px !important;
+}

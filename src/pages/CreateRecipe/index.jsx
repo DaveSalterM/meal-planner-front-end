@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './styles.css';
-
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 const CreateRecipe = () => {
 	const [recipeName, setRecipeName] = useState('');
 
@@ -9,6 +10,7 @@ const CreateRecipe = () => {
 
 	const [instructions, setInstructions] = useState([{ instruction: '' }]);
 	// const [instructions, setInstructions] = useState([]);
+	const [selectedOption, setSelectedOption] = useState(null);
 
 	const handleClickIngredient = (e) => {
 		e.preventDefault();
@@ -58,7 +60,20 @@ const CreateRecipe = () => {
 		console.log('======================================');
 		console.log(instructions);
 	};
-
+	const dropdownHandler = (e) => {
+		setSelectedOption(e.value)
+	}
+	const options = [
+		'g', 'lbs', 'cups', 'tsp', 'tbsp', 'gal'
+	]
+	// const options = [
+	// 	{ value: 'g', label: 'g' },
+	// 	{ value: 'lbs', label: 'lbs' },
+	// 	{ value: 'cups', label: 'cups' },
+	// 	{ value: 'tsp', label: 'tsp' },
+	// 	{ value: 'tbsp', label: 'tbsp' },
+	// 	{ value: 'gal', label: 'gal' },
+	// ];
 	return (
 		<>
 			<h1>Create Your Recipe!</h1>
@@ -74,11 +89,14 @@ const CreateRecipe = () => {
 					<h2>Ingredients</h2>
 					{ingredients.map((val, i) => (
 						<div key={i}>
-							<input
-								name="ingredient"
-								value={val.ingredient}
-								onChange={(e) => handleIngredientChange(e, i)}
-							/>
+							<div className="ingredient-field">
+								<input
+									name="ingredient"
+									value={val.ingredient}
+									onChange={(e) => handleIngredientChange(e, i)}
+								/>
+								<Dropdown className="dropdown-menu" menuClassName='myMenuClassName' arrowClassName='myArrowClassName' controlClassName='myControlClassName' options={options} onChange={dropdownHandler} placeholder='Select' />
+							</div>
 							{i !== 0 ? (
 								<button type="button" onClick={() => handleDeleteIngredient(i)}>
 									Delete
@@ -120,8 +138,16 @@ const CreateRecipe = () => {
 					</div>
 				</form>
 			</div>
+			{/* <div>
+				<Dropdown className="dropdown-menu" menuClassName='myMenuClassName' arrowClassName='myArrowClassName' controlClassName='myControlClassName' options={options} onChange={dropdownHandler} placeholder="Select an option" />
+			</div> */}
 		</>
+
 	);
 };
 
 export default CreateRecipe;
+
+
+
+
