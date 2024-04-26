@@ -18,36 +18,41 @@ const signUpHandler = (e) => {
 function SignupForm ({setHaveAccount}) {
     return (
         <>
-            
-            <form onSubmit={signUpHandler} className="user-form">
-                <h2>Sign Up</h2>
-                <label htmlFor="username">Username</label>
-                <input type="text" id="signupUsername" name="username" />
-                <br/>
+        <div className="split left">
+            <div className="left centered">
+                <form onSubmit={signUpHandler} className="user-form">
+                    <h2>Sign Up</h2>
+                    <label htmlFor="username">Username</label>
+                    <input type="text" id="signupUsername" name="username" />
+                    <br/>
 
-                <label htmlFor="email">E-mail</label>
-                <input type="email" id="email" name="email" />
-                <br/>
+                    <label htmlFor="email">E-mail</label>
+                    <input type="email" id="email" name="email" />
+                    <br/>
 
-                <label htmlFor="password">Password</label>
-                <input type="password" id="signupPassword" name="password" />
-                <br/>
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="signupPassword" name="password" />
+                    <br/>
 
-                <label htmlFor="confirm">Confirm Password</label>
-                <input type="password" id="confirm" name="confirm" />
-                <br/>
+                    <label htmlFor="confirm">Confirm Password</label>
+                    <input type="password" id="confirm" name="confirm" />
+                    <br/>
 
-                <input type="submit" value="Sign Up" />
-            <p>
-                Already have an account? 
-                <a 
-                    href="#login"
-                    onClick={() => setHaveAccount(true)}
-                >
-                    Log in
-                </a>
-            </p>
-            </form>
+                    <input type="submit" value="Sign Up" />
+                <p>
+                    Already have an account? 
+                    <a 
+                        href="#login"
+                        onClick={() => setHaveAccount(true)}
+                    >
+                        Log in
+                    </a>
+                </p>
+                </form>
+            </div>
+        </div>
+
+        <div className="split right" />
         </>
     )
 }
