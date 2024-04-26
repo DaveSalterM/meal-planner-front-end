@@ -1,11 +1,11 @@
-const URL_PREFIX="http://localhost:3000"
+const URL_PREFIX="http://localhost:3001"
 
 const API = {
 
     // Signup
     signup:userObj => {
         //TODO: Verify backend route
-        return fetch(`${URL_PREFIX}/api/users`, {
+        return fetch(`${URL_PREFIX}/api/createUser`, {
             method: "POST",
             body: JSON.stringify(userObj),
             headers: {
@@ -16,7 +16,8 @@ const API = {
 
     // Login 
     login:userObj => {
-        //TODO: Verify backend route
+        console.log("Logging in with credentials ");
+        console.log(userObj);
         return fetch(`${URL_PREFIX}/api/users/login`, {
             method: "POST",
             body: JSON.stringify(userObj),
@@ -35,6 +36,7 @@ const API = {
         }).then(res => res.json())
     },
 
+    // Get one user
     getOneUser:userId => {
         return fetch(`${URL_PREFIX}/api/users/${userId}`).then(res => res.json())
     }

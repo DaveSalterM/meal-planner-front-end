@@ -1,54 +1,51 @@
 import './styles.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import LoginForm from '../../components/Login/index.jsx';
-//import SignupForm from '../../components/Sign-up/index.jsx';
 
-const loginHandler = (e) => {
-    e.preventDefault();
-    const username = e.target.username.value;
-    const password = e.target.password.value;
-    
-    console.log('Login: ' + username, password);
-}
 
-const signUpHandler = (e) => {
-    e.preventDefault();
-    const username = e.target.username.value;
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    const confirm = e.target.confirm.value;
 
-    console.log('Sign Up: ' + username, email, password);
-    if(password !== confirm) {
-        console.log('Passwords do not match');
-    } else {
-        console.log('Passwords match');
-    }
-}
-
+// Main Function
 const Login = (props) => {
     //Bool to toggle between login and signup
     const [haveAccount, setHaveAccount] = useState(false);
     
+    //IF user id exists (logged in) redirect to home page
     const navigate = useNavigate();
     useEffect(() => {
         if (props.userId) {
-            navigate('/home');
+            navigate('/');
         }
     }, [props.userId] )
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        props.setFormState({
-            ...props.formState,
-            [name]: value
-        });
+    // Login Handler
+    const loginHandler = (e) => {
+        e.preventDefault();
+        const username = e.target.username.value;
+        const password = e.target.password.value;
+        
+        props.handleLogin({username, password});
+        navigate('/');
+        //console.log('Login: ' + username, password);
+    }
+
+    // Sign Up Handler
+    const signUpHandler = (e) => {
+        e.preventDefault();
+        const username = e.target.username.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const confirm = e.target.confirm.value;
+
+        console.log('Sign Up: ' + username, email, password);
+        if(password !== confirm) {
+            console.log('Passwords do not match');
+        } else {
+            console.log('Passwords match');
+        }
     }
 
     if (haveAccount) {
         return (
-            //<LoginForm setHaveAccount={setHaveAccount}/>
             <>   
             <div className="split left">         
                 <div className="left centered">
@@ -65,7 +62,7 @@ const Login = (props) => {
                         <input type="submit" value="Log In" />
                     <p>
                         Don't have an account?
-                        <a href="" onClick={() => setHaveAccount(false)}>
+                        <a href="#sign-up" onClick={() => setHaveAccount(false)}>
                             Sign up
                         </a>
                     </p>
@@ -78,7 +75,6 @@ const Login = (props) => {
         );
     } else {
         return (
-            //<SignupForm setHaveAccount={setHaveAccount}/>
             <>
             <div className="split left">
                 <div className="left centered">
@@ -104,7 +100,7 @@ const Login = (props) => {
                     <p>
                         Already have an account? 
                         <a 
-                            href="#sign-up"
+                            href="#login"
                             onClick={() => setHaveAccount(true)}
                         >
                             Log in

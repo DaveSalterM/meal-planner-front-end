@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/index.jsx';
 import CreateRecipe from './pages/CreateRecipe/index.jsx';
 import Home from './pages/Home/index.jsx';
 import Login from './pages/Login/index.jsx';
+import API from '../utils/API.js';
 
 function App() {
 	const [userId, setUserId] = useState(0);
@@ -63,10 +64,11 @@ function App() {
 		<Router>
 			<Navbar />
 			<Routes>
-
+				{/* ============================ *IMPORTANT ============================ */}
 				{/* Pass token and userId to all pages that require user to be logged in */}
-				<Route path="/" element={<Home />} />
-				<Route path="/createrecipe" element={<CreateRecipe />} />
+				{/* ============================ *IMPORTANT ============================ */}
+				<Route path="/" element={<Home userId={userId} token={token}/>} />
+				<Route path="/createrecipe" element={<CreateRecipe userId={userId} token={token}/>} />
 				<Route path="/login" element={<Login handleLogin={handleLogin} handleSignup={handleSignup} userId={userId}/>} />
 				<Route path="*" element={<h1>notFound</h1>} />
 			</Routes>
