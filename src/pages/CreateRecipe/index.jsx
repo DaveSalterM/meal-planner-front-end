@@ -54,7 +54,7 @@ const CreateRecipe = () => {
 		e.preventDefault();
 		console.log(recipeName);
 		console.log('======================================');
-		console.log(ingredients);
+		console.log(...ingredients);
 		console.log('======================================');
 		console.log(instructions);
 	};
