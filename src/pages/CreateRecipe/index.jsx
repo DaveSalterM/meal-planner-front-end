@@ -1,20 +1,19 @@
 import { useState } from 'react';
-import './styles.css';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import './styles.css';
 const CreateRecipe = () => {
 	const [recipeName, setRecipeName] = useState('');
-
-	const [ingredients, setIngredients] = useState([{ ingredient: '' }]);
-	// const [ingredients, setIngredients] = useState([]);
-
+	const [ingredients, setIngredients] = useState([
+		{ ingredient: '', amount: 0, unit: null },
+	]);
 	const [instructions, setInstructions] = useState([{ instruction: '' }]);
-	// const [instructions, setInstructions] = useState([]);
-	const [selectedOption, setSelectedOption] = useState(null);
+
+	const options = ['g', 'lbs', 'cups', 'tsp', 'tbsp', 'gal'];
 
 	const handleClickIngredient = (e) => {
 		e.preventDefault();
-		setIngredients([...ingredients, { ingredient: '' }]);
+		setIngredients([...ingredients, { ingredient: '', amount: 0, unit: null }]);
 	};
 
 	const handleClickInstruction = (e) => {
@@ -33,6 +32,14 @@ const CreateRecipe = () => {
 		onchangeVal[i][name] = value;
 		setIngredients(onchangeVal);
 	};
+
+	const handleUnitChange = (e, i) => {
+		const { value } = e;
+		const onchangeVal = [...ingredients];
+		onchangeVal[i]['unit'] = value;
+		setIngredients(onchangeVal);
+	};
+
 	const handleInstructionChange = (e, i) => {
 		const { name, value } = e.target;
 		const onchangeVal = [...instructions];
@@ -60,27 +67,15 @@ const CreateRecipe = () => {
 		console.log('======================================');
 		console.log(instructions);
 	};
-	const dropdownHandler = (e) => {
-		setSelectedOption(e.value)
-	}
-	const options = [
-		'g', 'lbs', 'cups', 'tsp', 'tbsp', 'gal'
-	]
-	// const options = [
-	// 	{ value: 'g', label: 'g' },
-	// 	{ value: 'lbs', label: 'lbs' },
-	// 	{ value: 'cups', label: 'cups' },
-	// 	{ value: 'tsp', label: 'tsp' },
-	// 	{ value: 'tbsp', label: 'tbsp' },
-	// 	{ value: 'gal', label: 'gal' },
-	// ];
+
 	return (
-		<>
+		<div className="recipe-page">
 			<h1>Create Your Recipe!</h1>
 			<div className="recipe-form">
 				<form onSubmit={submitHandler}>
 					<h2>Recipe Name</h2>
 					<input
+						className="recipe-field"
 						name="recipe"
 						value={recipeName}
 						onChange={handleRecipeChange}
@@ -89,20 +84,48 @@ const CreateRecipe = () => {
 					<h2>Ingredients</h2>
 					{ingredients.map((val, i) => (
 						<div key={i}>
+							{/* <h3>Ingredient {i + 1}</h3> */}
 							<div className="ingredient-field">
-								<input
-									name="ingredient"
-									value={val.ingredient}
-									onChange={(e) => handleIngredientChange(e, i)}
-								/>
-								<Dropdown className="dropdown-menu" menuClassName='myMenuClassName' arrowClassName='myArrowClassName' controlClassName='myControlClassName' options={options} onChange={dropdownHandler} placeholder='Select' />
+								<div>
+									<h3>Ingredient {i + 1}</h3>
+									<input
+										name="ingredient"
+										value={val.ingredient}
+										onChange={(e) => handleIngredientChange(e, i)}
+										className="ingredient-name"
+									/>
+								</div>
+								<div>
+									<h3>Amount</h3>
+									<input
+										name="amount"
+										// value={val.ingredient}
+										onChange={(e) => handleIngredientChange(e, i)}
+										className="amount-input"
+									/>
+								</div>
+								<div>
+									<h3>Units</h3>
+									<Dropdown
+										className="dropdown-menu"
+										menuClassName="myMenuClassName"
+										arrowClassName="myArrowClassName"
+										controlClassName="myControlClassName"
+										options={options}
+										onChange={(e) => handleUnitChange(e, i)}
+										placeholder="Select"
+									/>
+								</div>
+
+								{i !== 0 ? (
+									<button
+										type="button"
+										onClick={() => handleDeleteIngredient(i)}
+									>
+										Delete
+									</button>
+								) : null}
 							</div>
-							{i !== 0 ? (
-								<button type="button" onClick={() => handleDeleteIngredient(i)}>
-									Delete
-								</button>
-							) : null}
-							{/* <button onClick={() => handleDeleteIngredient(i)}>Delete</button> */}
 						</div>
 					))}
 					<button type="button" onClick={handleClickIngredient}>
@@ -112,20 +135,26 @@ const CreateRecipe = () => {
 					<h2>Instructions</h2>
 					{instructions.map((val, i) => (
 						<div key={i}>
-							<input
-								name="instruction"
-								value={val.instruction}
-								onChange={(e) => handleInstructionChange(e, i)}
-							/>
-							{i !== 0 ? (
-								<button
-									type="button"
-									onClick={() => handleDeleteInstruction(i)}
-								>
-									Delete
-								</button>
-							) : null}
-							{/* <button onClick={() => handleDeleteInstruction(i)}>Delete</button> */}
+							<div className="instruction-field">
+								<div>
+									<h3>Instruction {i + 1}</h3>
+									<input
+										name="instruction"
+										value={val.instruction}
+										onChange={(e) => handleInstructionChange(e, i)}
+										className="instruction-input"
+									/>
+								</div>
+
+								{i !== 0 ? (
+									<button
+										type="button"
+										onClick={() => handleDeleteInstruction(i)}
+									>
+										Delete
+									</button>
+								) : null}
+							</div>
 						</div>
 					))}
 
@@ -138,16 +167,8 @@ const CreateRecipe = () => {
 					</div>
 				</form>
 			</div>
-			{/* <div>
-				<Dropdown className="dropdown-menu" menuClassName='myMenuClassName' arrowClassName='myArrowClassName' controlClassName='myControlClassName' options={options} onChange={dropdownHandler} placeholder="Select an option" />
-			</div> */}
-		</>
-
+		</div>
 	);
 };
 
 export default CreateRecipe;
-
-
-
-
