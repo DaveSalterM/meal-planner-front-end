@@ -1,0 +1,31 @@
+* {
+    --text-color: #000;
+}
+
+h1{
+    color: var(--text-color);
+}
+
+#login-split {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+}
+
+#login-image {
+    width: 50%;
+    height: 100%;
+    background-image: url("https://media.istockphoto.com/id/1128687123/photo/shopping-bag-full-of-fresh-vegetables-and-fruits.jpg?s=1024x1024&w=is&k=20&c=ZP6MR_8ca51_wrOQFjp5HN0cK1TwmMHMc8sRZy9Dxn4=");
+    background-size: cover;
+    background-position: center;
+}

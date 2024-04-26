@@ -9,8 +9,8 @@ const Navbar = () => {
 	
 	return (
 		<>
-		<div className="container">
-			<h1>Meal Mapper</h1>
+		<div id="banner">
+			<h1 id="header-title">Meal Mapper</h1>
 			<ul className="nav nav-tabs">
 				<li id="nav-item">
 					<Link
@@ -32,7 +32,7 @@ const Navbar = () => {
 					<Link 
 						key={1} 
 						className="nav-link" 
-						to={loggedIn ? "/create-recipe" : "/login"}>
+						to={loggedIn ? "/createrecipe" : "/login"}>
 							Create a recipe 
 					</Link>
 				</li>
