@@ -15,9 +15,11 @@ const API = {
     },
 
     // Login 
+    // userobj = {username: "username", password: "password"}
+    // fetch sent to backend :
     login:userObj => {
         console.log("Logging in with credentials ");
-        console.log(userObj);
+        console.log("API.jsx userObj: ", userObj);
         return fetch(`${URL_PREFIX}/api/users/login`, {
             method: "POST",
             body: JSON.stringify(userObj),
@@ -29,7 +31,7 @@ const API = {
 
     //Check Token
     checkToken:token => {
-        return fetch(`${URL_PREFIX}/api/users/checkToken`, {
+        return fetch(`${URL_PREFIX}/api/checkToken`, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }

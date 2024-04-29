@@ -2,11 +2,13 @@
 import { Link } from 'react-router-dom'
 import './styles.css';
 
-const Navbar = () => {
+const Navbar = (props) => {
 {/* ================================================== */}
-		const loggedIn = false;
+		let loggedIn = props.userId === 0 ? false : true;
 {/* ================================================== */}	
 	
+
+	console.log("Navbar: ", loggedIn);
 	return (
 		<>
 		<div id="banner">

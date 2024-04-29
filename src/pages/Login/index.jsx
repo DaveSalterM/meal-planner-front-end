@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 // Main Function
 const Login = (props) => {
     //Bool to toggle between login and signup
-    const [haveAccount, setHaveAccount] = useState(false);
+    const [haveAccount, setHaveAccount] = useState(true);
     
     //IF user id exists (logged in) redirect to home page
     const navigate = useNavigate();
