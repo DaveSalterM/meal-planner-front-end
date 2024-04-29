@@ -37,6 +37,7 @@ const API = {
         }).then(res => res.json())
     },
 
+
 	// Get one user
 	getOneUser: (userId) => {
 		return fetch(`${URL_PREFIX}/api/users/${userId}`).then((res) => res.json());
