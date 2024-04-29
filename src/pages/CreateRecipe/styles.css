@@ -67,3 +67,18 @@
 .amount-input {
 	height: 24px;
 }
+
+.delete-button {
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+#trash-button {
+	height: 30px;
+	width: 30px;
+	position: absolute;
+}
+
+#trash-button:hover {
+	cursor: pointer;
+}
