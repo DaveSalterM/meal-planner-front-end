@@ -5,7 +5,7 @@ const API = {
 	// Signup
 	signup: (userObj) => {
 		//TODO: Verify backend route
-		return fetch(`${URL_PREFIX}/api/createUser`, {
+		return fetch(`${URL_PREFIX}/api/users`, {
 			method: 'POST',
 			body: JSON.stringify(userObj),
 			headers: {
@@ -13,6 +13,7 @@ const API = {
 			},
 		}).then((res) => res.json());
 	},
+
 
 	// Login
 	// userobj = {username: "username", password: "password"}
@@ -43,6 +44,14 @@ const API = {
 			body: imgObj,
 		}).then((res) => res.json());
 	},
+
+
+
+	// Get one user
+	getOneUser: (userId) => {
+		return fetch(`${URL_PREFIX}/api/users/${userId}`).then((res) => res.json());
+	},
+
 
 	// Create a recipe
 	createRecipe: (userObj, token) => {

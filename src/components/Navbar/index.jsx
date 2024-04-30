@@ -8,7 +8,7 @@ const Navbar = (props) => {
 {/* ================================================== */}	
 	
 
-	console.log("Navbar: ", loggedIn);
+	//console.log("Navbar: ", loggedIn);
 	return (
 		<>
 		<div id="banner">
