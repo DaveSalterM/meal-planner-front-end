@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+
+    --header-background-color: #289945;
+    --header-text-color: #fff;
+}
+
+#banner {
+    display: flex;
+    background-color: var(--header-background-color);
+    height: 80px;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+#header-title {
+    text-align: left;
+    color: var(--header-text-color);
+    margin-left: 2rem;
+    margin-top: 1.3rem;
+}
+
+ul{
+    display: flex;
+    list-style-type: none;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 2rem; 
+    width: 400px;
+    padding: 0;
+    justify-content: space-around;
+}
+
+.nav-link{
+    text-decoration: none;
+    color: var(--header-text-color);
+    font-weight: bold;
+}

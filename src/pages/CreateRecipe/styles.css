@@ -1,0 +1,92 @@
+.recipe-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.recipe-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 1000px;
+}
+
+/* .recipe-form form {
+	justify-content: center;
+	align-items: center;
+} */
+
+/* .ingredient-field {
+	display: flex;
+} */
+
+.submit-btn {
+	display: flex;
+	flex-direction: column;
+}
+
+.submit-btn button {
+	width: 100%;
+}
+
+.unit-dropdown {
+	width: 3rem;
+}
+
+.ingredient-field,
+.instruction-field {
+	display: flex;
+	width: 100%;
+}
+
+.myControlClassName {
+	padding: 4px 15px 4px 5px !important;
+}
+
+.dropdown-menu {
+	/* width: 65px;
+	text-align: center; */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.myArrowClassName {
+	right: 4px !important;
+	top: 11px !important;
+}
+
+.myMenuClassName {
+	width: 65px !important;
+}
+
+.instruction-input {
+	width: 500px;
+}
+
+.instruction-input,
+.recipe-field,
+.ingredient-name,
+.amount-input {
+	height: 24px;
+}
+
+.delete-button {
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+#trash-button {
+	height: 30px;
+	width: 30px;
+	position: absolute;
+}
+
+#trash-button:hover {
+	cursor: pointer;
+}
+
+.upload-form {
+	display: flex;
+	flex-direction: column;
+}
