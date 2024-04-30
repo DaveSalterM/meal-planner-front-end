@@ -48,8 +48,11 @@
 }
 
 .dropdown-menu {
-	width: 65px;
-	text-align: center;
+	/* width: 65px;
+	text-align: center; */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .myArrowClassName {
@@ -85,6 +88,16 @@
 
 #trash-button:hover {
 	cursor: pointer;
+}
+
+.upload-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.upload-form {
+	display: flex;
+	flex-direction: column;
 }
 
 .recipe{

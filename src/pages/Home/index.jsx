@@ -1,11 +1,19 @@
-import { useState, useEffect } from 'react';
-import API from '../../../utils/API';
+// import React from 'react';
+import RecipeCard from '../../components/RecipeCard';
+import Searchbar from '../../components/Searchbar';
+import './styles.css';
 
 const Home = (props) => {
-		
-	
-	console.log('Home page props: ', props.userId);
-	return <div>Home</div>;
+	console.log('Home page props: ', props);
+	return (
+		<div>
+			Home
+			<Searchbar />
+			<div>
+				<RecipeCard />
+			</div>
+		</div>
+	);
 };
 
 export default Home;
