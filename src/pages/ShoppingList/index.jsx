@@ -1,17 +1,17 @@
 import './styles.css';
-//import { useState } from 'react';
-//let aux = [];
+import { useState } from 'react';
+let aux = [];
 
 const ShoppingList = (props) => {
 
     //Switch to useState
-    // const [quantities, setQuantities] = useState(aux);
+    const [userRecipes, setRecipes] = useState(aux);
      
-    // // This works btw
-    // if(props.user.recipes && quantities.length === 0){
-    //     aux = new Array(props.user.recipes.length).fill(1)
-    //     //setQuantities(aux);
-    // }   
+    // This works btw
+    if(props.user.recipes && userRecipes.length === 0){
+        aux = new Array(props.user.recipes.length).fill(1)
+        //setQuantities(aux);
+    }   
 
     // const getRecipies = (e) => {
     //     console.log("Intex: ", e);
@@ -48,7 +48,7 @@ const ShoppingList = (props) => {
         if(props.user.recipes){
             // Get the user's recipes
             const userRecipes = props.user.recipes;
-            
+            console.log("USER RECIPES: ", userRecipes);
             // let userRecipes = props.user.recipes.map((recipe) => (
             //     [recipe, 1]
             // ));
