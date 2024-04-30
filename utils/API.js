@@ -4,7 +4,7 @@ const API = {
 	// Signup
 	signup: (userObj) => {
 		//TODO: Verify backend route
-		return fetch(`${URL_PREFIX}/api/createUser`, {
+		return fetch(`${URL_PREFIX}/api/users`, {
 			method: 'POST',
 			body: JSON.stringify(userObj),
 			headers: {

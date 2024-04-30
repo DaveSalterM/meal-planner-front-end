@@ -1,16 +1,19 @@
 import convert from 'convert-units';
 import fracty from 'fracty';
 import { numericQuantity } from 'numeric-quantity';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import { FaTrashAlt } from 'react-icons/fa';
 import API from '../../../utils/API';
 import './styles.css';
 
-const CreateRecipe = () => {
-	const token =
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjlhZWFiMThmYjcxODNmNmZlMjNkOCIsInVzZXJuYW1lIjoidGVzdFVzZXIyIiwiaWF0IjoxNzE0NDE1MzgwLCJleHAiOjE3MTQ0MjI1ODB9.XqltrAe8mj8as9H2e-6zXcpun-wcDBWKunj6iH5tWcw';
+const CreateRecipe = (props) => {
+	
+	
+	const token = props.token;
+	console.log("Create Recipe: ", props.user);
+	//'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjlhZWFiMThmYjcxODNmNmZlMjNkOCIsInVzZXJuYW1lIjoidGVzdFVzZXIyIiwiaWF0IjoxNzE0NDE1MzgwLCJleHAiOjE3MTQ0MjI1ODB9.XqltrAe8mj8as9H2e-6zXcpun-wcDBWKunj6iH5tWcw';
 	const regex =
 		/^(\d*)(\s{0,1}(\d{0,1})(\/?)(\d{0,1})|(\.\d{0,2})|\/(\d{0,1}))$/;
 	const [recipeName, setRecipeName] = useState('');

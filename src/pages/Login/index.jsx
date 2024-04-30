@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 // Main Function
 const Login = (props) => {
     //Bool to toggle between login and signup
+    // TRUE: will show login form on page load
+    // FALSE: will show signup form on page load
     const [haveAccount, setHaveAccount] = useState(true);
     
     //IF user id exists (logged in) redirect to home page
@@ -42,6 +44,8 @@ const Login = (props) => {
         } else {
             console.log('Passwords match');
         }
+        props.handleSignup({username, email, password});
+        navigate('/');
     }
 
     if (haveAccount) {
