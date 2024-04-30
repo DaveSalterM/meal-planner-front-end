@@ -108,6 +108,14 @@ function App() {
 					element={<Profile logout={logout} userId={userId} token={token} />}
 				/>
 				<Route
+					path="/meal-plan"
+					element={<MealPlan user={user} userId={userId} token={token} />}
+				/>
+				<Route
+					path="/shopping-list"
+					element={<ShoppingList user={user} userId={userId} token={token} />}
+				/>
+				<Route
 					path="/createrecipe"
 					element={<CreateRecipe userId={userId} token={token} />}
 				/>
@@ -120,10 +128,6 @@ function App() {
 							userId={userId}
 						/>
 					}
-				/>
-				<Route
-					path="/createrecipe"
-					element={<CreateRecipe userId={userId} token={token} />}
 				/>
 				<Route
 					path="/recipes/:recipe"
