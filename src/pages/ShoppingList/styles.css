@@ -1,0 +1,25 @@
+.shop-card {
+  display: flex;
+  flex-wrap: column;
+  justify-content: center;
+  border: 1px solid #ccc;
+  width: 500px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.shop-ul {
+  list-style-type: none;
+  display: block;
+  flex-wrap: wrap;
+}
+.shop-li {
+  list-style-type: none;
+  display: block;
+  padding: 10px;
+  margin: 10px;
+  width : 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
