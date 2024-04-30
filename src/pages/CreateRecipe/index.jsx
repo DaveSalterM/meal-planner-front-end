@@ -2,7 +2,7 @@ import convert from 'convert-units';
 import fracty from 'fracty';
 import { numericQuantity } from 'numeric-quantity';
 import { useState } from 'react';
-import Dropdown from 'react-dropdown';
+// import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import { FaTrashAlt } from 'react-icons/fa';
 import API from '../../../utils/API';
@@ -10,33 +10,24 @@ import './styles.css';
 
 const CreateRecipe = () => {
 	const token =
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjlhZWFiMThmYjcxODNmNmZlMjNkOCIsInVzZXJuYW1lIjoidGVzdFVzZXIyIiwiaWF0IjoxNzE0NDE1MzgwLCJleHAiOjE3MTQ0MjI1ODB9.XqltrAe8mj8as9H2e-6zXcpun-wcDBWKunj6iH5tWcw';
+		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzA1NzM5MWU2ZDBkMTY1ZWFiODkzYSIsInVzZXJuYW1lIjoidGVzdFVzZXIyIiwiaWF0IjoxNzE0NDUyMzg2LCJleHAiOjE3MTQ0NTk1ODZ9.0JL6lL6VvpSMt22lY0i5au4MDcHQdNQO3sPavzZW7uc';
 	const regex =
 		/^(\d*)(\s{0,1}(\d{0,1})(\/?)(\d{0,1})|(\.\d{0,2})|\/(\d{0,1}))$/;
 	const [recipeName, setRecipeName] = useState('');
 	const [ingredients, setIngredients] = useState([
-		{ ingredient: '', amount: '', unit: null },
+		{ ingredient: '', amount: '', unit: 'Select' },
 	]);
 	// const [instructions, setInstructions] = useState([{ instruction: '' }]);
 	const [instructions, setInstructions] = useState(['']);
 	const [calories, setCalories] = useState('');
+	const [image, setImage] = useState(null);
 	// const [userObj, setUserObj] = useState({})
-
-	// const options = ['g', 'lbs', 'cups', 'tsp', 'tbsp', 'gal'];
-	const options = [
-		{ value: 'g', label: 'g' },
-		{ value: 'lb', label: 'lbs' },
-		{ value: 'cup', label: 'cups' },
-		{ value: 'tsp', label: 'tsp' },
-		{ value: 'Tbs', label: 'tbsp' },
-		{ value: 'gal', label: 'gal' },
-	];
 
 	const handleClickIngredient = (e) => {
 		e.preventDefault();
 		setIngredients([
 			...ingredients,
-			{ ingredient: '', amount: '', unit: null },
+			{ ingredient: '', amount: '', unit: 'Select' },
 		]);
 	};
 
@@ -61,22 +52,6 @@ const CreateRecipe = () => {
 	const handleAmountChange = (e, i) => {
 		const { name, value } = e.target;
 		const onchangeVal = [...ingredients];
-		// if (!value || value.match(/^\d{1,}(\.\d{0,4})?$/)) {
-		// 	console.log('is number');
-		// 	onchangeVal[i][name] = value;
-		// }
-		// if (!value || value.match(/^\d{1,}(\s{0,1})?(\.\d{0,2})?(\/\d{0,2})?$/)) {
-		// 	console.log('is number');
-		// 	onchangeVal[i][name] = value;
-		// }
-		// if (!value || value.match(/^\d{1,}(\.\d{0,2})?(\/\d{0,2})?(\s)$/)) {
-		// 	console.log('is number');
-		// 	onchangeVal[i][name] = value;
-		// }
-		// if (!value || value.match(/^\d+(\s\d+\/\d+)?(\.\d+)?$/)) {
-		// 	console.log('is number');
-		// 	onchangeVal[i][name] = value;
-		// }
 		if (regex.test(value)) {
 			onchangeVal[i][name] = value;
 		}
@@ -85,7 +60,7 @@ const CreateRecipe = () => {
 	};
 
 	const handleUnitChange = (e, i) => {
-		const { value } = e;
+		let { value } = e.target;
 		const onchangeVal = [...ingredients];
 		// Check if they haven't changed yet
 		if (!onchangeVal[i]['unit']) {
@@ -94,7 +69,11 @@ const CreateRecipe = () => {
 			setIngredients(onchangeVal);
 		} else {
 			// Get "previous" unit
-			const unit = onchangeVal[i]['unit'];
+			let unit = onchangeVal[i]['unit'];
+			// Check if Tbs is tbsp
+			if (unit === 'tbsp') {
+				unit = 'Tbs';
+			}
 			// Get the number amount
 			const amount = onchangeVal[i]['amount'];
 			if (
@@ -106,7 +85,7 @@ const CreateRecipe = () => {
 				let convertNum = numericQuantity(amount, { round: false });
 				let unitConv = convert(convertNum).from(unit).to(value);
 				onchangeVal[i]['unit'] = value;
-				onchangeVal[i]['amount'] = unitConv;
+				onchangeVal[i]['amount'] = `${unitConv}`;
 				setIngredients(onchangeVal);
 			} else if (
 				// unit === ('cup' || 'tsp' || 'Tbs' || 'gal') &&
@@ -117,10 +96,16 @@ const CreateRecipe = () => {
 				let convertNum = numericQuantity(amount, { round: false });
 				let unitConv = convert(convertNum).from(unit).to(value);
 				let fractionNum = fracty(unitConv);
+				if (value === 'Tbs') {
+					value = 'tbsp';
+				}
 				onchangeVal[i]['unit'] = value;
 				onchangeVal[i]['amount'] = fractionNum;
 				setIngredients(onchangeVal);
 			} else {
+				if (value === 'Tbs') {
+					value = 'tbsp';
+				}
 				onchangeVal[i]['unit'] = value;
 			}
 		}
@@ -133,6 +118,16 @@ const CreateRecipe = () => {
 		onchangeVal[i] = value;
 		// console.log(onchangeVal);
 		setInstructions(onchangeVal);
+	};
+
+	const handleImageChange = (e) => {
+		// console.log(e.target.files);
+		// console.log(e.target.files[0]);
+		// const formData = new FormData();
+		setImage(e.target.files[0]);
+
+		// formData.append('image', file);
+		// console.log(formData);
 	};
 
 	const handleCaloriesChange = (e) => {
@@ -156,12 +151,16 @@ const CreateRecipe = () => {
 	};
 
 	const submitHandler = async (e) => {
-		// e.preventDefault();
+		e.preventDefault();
 		// console.log(recipeName);
 		// console.log('======================================');
 		// console.log(...ingredients);
 		// console.log('======================================');
 		// console.log(...instructions);
+		const formData = new FormData();
+		formData.append('image', image);
+		const { imageUrl } = await API.uploadImage(formData);
+
 		try {
 			e.preventDefault();
 			const newRecipe = await API.createRecipe(
@@ -170,10 +169,11 @@ const CreateRecipe = () => {
 					ingredients: ingredients,
 					instructions: instructions,
 					calories: calories,
+					imgUrl: imageUrl,
 				},
 				token
 			);
-			console.log('IT WORKS!!!');
+			// console.log('IT WORKS!!!');
 		} catch (error) {
 			console.log(error);
 		}
@@ -216,17 +216,23 @@ const CreateRecipe = () => {
 										className="amount-input"
 									/>
 								</div>
-								<div>
+								<div className="dropdown-menu">
 									<h3>Units</h3>
-									<Dropdown
-										className="dropdown-menu"
-										menuClassName="myMenuClassName"
-										arrowClassName="myArrowClassName"
-										controlClassName="myControlClassName"
-										options={options}
+
+									<select
+										defaultValue=""
 										onChange={(e) => handleUnitChange(e, i)}
-										placeholder="Select"
-									/>
+									>
+										<option value="" disabled hidden>
+											Select
+										</option>
+										<option value="g">g</option>
+										<option value="lb">lb</option>
+										<option value="cup">cup</option>
+										<option value="tsp">tsp</option>
+										<option value="Tbs">tbsp</option>
+										<option value="gal">gal</option>
+									</select>
 								</div>
 
 								{i !== 0 ? (
@@ -285,6 +291,11 @@ const CreateRecipe = () => {
 						onChange={handleCaloriesChange}
 					/>
 
+					<h2>Upload</h2>
+					<div className="upload-form">
+						<label>Upload an image of the food:</label>
+						<input type="file" onChange={handleImageChange} />
+					</div>
 					<div className="submit-btn">
 						<button>Submit</button>
 					</div>
