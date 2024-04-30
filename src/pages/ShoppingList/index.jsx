@@ -1,16 +1,30 @@
 import './styles.css';
+import { useState } from 'react';
 
 
 const ShoppingList = (props) => {
 
-    const getRecipies = (e) => {
-        console.log("CHECKED: ", e);
-            let userRecipes = props.user.recipes.map((recipe) => (
-                [recipe, 1]
-            ));
-            userRecipes[e][1] = userRecipes[e][1] === 0 ? 1 : 0;
-            console.log("USER RECIPES: ", userRecipes);
-    }
+    //Switch to useState
+    //let [quantities, setQuantities] = useState([]);
+    // if(props.user.recipes && quantities.length === 0){
+    //     let aux = new Array(props.user.recipes.length).fill(1)
+    //     console.log("AUX: ", aux);
+    //     setQuantities(aux);
+    //     console.log("QUANTITIES: ", quantities);
+    // }    
+
+
+    // const getRecipies = (e) => {
+    //     console.log("E: ", e);
+    //     let aux = quantities;
+    //     console.log(props.user.recipes);
+    //     //console.log("AUX: ", aux);
+        
+    //     //console.log("QUANTITIES: ", aux);
+        
+    //     //quantities[e] = quantities[e] === 1 ? 0 : 1;
+        
+    // }
 
     const renderRecipies = () => {
         
@@ -24,7 +38,7 @@ const ShoppingList = (props) => {
             //console.log("GET RECIPES: ", userRecipes);
             const recipesArray = userRecipes.map((recipe, index) => (
                 <li className="shop-li" key={recipe[0]._id}>
-                <input type="checkbox" value={recipe[1]} onClick={() => getRecipies(index)} defaultChecked/>
+                <input type="checkbox" value={recipe[1]} onClick={() => console.log('Index: ', index)/*getRecipies(index)*/} defaultChecked/>
                     {recipe[0].name} 
                 </li>
             ));
@@ -39,15 +53,8 @@ const ShoppingList = (props) => {
         // Whole thing breaks if it's not wrapped in this if statement :(
         if(props.user.recipes){
             // Get the user's recipes
-            //const userRecipes = props.user.recipes;
-            
-            let userRecipes = props.user.recipes.map((recipe) => (
-                [recipe, 1]
-            ));
-
-            userRecipes[2][1] = 0;
+            const userRecipes = props.user.recipes;
             console.log("USER RECIPES: ", userRecipes);
-            //console.log("MORE RECIPES: ", moreRecipes);
 
             // Consolidate ingredients into one array of objects
             // Each object is keyed with the ingredient name and has a value of the total amount and unit
@@ -57,21 +64,21 @@ const ShoppingList = (props) => {
             for (let i = 0; i < userRecipes.length; i++) {
                 
                 // Loop through each ingredient in the recipe
-                for (let j = 0; j < userRecipes[i][0].ingredients.length; j++) {
+                for (let j = 0; j < userRecipes[i].ingredients.length; j++) {
                     
                     // Passes if the recipe quantity is greater than zero
                     // Quantity is stored in the second element of the userRecipes array
-                    if (userRecipes[i][1] > 0) {  
+                    //if (userRecipes[i][1] > 0) {  
                         
                         // If the ingredient is not already in the shopping list, add it
-                        if (!shoppingList[userRecipes[i][0].ingredients[j].ingredient]) {
-                            shoppingList[userRecipes[i][0].ingredients[j].ingredient] = {"amount": parseInt(userRecipes[i][0].ingredients[j].amount), "unit":userRecipes[i][0].ingredients[j].unit};
+                        if (!shoppingList[userRecipes[i].ingredients[j].ingredient]) {
+                            shoppingList[userRecipes[i].ingredients[j].ingredient] = {"amount": parseInt(userRecipes[i].ingredients[j].amount), "unit":userRecipes[i].ingredients[j].unit};
                         
                         } else { 
                             // If the ingredient is already in the shopping list, add the amount to the existing amount
-                            shoppingList[userRecipes[i][0].ingredients[j].ingredient].amount += parseInt(userRecipes[i][0].ingredients[j].amount);
+                            shoppingList[userRecipes[i].ingredients[j].ingredient].amount += parseInt(userRecipes[i].ingredients[j].amount);
                         }
-                    }
+                    //}
                 }
             }//End of loop
             console.log("SHOPPING LIST: ", shoppingList);
