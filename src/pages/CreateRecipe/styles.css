@@ -1,14 +1,18 @@
+
 .recipe-page {
 	display: flex;
-	justify-content: center;
+	/* justify-content: center; */
 	align-items: center;
 	flex-direction: column;
+	background-color: #c4b594;
+	height: 100vh
 }
 .recipe-form {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 1000px;
+	
 }
 
 /* .recipe-form form {
@@ -81,4 +85,14 @@
 
 #trash-button:hover {
 	cursor: pointer;
+}
+
+.recipe{
+	background-color: white;
+    display: block;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 550px;
+    width: 100%;
 }
