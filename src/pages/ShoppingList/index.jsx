@@ -17,12 +17,11 @@ const ShoppingList = (props) => {
         
         const localList = JSON.parse(localStorage.getItem("userList"));
         
-        if(localList[props.userId]) {
+        if(localList[props.userId].length > 0) {
             
             setRecipes(localList[props.userId]);
         
         } else {
-        
             let aux = props.user.recipes.map((recipe) => (
                 // [Recipe, quantity]
                 [recipe, 1]
@@ -52,9 +51,7 @@ const ShoppingList = (props) => {
         if(propsLoaded) {
             console.log("USE EFFECT")
             getShoppingList();
-        }
-
-        
+        }        
 
     }, [userRecipes]);
     
