@@ -2,31 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../../../utils/API';
 import './styles.css';
-
+//import { useState } from 'react';
 //let aux = [];
 
 const ShoppingList = (props) => {
-	const navigate = useNavigate();
-	// const [test, setTest] = useState(null);
-	const [isLoading, setIsLoading] = useState(true);
-
-	useEffect(() => {
-		// if (props.userId === 0) {
-		// 	console.log('hold');
-		// } else {
-		// 	console.log(props.userId);
-		// 	API.getOneUser(props.userId).then(() => setIsLoading(false));
-		// }
-
-		if (props.userId !== 0) {
-			console.log(props.userId);
-			API.getOneUser(props.userId).then((data) => {
-				console.log(data);
-				setIsLoading(false);
-			});
-		}
-	}, [props.userId]);
-
 	//Switch to useState
 	// const [quantities, setQuantities] = useState(aux);
 
@@ -119,26 +98,14 @@ const ShoppingList = (props) => {
 
 	return (
 		<div>
-			{/* <div className="shop-card">
-                    <div className="shop-header">
-                        <div className="shop-title">Recipes</div>
-                        <div className="shop-body">
-                            <ul className="shop-ul"> {renderRecipies()} </ul>
-                        </div>
-                    </div>
-                </div> */}
-			{isLoading ? (
-				<h1>Loading...</h1>
-			) : (
-				<div className="shop-card">
-					<div className="shop-header">
-						<div className="shop-title">Shopping List</div>
-						<div className="shop-body">
-							<ul className="shop-ul"> {getShoppingList()} </ul>
-						</div>
+			<div className="shop-card">
+				<div className="shop-header">
+					<div className="shop-title">Recipes</div>
+					<div className="shop-body">
+						<ul className="shop-ul"> {getShoppingList()} </ul>
 					</div>
 				</div>
-			)}
+			</div>
 		</div>
 	);
 };

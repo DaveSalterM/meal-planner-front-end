@@ -176,7 +176,7 @@ const CreateRecipe = (props) => {
 		<div className="recipe-page">
 			<h1>Create Your Recipe!</h1>
 			<div className="recipe-form">
-				<form onSubmit={submitHandler}>
+				<form  class= 'recipe' onSubmit={submitHandler}>
 					<h2>Recipe Name</h2>
 					<input
 						className="recipe-field"
