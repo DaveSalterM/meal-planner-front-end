@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import API from '../../../utils/API';
+import { useCallback, useEffect, useState } from 'react';
+import { useBeforeUnload } from 'react-router-dom';
 import './styles.css';
+
 
 
 const ShoppingList = (props) => {
@@ -14,19 +14,48 @@ const ShoppingList = (props) => {
     let propsLoaded = props.user.recipes;
     
     if(propsLoaded && userRecipes.length === 0){
-        let aux = props.user.recipes.map((recipe) => (
-            // [Recipe, quantity]
-            [recipe, 1]
-        ));
-        setRecipes(aux);
+        
+        const localList = JSON.parse(localStorage.getItem("userList"));
+        
+        if(localList[props.userId]) {
+            
+            setRecipes(localList[props.userId]);
+        
+        } else {
+        
+            let aux = props.user.recipes.map((recipe) => (
+                // [Recipe, quantity]
+                [recipe, 1]
+            ));
+
+            setRecipes(aux);
+        }
     }
     
+    useBeforeUnload(
+        useCallback(() => {
+            //Pull local storage list
+            // populate with all current values
+            // Put it back
+            
+            const localList = JSON.parse(localStorage.getItem("userList"));
+            if(localList) {
+                localList[props.userId] = userRecipes;
+            }
+
+            localStorage.setItem("userList", JSON.stringify(localList));
+        }, [userRecipes])
+    );
+
     useEffect(() => {
         
         if(propsLoaded) {
             console.log("USE EFFECT")
             getShoppingList();
         }
+
+        
+
     }, [userRecipes]);
     
      
