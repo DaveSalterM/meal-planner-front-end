@@ -1,0 +1,74 @@
+.recipe-data ul,
+.recipe-data ol {
+	margin-left: 1.5rem;
+}
+
+.recipe-header {
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+	margin-bottom: 40px;
+}
+
+.serv-cal-star {
+	display: flex;
+	align-items: flex-end;
+	/* margin: 0px 10px; */
+}
+
+/* Applies to direct children of .serv-cal-star class */
+.serv-cal-star > * {
+	margin: 0px 10px;
+}
+
+.image-buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: fit-content;
+}
+.image-buttons img {
+	width: 800px;
+	object-fit: contain;
+}
+
+.image-buttons button:hover {
+	cursor: pointer;
+}
+
+.image-buttons button {
+	margin: 10px 40px;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.recipe-data-container {
+	display: flex;
+	justify-content: space-around;
+}
+
+.recipe-ingredients,
+.recipe-instructions {
+	border: 1px solid black;
+	margin: 0px 10px;
+	padding: 20px;
+	border-radius: 10px;
+	width: 300px;
+}
+
+.recipe-ingredients h2,
+.recipe-instructions h2 {
+	border-bottom: 1px solid black;
+	padding-bottom: 5px;
+	font-size: 32px;
+}
+
+.recipe-ingredients ul li,
+.recipe-instructions ol li {
+	margin: 30px 0px;
+	font-size: 21px;
+}
+
+.ingredients-instruction-container {
+	display: flex;
+}

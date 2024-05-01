@@ -1,0 +1,26 @@
+.recipe-container {
+	/* display: flex; */
+	display: grid;
+	grid-template-columns: 400px 400px 400px 400px;
+	justify-content: space-evenly;
+}
+.recipe-container a {
+	text-decoration: none;
+	/* width: fit-content; */
+}
+
+.recipe-container a:visited {
+	color: inherit;
+}
+
+.recipe-container h1 {
+	width: fit-content;
+}
+
+.name-link {
+	display: inline-block;
+}
+
+/* .name-link a {
+	width: fit-content;
+} */
