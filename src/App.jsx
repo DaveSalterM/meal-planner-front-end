@@ -17,6 +17,7 @@ import ShoppingList from './pages/ShoppingList/index.jsx';
 import Login from './pages/Login/index.jsx';
 import Profile from './pages/Profile/index.jsx';
 import Recipes from './pages/Recipes/index.jsx';
+import SingleRecipePage from './pages/SingleRecipe/index.jsx';
 
 function App() {
 	const [userId, setUserId] = useState(0);
@@ -132,6 +133,10 @@ function App() {
 				<Route
 					path="/recipes/:recipe"
 					element={<Recipes userId={userId} token={token} />}
+				/>
+				<Route
+					path="/recipes/:recipe/:recipeId"
+					element={<SingleRecipePage userId={userId} token={token} />}
 				/>
 				{/* =======
 				<Route path="/" element={<Home user={user} userId={userId} token={token}/>} />
