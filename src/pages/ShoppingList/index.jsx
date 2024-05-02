@@ -54,11 +54,8 @@ const ShoppingList = (props) => {
                 userRecipes.forEach((recipe) => {
                     storedRecipes[recipe[0]._id] = recipe[1];
                 });
-
                 
                 localList[props.userId] = storedRecipes;
-                console.log('storedRecipes: ', storedRecipes)
-                console.log('localList: ', localList[props.userId]);
                 localStorage.setItem("userList", JSON.stringify(localList));
             
             }
@@ -66,6 +63,51 @@ const ShoppingList = (props) => {
         }
         
     };
+
+    // Function converts all unit measurements in shopping list to appropriate display units
+    // Called in getShoppingList after the for loops
+    const convertUnits = (shoppingList) => {
+        
+        let convertedAmount = {
+            val: 0,
+            unit: ""
+        };
+        
+        for(let ingredient in shoppingList) {
+            
+            // If the ingredient is in grams and the amount is greater than 1 oz and less than 16 oz
+            // Convert to oz
+            if(shoppingList[ingredient].unit === "g") {
+
+                convertedAmount = convert(shoppingList[ingredient].amount).from('g').toBest({cutoffNumber: 2, exclude: ['in3','ft3','yd3','tsp', 'tbsp', 'cups', 'fl-oz', 'gal', 'qt', 'pnt','t']});
+                shoppingList[ingredient] = {"amount": convertedAmount.val, "unit": convertedAmount.unit};
+            
+            // If ingredient is more than 16 oz OR more than 453.592 grams
+            // Distinction is made incase grams are used for large quantities
+            } else if ((shoppingList[ingredient].unit === "oz" && shoppingList[ingredient].amount > 16) || shoppingList[ingredient].unit === "g" && shoppingList[ingredient].amount > 453.592) {
+                convertedAmount.val = convert(shoppingList[ingredient].amount).from('oz').to('lb');
+                convertedAmount.unit = "lb";
+                shoppingList[ingredient] = {"amount": convertedAmount.val, "unit": convertedAmount.unit};
+
+            // Just converts 'tbsp' to 'Tbs' for the conversion
+            // Then converts to best unit   
+            } else if(shoppingList[ingredient].unit === "tbsp") {
+                
+                convertedAmount = convert(shoppingList[ingredient].amount).from('Tbs').toBest({cutoffNumber: 2, exclude: ['in3','ft3','yd3', 'qt', 'pnt', 'oz', 'lb', 't']});
+                if(convertedAmount.unit === "Tbs") convertedAmount.unit = "tbsp";
+                shoppingList[ingredient] = {"amount": convertedAmount.val, "unit": convertedAmount.unit};
+            
+            // Converts all other units to best unit
+            } else if (shoppingList[ingredient].unit !== "lb") { 
+                convertedAmount = convert(shoppingList[ingredient].amount).from(shoppingList[ingredient].unit).toBest({exclude: ['in3','ft3','yd3', 'qt', 'pnt', 'oz', 'lb', 't']});
+                shoppingList[ingredient] = {"amount": convertedAmount.val, "unit": convertedAmount.unit};
+            }
+            // Rounds the amount to 2 decimal places
+            shoppingList[ingredient].amount = Math.round(shoppingList[ingredient].amount * 100) / 100;
+        }
+        return shoppingList;
+    }
+
 
     useBeforeUnload(
         useCallback(() => {
@@ -77,8 +119,6 @@ const ShoppingList = (props) => {
                 });
 
                 localList[props.userId] = storedRecipes;
-                console.log('storedRecipes: ', storedRecipes)
-                console.log('localList: ', localList[props.userId]);
                 localStorage.setItem("userList", JSON.stringify(localList));
         }, [userRecipes])
     );
@@ -124,15 +164,15 @@ const ShoppingList = (props) => {
                         //Create amount by multiplying the ingredient amount by the recipe quantity
                         console.log(userRecipes[i][0].ingredients[j].ingredient, userRecipes[i][1])
                         let newAmount = parseInt(userRecipes[i][0].ingredients[j].amount) * userRecipes[i][1];
-                        let convertedAmount = convert(newAmount).from(userRecipes[i][0].ingredients[j].unit).toBest({cutoffNumber: 2});
-                        console.log('converted amount for: ' ,userRecipes[i][0].ingredients[j].ingredient,newAmount ,userRecipes[i][0].ingredients[j].unit, convertedAmount)
-                        shoppingList[userRecipes[i][0].ingredients[j].ingredient].amount += convertedAmount.val;
-                        shoppingList[userRecipes[i][0].ingredients[j].ingredient].unit = convertedAmount.unit;
+                        shoppingList[userRecipes[i][0].ingredients[j].ingredient].amount += newAmount;
                     }
                 }
             }
-        }//End of loop
-        
+        }//End of for loop
+
+        shoppingList = convertUnits(shoppingList);
+        console.log('shoppingList: ', shoppingList)
+
         // Convert the shopping list object into an array of JSX elements
         const shoppingListArray = Object.entries(shoppingList).map(([ingredient, { amount, unit }]) => (
         
@@ -141,7 +181,7 @@ const ShoppingList = (props) => {
             </li>
         ));
         
-        //console.log("SHOPPING LIST ARRAY: ", shoppingListArray);
+        console.log("SHOPPING LIST ARRAY: ", shoppingListArray);
         setShoppingList(shoppingListArray);
     }
   
