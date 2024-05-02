@@ -20,9 +20,9 @@
 	align-items: center;
 } */
 
-/* .ingredient-field {
-	display: flex;
-} */
+.ingredient-field {
+	margin-bottom: 0.5rem;
+}
 
 .submit-btn {
 	display: flex;
@@ -31,6 +31,8 @@
 
 .submit-btn button {
 	width: 100%;
+	border-radius: 5px;
+	background-color:#289945
 }
 
 .unit-dropdown {
@@ -41,6 +43,7 @@
 .instruction-field {
 	display: flex;
 	width: 100%;
+	margin-bottom: 0.5rem
 }
 
 .myControlClassName {
@@ -63,16 +66,25 @@
 .myMenuClassName {
 	width: 65px !important;
 }
+.ingredient-name, .amount-input{
+	margin-right: 10px;
+}
 
 .instruction-input {
 	width: 500px;
+	height: 24px;
+	border-radius: 5px;
+}
+.calorie-input {
+	width: 80px;
 }
 
-.instruction-input,
 .recipe-field,
+.calorie-input,
 .ingredient-name,
 .amount-input {
 	height: 24px;
+	border-radius: 5px;
 }
 
 .delete-button {
@@ -84,6 +96,7 @@
 	height: 30px;
 	width: 30px;
 	position: absolute;
+	margin-left: 0.5rem
 }
 
 #trash-button:hover {
@@ -108,4 +121,37 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 550px;
     width: 100%;
+}
+
+.recipe-border{
+	border-bottom: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: black;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+.button-create{
+	margin-top: 0.5rem;
+	border-radius: 5px;
+	background-color:#289945 ;
+	border: solid;
+	width: 80px;
+}
+
+.upload-image{
+	border-radius: 2px;
+	margin: 2px 0px
+}
+
+.upload-form{
+	margin-bottom: 1rem;
+}
+
+.header-create-recipe{
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	color: white
+}
+.header-names{
+	margin-bottom: 0.3rem
 }

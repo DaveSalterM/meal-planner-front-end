@@ -193,18 +193,20 @@ const CreateRecipe = (props) => {
 
 	return (
 		<div className="recipe-page">
-			<h1>Create Your Recipe!</h1>
+			<h1 className='header-create-recipe'>Create Your Recipe!</h1>
 			<div className="recipe-form">
 				<form  class= 'recipe' onSubmit={submitHandler}>
-					<h2>Recipe Name</h2>
+				
+					<h2 className='header-names'>Recipe Name</h2>
 					<input
 						className="recipe-field"
 						name="recipe"
 						value={recipeName}
 						onChange={handleRecipeChange}
 					/>
-
-					<h2>Ingredients</h2>
+					<div className='recipe-border'>
+					</div>
+					<h2 className='header-names'>Ingredients</h2>
 					{ingredients.map((val, i) => (
 						<div key={i}>
 							{/* <h3>Ingredient {i + 1}</h3> */}
@@ -260,11 +262,11 @@ const CreateRecipe = (props) => {
 							</div>
 						</div>
 					))}
-					<button type="button" onClick={handleClickIngredient}>
+					<button className="button-create" type="button" onClick={handleClickIngredient}>
 						+ Add More
 					</button>
-
-					<h2>Instructions</h2>
+					<div className= "recipe-border"></div>
+					<h2 className='header-names'>Instructions</h2>
 					{instructions.map((val, i) => (
 						<div key={i}>
 							<div className="instruction-field">
@@ -292,21 +294,22 @@ const CreateRecipe = (props) => {
 						</div>
 					))}
 
-					<button type="button" onClick={handleClickInstruction}>
+					<button className="button-create" type="button" onClick={handleClickInstruction}>
 						+ Add More
 					</button>
-
-					<h2>Calories</h2>
+					<div className= "recipe-border"></div>
+					<h2 className='header-names'>Calories</h2>
 					<input
 						name="calories"
 						value={calories}
 						onChange={handleCaloriesChange}
+						className="calorie-input"
 					/>
-
-					<h2>Upload</h2>
+					<div className= "recipe-border"></div>
+					<h2 className='header-names'>Upload</h2>
 					<div className="upload-form">
 						<label>Upload an image of the food:</label>
-						<input type="file" onChange={handleImageChange} />
+						<input className= "upload-image" type="file" onChange={handleImageChange} />
 					</div>
 					<div className="submit-btn">
 						<button>Submit</button>

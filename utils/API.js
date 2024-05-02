@@ -1,5 +1,5 @@
- //const URL_PREFIX = 'http://localhost:3001';
- const URL_PREFIX = 'https://meal-planner-ij2h.onrender.com';
+ const URL_PREFIX = 'http://localhost:3001';
+//  const URL_PREFIX = 'https://meal-planner-ij2h.onrender.com';
 
 const API = {
 	// Signup
