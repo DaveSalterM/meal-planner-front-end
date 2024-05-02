@@ -45,6 +45,7 @@
 .recipe-data-container {
 	display: flex;
 	justify-content: space-around;
+	margin-bottom: 50px;
 }
 
 .recipe-ingredients,
@@ -71,4 +72,56 @@
 
 .ingredients-instruction-container {
 	display: flex;
+}
+
+.review-section {
+	display: flex;
+	justify-content: center;
+}
+
+.review-container {
+	width: 800px;
+}
+
+.review-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 5px;
+}
+
+.review-header h2 {
+	font-size: 2em;
+}
+
+.review-header button {
+	padding: 10px 20px;
+	font-size: 20px;
+}
+
+.review-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.review-card {
+	border: 1px solid gray;
+	border-radius: 5px;
+	box-shadow: 0 0 2px;
+	padding: 10px;
+	margin: 30px 0px;
+}
+
+.review-form {
+	/* margin-bottom: 20px; */
+	display: none;
+}
+
+.review-form-visible {
+	/* margin-bottom: 20px; */
+	display: visible;
+}
+
+.review-form input {
+	margin: 0;
 }

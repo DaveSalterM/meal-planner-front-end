@@ -36,21 +36,27 @@ function App() {
 		const savedToken = localStorage.getItem('token');
 		const savedUserId = localStorage.getItem('userId');
 		if (savedToken) {
-			API.checkToken(savedToken).then((data) => {
-				if (data.validToken) {
-					setToken(savedToken);
-					setUserId(savedUserId);
+			API.checkToken(savedToken)
+				.then((data) => {
+					if (data.validToken) {
+						setToken(savedToken);
+						setUserId(savedUserId);
 
+						// API.getOneUser(savedUserId).then((res) => {
+						// 	setUser(res);
+						// });
+					} else {
+						localStorage.removeItem('token');
+						localStorage.removeItem('userId');
+					}
+				})
+				.then(() =>
 					API.getOneUser(savedUserId).then((res) => {
 						setUser(res);
-					});
-				} else {
-					localStorage.removeItem('token');
-					localStorage.removeItem('userId');
-				}
-			});
+					})
+				);
 		}
-	}, []);
+	}, [token]);
 
 	// Passes object to API.signup
 	// API.signup returns a promise
@@ -81,6 +87,7 @@ function App() {
 	// Sets token and userId to local storage
 	const handleLogin = (obj) => {
 		API.login(obj).then((data) => {
+			// console.log(data);
 			setUserId(data.user._id);
 			setToken(data.token);
 			localStorage.setItem('token', data.token);
@@ -92,7 +99,9 @@ function App() {
 	const logout = () => {
 		setToken('');
 		setUserId(0);
+		setUser({});
 		localStorage.removeItem('token');
+		localStorage.removeItem('userId');
 	};
 
 	return (
@@ -132,7 +141,7 @@ function App() {
 				/>
 				<Route
 					path="/recipes/:recipe"
-					element={<Recipes userId={userId} token={token} />}
+					element={<Recipes user={user} userId={userId} token={token} />}
 				/>
 				<Route
 					path="/recipes/:recipe/:recipeId"
