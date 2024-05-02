@@ -1,7 +1,5 @@
-
- const URL_PREFIX = 'http://localhost:3001';
- //const URL_PREFIX = 'https://meal-planner-ij2h.onrender.com';
-
+const URL_PREFIX = 'http://localhost:3001';
+//const URL_PREFIX = 'https://meal-planner-ij2h.onrender.com';
 
 const API = {
 	// Signup
@@ -85,7 +83,27 @@ const API = {
 		}).then((res) => res.json());
 	},
 	// Like a recipe
-	likeRecipe: () => {},
+	likeRecipe: (userId, recipeId, token) => {
+		return fetch(`${URL_PREFIX}/api/users/${userId}/favorites`, {
+			method: 'PUT',
+			body: JSON.stringify(recipeId),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		}).then((res) => res.json());
+	},
+	// Unlike recipe
+	unlikeRecipe: (userId, recipeId, token) => {
+		return fetch(`${URL_PREFIX}/api/users/${userId}/favorites`, {
+			method: 'DELETE',
+			body: JSON.stringify(recipeId),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		}).then((res) => res.json());
+	},
 };
 
 export default API;
