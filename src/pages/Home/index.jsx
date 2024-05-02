@@ -4,7 +4,7 @@ import Searchbar from '../../components/Searchbar';
 import './styles.css';
 
 const Home = (props) => {
-	console.log('Home page props: ', props);
+	// console.log('Home page props: ', props);
 	return (
 		<div>
 			Home

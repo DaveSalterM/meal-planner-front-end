@@ -73,6 +73,19 @@ const API = {
 			res.json()
 		);
 	},
+	// Create a review
+	createReview: (reviewData, token) => {
+		return fetch(`${URL_PREFIX}/api/reviews`, {
+			method: 'POST',
+			body: JSON.stringify(reviewData),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		}).then((res) => res.json());
+	},
+	// Like a recipe
+	likeRecipe: () => {},
 };
 
 export default API;
