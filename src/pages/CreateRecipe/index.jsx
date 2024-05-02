@@ -1,28 +1,16 @@
 import convert from 'convert-units';
 import fracty from 'fracty';
 import { numericQuantity } from 'numeric-quantity';
-// <<<<<<< HEAD
-// import { useState } from 'react';
-// // import Dropdown from 'react-dropdown';
-// =======
 import { useState } from 'react';
-// import Dropdown from 'react-dropdown';
-// >>>>>>> dev
 import 'react-dropdown/style.css';
 import { FaTrashAlt } from 'react-icons/fa';
 import API from '../../../utils/API';
 import './styles.css';
 
-// <<<<<<< HEAD
-// const CreateRecipe = () => {
-// 	const token =
-// 		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzA1NzM5MWU2ZDBkMTY1ZWFiODkzYSIsInVzZXJuYW1lIjoidGVzdFVzZXIyIiwiaWF0IjoxNzE0NDUyMzg2LCJleHAiOjE3MTQ0NTk1ODZ9.0JL6lL6VvpSMt22lY0i5au4MDcHQdNQO3sPavzZW7uc';
-// =======
 const CreateRecipe = (props) => {
 	const token = props.token;
-	console.log('Create Recipe: ', props.user);
-	//'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjlhZWFiMThmYjcxODNmNmZlMjNkOCIsInVzZXJuYW1lIjoidGVzdFVzZXIyIiwiaWF0IjoxNzE0NDE1MzgwLCJleHAiOjE3MTQ0MjI1ODB9.XqltrAe8mj8as9H2e-6zXcpun-wcDBWKunj6iH5tWcw';
-	// >>>>>>> dev
+	// console.log('Create Recipe: ', props.user);
+
 	const regex =
 		/^(\d*)(\s{0,1}(\d{0,1})(\/?)(\d{0,1})|(\.\d{0,2})|\/(\d{0,1}))$/;
 	const [recipeName, setRecipeName] = useState('');
@@ -88,20 +76,16 @@ const CreateRecipe = (props) => {
 			}
 			// Get the number amount
 			const amount = onchangeVal[i]['amount'];
-			if (
-				// (unit === 'g' && value === 'lb') ||
-				// (unit === 'lb' && value === 'g')
-				['g', 'lb'].includes(unit) &&
-				['g', 'lb'].includes(value)
-			) {
-				let convertNum = numericQuantity(amount, { round: false });
+			if (['g', 'lb'].includes(unit) && ['g', 'lb'].includes(value)) {
+				// let convertNum = numericQuantity(amount, { round: false });
+				let convertNum = numericQuantity(amount);
+				console.log('convert', convertNum);
 				let unitConv = convert(convertNum).from(unit).to(value);
+				// unitConv = unitConv.toFixed(2);
 				onchangeVal[i]['unit'] = value;
 				onchangeVal[i]['amount'] = `${unitConv}`;
 				setIngredients(onchangeVal);
 			} else if (
-				// unit === ('cup' || 'tsp' || 'Tbs' || 'gal') &&
-				// value === ('cup' || 'tsp' || 'Tbs' || 'gal')
 				['cup', 'tsp', 'Tbs', 'gal'].includes(unit) &&
 				['cup', 'tsp', 'Tbs', 'gal'].includes(value)
 			) {
@@ -126,9 +110,7 @@ const CreateRecipe = (props) => {
 	const handleInstructionChange = (e, i) => {
 		const { value } = e.target;
 		const onchangeVal = [...instructions];
-		// onchangeVal[i][name] = value;
 		onchangeVal[i] = value;
-		// console.log(onchangeVal);
 		setInstructions(onchangeVal);
 	};
 
@@ -146,7 +128,6 @@ const CreateRecipe = (props) => {
 		const { value } = e.target;
 		let onchangeVal = [...calories];
 		onchangeVal = value;
-		// console.log(onchangeVal);
 		setCalories(onchangeVal);
 	};
 

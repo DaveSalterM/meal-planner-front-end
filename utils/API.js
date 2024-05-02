@@ -1,5 +1,7 @@
+
  const URL_PREFIX = 'http://localhost:3001';
-//  const URL_PREFIX = 'https://meal-planner-ij2h.onrender.com';
+ //const URL_PREFIX = 'https://meal-planner-ij2h.onrender.com';
+
 
 const API = {
 	// Signup
@@ -13,7 +15,6 @@ const API = {
 			},
 		}).then((res) => res.json());
 	},
-
 
 	// Login
 	// userobj = {username: "username", password: "password"}
@@ -45,13 +46,10 @@ const API = {
 		}).then((res) => res.json());
 	},
 
-
-
 	// Get one user
 	getOneUser: (userId) => {
 		return fetch(`${URL_PREFIX}/api/users/${userId}`).then((res) => res.json());
 	},
-
 
 	// Create a recipe
 	createRecipe: (userObj, token) => {
@@ -64,7 +62,17 @@ const API = {
 			},
 		}).then((res) => res.json());
 	},
-	// Get recipes
+	getSearchedRecipe: (search) => {
+		return fetch(`${URL_PREFIX}/api/recipes/${search}`).then((res) =>
+			res.json()
+		);
+	},
+	// Get Single Recipe
+	getSingleRecipe: (recipeId) => {
+		return fetch(`${URL_PREFIX}/api/recipes/recipe/${recipeId}`).then((res) =>
+			res.json()
+		);
+	},
 };
 
 export default API;

@@ -1,11 +1,11 @@
 .card-container {
-	width: 500px;
-	min-height: 500px;
+	width: 400px;
+	min-height: 400px;
 }
 
 .img-card {
-	width: 500px;
-	height: 500px;
+	width: 400px;
+	height: 400px;
 	position: relative;
 	/* display: flex; */
 	/* justify-content: center; */
