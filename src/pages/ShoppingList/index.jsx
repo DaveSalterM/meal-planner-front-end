@@ -118,20 +118,22 @@ const ShoppingList = (props) => {
         }, [userRecipes])
     );
 
+
 	//Use effect that renders the shopping list when the userRecipes array is updated
 	useEffect(() => {
 		if (propsLoaded) getShoppingList();
 		if (propsLoaded) updateLocalStorage();
 	}, [userRecipes]);
 
-    // This works btw
-    const getRecipes = (recipeIndex, newQuantity) => {
-        setRecipes(
-            userRecipes.map((recipe, i) =>
-                recipeIndex == i ? [recipe[0], newQuantity] : recipe
-            )
-        );
-    };
+
+	// This works btw
+	const getRecipes = (recipeIndex, newQuantity) => {
+		setRecipes(
+			userRecipes.map((recipe, i) =>
+				recipeIndex == i ? [recipe[0], newQuantity] : recipe
+			)
+		);
+	};
 
     const getShoppingList = () => {        
         // Consolidate ingredients into one array of objects
