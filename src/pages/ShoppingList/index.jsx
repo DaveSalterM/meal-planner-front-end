@@ -62,6 +62,21 @@ const ShoppingList = (props) => {
         
     };
 
+    
+	useBeforeUnload(
+		useCallback(() => {
+			let localList = JSON.parse(localStorage.getItem('userList'));
+			let storedRecipes = {};
+			userRecipes.forEach((recipe) => {
+				storedRecipes[recipe[0]._id] = recipe[1];
+			});
+
+			localList[props.userId] = storedRecipes;
+			console.log('storedRecipes: ', storedRecipes);
+			console.log('localList: ', localList[props.userId]);
+			localStorage.setItem('userList', JSON.stringify(localList));
+		}, [userRecipes])
+	);
 
     // Function converts all unit measurements in shopping list to appropriate display units
     // Called in getShoppingList after the for loops
@@ -227,6 +242,4 @@ const ShoppingList = (props) => {
             </>
     );
 }
-
-
 export default ShoppingList;
