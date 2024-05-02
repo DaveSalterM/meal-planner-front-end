@@ -1,46 +1,60 @@
 // import React from 'react';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaRegStar } from 'react-icons/fa';
-import burger from './burger.jpg';
+import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa6';
+// import burger from './burger.jpg';
+// import { Link } from 'react-router-dom';
 
+import { useEffect, useState } from 'react';
 import './styles.css';
 
-const RecipeCard = ({ recipeName, user, image }) => {
-	// const testRecipe = [
-	// 	{
-	// 		_id: '662fe7ba9456a39cfc3460ec',
-	// 		name: 'Test Recipe Final',
-	// 		ingredients: [
-	// 			{
-	// 				ingredient: 't',
-	// 				amount: '1',
-	// 				unit: 'g',
-	// 			},
-	// 			{
-	// 				ingredient: 's',
-	// 				amount: '2',
-	// 				unit: 'lb',
-	// 			},
-	// 			{
-	// 				ingredient: 'r',
-	// 				amount: '3',
-	// 				unit: 'cup',
-	// 			},
-	// 		],
-	// 		instructions: ['instruction 1', 'instruction 2', 'instruction 3'],
-	// 		calories: 500,
-	// 		user: {
-	// 			_id: '6629aeab18fb7183f6fe23d8',
-	// 			username: 'testUser2',
-	// 		},
-	// 		reviews: [],
-	// 		__v: 0,
-	// 	},
-	// ];
+const RecipeCard = ({ image, id, user }) => {
+	// const handleClick = (e) => {
+	// 	e.preventDefault();
+	// 	// console.log('?', e.target);
+	// 	// console.log(e.target.getAttribute('value'));
+	// 	console.log(id);
+	// 	// console.log('clicked');
+	// };
+	const [userFavorites, setUserFavorites] = useState([]);
+	// const [isLiked, setIsLiked] = useState()
+
+	useEffect(() => {
+		// console.log(user);
+		if (user.favorites !== undefined) {
+			setUserFavorites(user.favorites);
+		}
+	}, [user]);
+
+	const handleLike = (e) => {
+		e.preventDefault();
+		console.log('liked');
+	};
+
+	const handleUnlike = (e) => {
+		e.preventDefault();
+		console.log('unliked');
+	};
+
 	return (
 		<div className="card-container">
 			<div className="img-card">
 				<div className="favorite-button">
-					<FaRegStar />
+					{/* {isLiked ? (
+						<FaStar onClick={handleClick} value={id} />
+					) : (
+						<FaRegStar className="test-star" onClick={handleClick} value={id} />
+					)} */}
+					{/* {isLiked ? (
+						<AiFillHeart onClick={handleUnlike} />
+					) : (
+						<AiOutlineHeart onClick={handleLike} />
+					)} */}
+					{userFavorites.includes(id) ? (
+						<AiFillHeart onClick={handleUnlike} />
+					) : (
+						<AiOutlineHeart onClick={handleLike} />
+					)}
 				</div>
 				<img src={image} alt="burger" />
 			</div>
