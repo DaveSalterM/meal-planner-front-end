@@ -1,17 +1,18 @@
 // import React from 'react';
 import { useEffect, useState } from 'react';
 import { FaRegStar } from 'react-icons/fa';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import API from '../../../utils/API';
 
 import ReviewCard from '../../components/ReviewCard';
 import './styles.css';
 
-const SingleRecipePage = ({ token }) => {
+const SingleRecipePage = ({ id, user, userId, token }) => {
 	const { recipeId } = useParams();
 
 	const [recipeData, setRecipeData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const [recipeReviews, setRecipeReviews] = useState([]);
 	const [showReview, setShowReview] = useState(false);
 	const [reviewContent, setReviewContent] = useState('');
 	const [refresh, setRefresh] = useState(true);
@@ -23,11 +24,12 @@ const SingleRecipePage = ({ token }) => {
 				setRecipeData(response);
 				// console.log(response);
 			})
+			// .then(() => setRecipeReviews(recipeData.reviews))
 			.then(() => setIsLoading(false));
 	}, [recipeId, refresh]);
 
 	const handleClick = () => {
-		console.log(recipeData.reviews);
+		// console.log(recipeReviews);
 	};
 
 	const handleShowReview = () => {
