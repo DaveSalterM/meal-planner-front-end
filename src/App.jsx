@@ -75,9 +75,9 @@ function App() {
 	const handleSignup = (obj) => {
 		API.signup(obj).then((data) => {
 			setToken(data.token);
-			setUserId(data._id);
+			setUserId(data.userData._id);
 			localStorage.setItem('token', data.token);
-			localStorage.setItem('userId', data._id);
+			localStorage.setItem('userId', data.userData._id);
 		});
 	};
 
