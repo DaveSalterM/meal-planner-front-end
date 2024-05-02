@@ -5,13 +5,13 @@
 	align-items: center;
 	flex-direction: column;
 	background-color: #c4b594;
-	height: auto
+	height: auto;
 }
 .recipe-form {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: auto;
+	width: 1000px;
 	
 }
 
