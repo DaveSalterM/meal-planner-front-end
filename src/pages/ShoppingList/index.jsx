@@ -1,113 +1,158 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import API from '../../../utils/API';
+import { useCallback, useEffect, useState } from 'react';
+import { useBeforeUnload } from 'react-router-dom';
 import './styles.css';
-//import { useState } from 'react';
-//let aux = [];
+
+
 
 const ShoppingList = (props) => {
-	//Switch to useState
-	// const [quantities, setQuantities] = useState(aux);
+    
+    const [userRecipes, setRecipes] = useState([]);
+    const [shoppingList, setShoppingList] = useState([]);
+    
+    // Stores user recipes from props
+    // But functions as a boolean to check if props have loaded
+    let propsLoaded = props.user.recipes;
+    
+    if(propsLoaded && userRecipes.length === 0){
+        
+        const localList = JSON.parse(localStorage.getItem("userList"));
+        
+        if(localList[props.userId].length > 0) {
+            
+            setRecipes(localList[props.userId]);
+        
+        } else {
+            let aux = props.user.recipes.map((recipe) => (
+                // [Recipe, quantity]
+                [recipe, 1]
+            ));
 
-	// // This works btw
-	// if(props.user.recipes && quantities.length === 0){
-	//     aux = new Array(props.user.recipes.length).fill(1)
-	//     //setQuantities(aux);
-	// }
+            setRecipes(aux);
+        }
+    }
+    
+    useBeforeUnload(
+        useCallback(() => {
+            //Pull local storage list
+            // populate with all current values
+            // Put it back
+            
+            const localList = JSON.parse(localStorage.getItem("userList"));
+            if(localList) {
+                localList[props.userId] = userRecipes;
+            }
 
-	// const getRecipies = (e) => {
-	//     console.log("Intex: ", e);
-	//     let aux = quantities;
-	//     aux[e] = aux[e] === 1 ? 0 : 1;
-	//     setQuantities(aux);
-	//     getShoppingList();
-	// }
+            localStorage.setItem("userList", JSON.stringify(localList));
+        }, [userRecipes])
+    );
 
-	// const renderRecipies = () => {
+    useEffect(() => {
+        
+        if(propsLoaded) {
+            console.log("USE EFFECT")
+            getShoppingList();
+        }        
 
-	//     if(props.user.recipes){
+    }, [userRecipes]);
+    
+     
+    // This works btw
+    const getRecipes = (recipeIndex, newQuantity) => {
+        
+        setRecipes(userRecipes.map((recipe, i) => recipeIndex == i ? [recipe[0], newQuantity] : recipe   ))
+    }
 
-	//         // Get user recipes and tie a quantity to each recipe
-	//         let userRecipes = props.user.recipes.map((recipe) => (
-	//             [recipe, 1]
-	//         ));
-
-	//         //console.log("GET RECIPES: ", userRecipes);
-	//         const recipesArray = userRecipes.map((recipe, index) => (
-	//             <li className="shop-li" key={recipe[0]._id}>
-	//             <input type="checkbox" value={recipe[1]} onClick={() => getRecipies(index)} defaultChecked/>
-	//                 {recipe[0].name}
-	//             </li>
-	//         ));
-	//         return recipesArray;
-	//     }
-	// }
-
-	const getShoppingList = () => {
-		// Whole thing breaks if it's not wrapped in this if statement :(
-		if (props.user.recipes) {
-			// Get the user's recipes
-			const userRecipes = props.user.recipes;
-
-			// let userRecipes = props.user.recipes.map((recipe) => (
-			//     [recipe, 1]
-			// ));
-
-			// userRecipes[2][1] = 0;
-			// console.log("USER RECIPES: ", userRecipes);
-			//console.log("QUANTITIES: ", quantities)
-
-			// Consolidate ingredients into one array of objects
-			// Each object is keyed with the ingredient name and has a value of the total amount and unit
-			let shoppingList = {};
-
-			// Loop through each recipe
-			for (let i = 0; i < userRecipes.length; i++) {
-				// Loop through each ingredient in the recipe
-				for (let j = 0; j < userRecipes[i].ingredients.length; j++) {
-					// Passes if the recipe quantity is greater than zero
-					// Quantity is stored in the second element of the userRecipes array
-
-					// If the ingredient is not already in the shopping list, add it
-					if (!shoppingList[userRecipes[i].ingredients[j].ingredient]) {
-						shoppingList[userRecipes[i].ingredients[j].ingredient] = {
-							amount: parseInt(userRecipes[i].ingredients[j].amount),
-							unit: userRecipes[i].ingredients[j].unit,
-						};
-					} else {
-						// If the ingredient is already in the shopping list, add the amount to the existing amount
-						shoppingList[userRecipes[i].ingredients[j].ingredient].amount +=
-							parseInt(userRecipes[i].ingredients[j].amount);
-					}
-				}
-			} //End of loop
-
-			console.log('SHOPPING LIST: ', shoppingList);
-			// Convert the shopping list object into an array of JSX elements
-			const shoppingListArray = Object.entries(shoppingList).map(
-				([ingredient, { amount, unit }]) => (
-					<li className="shop-li" key={ingredient}>
-						{`${ingredient}: ${amount} ${unit}`}
-					</li>
-				)
-			);
-			console.log('SHOPPING LIST ARRAY: ', shoppingListArray);
-			return shoppingListArray;
-		} //End of if
-	};
-
-	return (
-		<div>
-			<div className="shop-card">
-				<div className="shop-header">
-					<div className="shop-title">Recipes</div>
-					<div className="shop-body">
-						<ul className="shop-ul"> {getShoppingList()} </ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
-};
+    const getShoppingList = () => {
+        
+        //console.log("getShoppingList > Props: ", props.user.recipes)
+        console.log("getShoppingList > userRecipes ", userRecipes);
+        
+            
+        // Consolidate ingredients into one array of objects
+        // Each object is keyed with the ingredient name and has a value of the total amount and unit
+        let shoppingList = {};
+        
+        // Loop through each recipe
+        for (let i = 0; i < userRecipes.length; i++) {
+            
+            // Loop through each ingredient in the recipe
+            for (let j = 0; j < userRecipes[i][0].ingredients.length; j++) {
+                
+                // Passes if the recipe quantity is greater than zero
+                // Quantity is stored in the second element of the userRecipes array 
+                if(userRecipes[i][1] > 0) {
+                    // IF the ingredient is not already in the shopping list, add it
+                    // ELSE add the amount to the existing amount
+                    if (!shoppingList[userRecipes[i][0].ingredients[j].ingredient]) {
+                        
+                        //Create amount by multiplying the ingredient amount by the recipe quantity
+                        let newAmount = parseInt(userRecipes[i][0].ingredients[j].amount) * userRecipes[i][1];
+                        shoppingList[userRecipes[i][0].ingredients[j].ingredient] = {"amount": newAmount, "unit":userRecipes[i][0].ingredients[j].unit};
+                    
+                    } else { 
+                        
+                        //Create amount by multiplying the ingredient amount by the recipe quantity
+                        let newAmount = parseInt(userRecipes[i][0].ingredients[j].amount) * userRecipes[i][1];
+                        shoppingList[userRecipes[i][0].ingredients[j].ingredient].amount += newAmount;
+                    }
+                } else {
+                    console.log("ELSE: ", userRecipes[i][0].ingredients[j].ingredient, userRecipes[i][1]);
+                
+                }
+            }
+        }//End of loop
+        
+        // Convert the shopping list object into an array of JSX elements
+        const shoppingListArray = Object.entries(shoppingList).map(([ingredient, { amount, unit }]) => (
+        
+            <li className="shop-li" key={ingredient}>
+                {`${ingredient}: ${amount} ${unit}`}
+            </li>
+        ));
+        
+        //console.log("SHOPPING LIST ARRAY: ", shoppingListArray);
+        setShoppingList(shoppingListArray);
+    
+    }
+  
+    return (
+        <>
+            <div>
+                <div className="shop-card">
+                <div className="shop-header">
+                    <div className="shop-title">Recipes</div>
+                    <div className="shop-body">
+                        <ul className="shop-ul"> {
+                            
+                            userRecipes.map((recipe, index) => (
+                                <li className="shop-li" key={recipe[0]._id}>
+                                    {recipe[0].name} 
+                                    <input
+                                        type="number"
+                                        value={userRecipes[index][1]}
+                                        onChange={(e) => getRecipes(index, parseInt(e.target.value))}
+                                        //onChange={(e) => {setRecipes(userRecipes.map((recipe, i => index == i ? [recipe[0], e.target.value] : recipe )  ))}}
+                                        min={0}
+                                    />
+                                </li>
+                            ))
+                        }</ul>
+                    </div>
+                </div>
+            </div> 
+            
+            <div className="shop-card">
+                <div className="shop-header">
+                    <div className="shop-title">Shopping List</div>
+                    <div className="shop-body">
+                        {/* <ul className="shop-ul"> {getShoppingList()} </ul> */}
+                        <ul className="shop-ul"> {shoppingList} </ul>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </>
+    );
+}
 
 export default ShoppingList;
