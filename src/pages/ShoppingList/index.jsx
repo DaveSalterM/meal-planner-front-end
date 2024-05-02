@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import convert from 'convert-units';
 import { useCallback, useEffect, useState } from 'react';
 import { useBeforeUnload } from 'react-router-dom';
 import './styles.css';
@@ -13,30 +14,42 @@ const ShoppingList = (props) => {
     // Stores user recipes from props
     // But functions as a boolean to check if props have loaded
     let propsLoaded = props.user.recipes;
-    
+    console.log('propsLoaded: ', props.user.recipes)
     if(propsLoaded && userRecipes.length === 0){
-        
+        console.log('passed with prop: ', props.user.recipes)
         let aux = props.user.recipes.map((recipe) => (
                 // [Recipe, quantity]
                 [recipe, 1]
             ));
         
         const localList = JSON.parse(localStorage.getItem("userList"));
+        console.log('localList: ', localList)
+        console.log('localList: ', localList[props.userId])
         if(localList !== null) {
-            if(Object.keys(localList[props.userId]).length > 0) {
+            if(localList[props.userId] !== undefined) {
                 for(let i = 0; i < aux.length; i++) {
                     aux[i][1] = localList[props.userId][aux[i][0]._id];
                 }
             }
-        }  
+        }  else {
+            let localList = {};
+            localList[props.userId] = {};
+            aux.forEach((recipe) => {
+                localList[props.userId][recipe[0]._id] = 1;
+            });
+            localStorage.setItem("userList", JSON.stringify(localList));
+        }
+        console.log('aux: ', aux)
         setRecipes(aux);
     }
     
     const updateLocalStorage = () => {
         let localList = JSON.parse(localStorage.getItem("userList"));
             
-        if(localList === null) {
-            if(Object.keys(localList[props.userId]).length > 0) {
+        
+        if(localList !== null) {
+            
+            if(localList[props.userId] !== undefined) {
                 let storedRecipes = {};
                 userRecipes.forEach((recipe) => {
                     storedRecipes[recipe[0]._id] = recipe[1];
@@ -44,30 +57,36 @@ const ShoppingList = (props) => {
 
                 
                 localList[props.userId] = storedRecipes;
-
+                console.log('storedRecipes: ', storedRecipes)
+                console.log('localList: ', localList[props.userId]);
                 localStorage.setItem("userList", JSON.stringify(localList));
+            
             }
+        
         }
+        
     };
 
     useBeforeUnload(
         useCallback(() => {
-            let storedRecipes = {};
-            userRecipes.forEach((recipe) => {
-                storedRecipes[recipe[0]._id] = recipe[1];
-            });
-
+            
             let localList = JSON.parse(localStorage.getItem("userList"));
-            localList[props.userId] = storedRecipes;
+            let storedRecipes = {};
+                userRecipes.forEach((recipe) => {
+                    storedRecipes[recipe[0]._id] = recipe[1];
+                });
 
-            localStorage.setItem("userList", JSON.stringify(localList));
+                localList[props.userId] = storedRecipes;
+                console.log('storedRecipes: ', storedRecipes)
+                console.log('localList: ', localList[props.userId]);
+                localStorage.setItem("userList", JSON.stringify(localList));
         }, [userRecipes])
     );
 
     //Use effect that renders the shopping list when the userRecipes array is updated
     useEffect(() => {    
         if(propsLoaded) getShoppingList();
-        //updateLocalStorage();
+        if(propsLoaded) updateLocalStorage();
     }, [userRecipes]);
     
      
@@ -75,14 +94,13 @@ const ShoppingList = (props) => {
     const getRecipes = (recipeIndex, newQuantity) => {
         
         setRecipes(userRecipes.map((recipe, i) => recipeIndex == i ? [recipe[0], newQuantity] : recipe))
-        updateLocalStorage();
     }
 
     const getShoppingList = () => {        
         // Consolidate ingredients into one array of objects
         // Each object is keyed with the ingredient name and has a value of the total amount and unit
         let shoppingList = {};
-        
+        console.log('userRecipes: ', userRecipes)
         // Loop through each recipe
         for (let i = 0; i < userRecipes.length; i++) {
             
@@ -97,14 +115,19 @@ const ShoppingList = (props) => {
                     if (!shoppingList[userRecipes[i][0].ingredients[j].ingredient]) {
                         
                         //Create amount by multiplying the ingredient amount by the recipe quantity
-                        let newAmount = parseInt(userRecipes[i][0].ingredients[j].amount) * userRecipes[i][1];
+                        let newAmount = parseFloat(userRecipes[i][0].ingredients[j].amount) * userRecipes[i][1];
+                        
                         shoppingList[userRecipes[i][0].ingredients[j].ingredient] = {"amount": newAmount, "unit":userRecipes[i][0].ingredients[j].unit};
                     
                     } else { 
                         
                         //Create amount by multiplying the ingredient amount by the recipe quantity
+                        console.log(userRecipes[i][0].ingredients[j].ingredient, userRecipes[i][1])
                         let newAmount = parseInt(userRecipes[i][0].ingredients[j].amount) * userRecipes[i][1];
-                        shoppingList[userRecipes[i][0].ingredients[j].ingredient].amount += newAmount;
+                        let convertedAmount = convert(newAmount).from(userRecipes[i][0].ingredients[j].unit).toBest({cutoffNumber: 2});
+                        console.log('converted amount for: ' ,userRecipes[i][0].ingredients[j].ingredient,newAmount ,userRecipes[i][0].ingredients[j].unit, convertedAmount)
+                        shoppingList[userRecipes[i][0].ingredients[j].ingredient].amount += convertedAmount.val;
+                        shoppingList[userRecipes[i][0].ingredients[j].ingredient].unit = convertedAmount.unit;
                     }
                 }
             }
