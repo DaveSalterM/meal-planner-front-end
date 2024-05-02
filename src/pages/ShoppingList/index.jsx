@@ -5,58 +5,65 @@ import { useBeforeUnload } from 'react-router-dom';
 import './styles.css';
 
 const ShoppingList = (props) => {
-	const [userRecipes, setRecipes] = useState([]);
-	const [shoppingList, setShoppingList] = useState([]);
+    
+    const [userRecipes, setRecipes] = useState([]);
+    const [shoppingList, setShoppingList] = useState([]);
+    
+    // Stores user recipes from props
+    // But functions as a boolean to check if props have loaded
+    let propsLoaded = props.user.recipes;
+    console.log('propsLoaded: ', props.user.recipes)
+    if(propsLoaded && userRecipes.length === 0){
+        console.log('passed with prop: ', props.user.recipes)
+        let aux = props.user.recipes.map((recipe) => (
+                // [Recipe, quantity]
+                [recipe, 1]
+            ));
+        
+        const localList = JSON.parse(localStorage.getItem("userList"));
+        // console.log('localList: ', localList)
+        // console.log('localList: ', localList[props.userId])
+        if(localList !== null) {
+            if(localList[props.userId] !== undefined) {
+                for(let i = 0; i < aux.length; i++) {
+                    aux[i][1] = localList[props.userId][aux[i][0]._id];
+                }
+            }
+        }  else {
+            let localList = {};
+            localList[props.userId] = {};
+            aux.forEach((recipe) => {
+                localList[props.userId][recipe[0]._id] = 1;
+            });
+            localStorage.setItem("userList", JSON.stringify(localList));
+        }
+        console.log('aux: ', aux)
+        setRecipes(aux);
+    }
+    
+    const updateLocalStorage = () => {
+        let localList = JSON.parse(localStorage.getItem("userList"));
+            
+        
+        if(localList !== null) {
+            
+            if(localList[props.userId] !== undefined) {
+                let storedRecipes = {};
+                userRecipes.forEach((recipe) => {
+                    storedRecipes[recipe[0]._id] = recipe[1];
+                });
 
-	// Stores user recipes from props
-	// But functions as a boolean to check if props have loaded
-	let propsLoaded = props.user.recipes;
-	console.log('propsLoaded: ', props.user.recipes);
-	if (propsLoaded && userRecipes.length === 0) {
-		console.log('passed with prop: ', props.user.recipes);
-		let aux = props.user.recipes.map((recipe) =>
-			// [Recipe, quantity]
-			[recipe, 1]
-		);
-
-		const localList = JSON.parse(localStorage.getItem('userList'));
-		// console.log('localList: ', localList)
-		// console.log('localList: ', localList[props.userId])
-		if (localList !== null) {
-			if (localList[props.userId] !== undefined) {
-				for (let i = 0; i < aux.length; i++) {
-					aux[i][1] = localList[props.userId][aux[i][0]._id];
-				}
-			}
-		} else {
-			let localList = {};
-			localList[props.userId] = {};
-			aux.forEach((recipe) => {
-				localList[props.userId][recipe[0]._id] = 1;
-			});
-			localStorage.setItem('userList', JSON.stringify(localList));
-		}
-		console.log('aux: ', aux);
-		setRecipes(aux);
-	}
-
-	const updateLocalStorage = () => {
-		let localList = JSON.parse(localStorage.getItem('userList'));
-
-		if (localList !== null) {
-			if (localList[props.userId] !== undefined) {
-				let storedRecipes = {};
-				userRecipes.forEach((recipe) => {
-					storedRecipes[recipe[0]._id] = recipe[1];
-				});
-
-				localList[props.userId] = storedRecipes;
-				console.log('storedRecipes: ', storedRecipes);
-				console.log('localList: ', localList[props.userId]);
-				localStorage.setItem('userList', JSON.stringify(localList));
-			}
-		}
-	};
+                
+                localList[props.userId] = storedRecipes;
+                console.log('storedRecipes: ', storedRecipes)
+                console.log('localList: ', localList[props.userId]);
+                localStorage.setItem("userList", JSON.stringify(localList));
+            
+            }
+        
+        }
+        
+    };
 
 	useBeforeUnload(
 		useCallback(() => {
