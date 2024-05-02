@@ -23,8 +23,8 @@ const ShoppingList = (props) => {
             ));
         
         const localList = JSON.parse(localStorage.getItem("userList"));
-        console.log('localList: ', localList)
-        console.log('localList: ', localList[props.userId])
+        // console.log('localList: ', localList)
+        // console.log('localList: ', localList[props.userId])
         if(localList !== null) {
             if(localList[props.userId] !== undefined) {
                 for(let i = 0; i < aux.length; i++) {
