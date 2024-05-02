@@ -4,8 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useBeforeUnload } from 'react-router-dom';
 import './styles.css';
 
-
-
 const ShoppingList = (props) => {
     
     const [userRecipes, setRecipes] = useState([]);
@@ -23,8 +21,8 @@ const ShoppingList = (props) => {
             ));
         
         const localList = JSON.parse(localStorage.getItem("userList"));
-        console.log('localList: ', localList)
-        console.log('localList: ', localList[props.userId])
+        // console.log('localList: ', localList)
+        // console.log('localList: ', localList[props.userId])
         if(localList !== null) {
             if(localList[props.userId] !== undefined) {
                 for(let i = 0; i < aux.length; i++) {
@@ -63,6 +61,7 @@ const ShoppingList = (props) => {
         }
         
     };
+
 
     // Function converts all unit measurements in shopping list to appropriate display units
     // Called in getShoppingList after the for loops
@@ -123,18 +122,11 @@ const ShoppingList = (props) => {
         }, [userRecipes])
     );
 
-    //Use effect that renders the shopping list when the userRecipes array is updated
-    useEffect(() => {    
-        if(propsLoaded) getShoppingList();
-        if(propsLoaded) updateLocalStorage();
-    }, [userRecipes]);
-    
-     
-    // This works btw
-    const getRecipes = (recipeIndex, newQuantity) => {
-        
-        setRecipes(userRecipes.map((recipe, i) => recipeIndex == i ? [recipe[0], newQuantity] : recipe))
-    }
+	//Use effect that renders the shopping list when the userRecipes array is updated
+	useEffect(() => {
+		if (propsLoaded) getShoppingList();
+		if (propsLoaded) updateLocalStorage();
+	}, [userRecipes]);
 
     const getShoppingList = () => {        
         // Consolidate ingredients into one array of objects
@@ -224,5 +216,16 @@ const ShoppingList = (props) => {
             </>
     );
 }
+
+	// This works btw
+	const getRecipes = (recipeIndex, newQuantity) => {
+		setRecipes(
+			userRecipes.map((recipe, i) =>
+				recipeIndex == i ? [recipe[0], newQuantity] : recipe
+			)
+		);
+	};
+
+	
 
 export default ShoppingList;

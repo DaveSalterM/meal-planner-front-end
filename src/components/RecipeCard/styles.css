@@ -37,6 +37,10 @@
 	z-index: 999;
 }
 
+.favorite-button input {
+	z-index: 999;
+}
+
 /* .test-star {
 	color: red;
 } */

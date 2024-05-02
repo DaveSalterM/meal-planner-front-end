@@ -8,7 +8,7 @@ import API from '../../../utils/API';
 import RecipeCard from '../../components/RecipeCard';
 import './styles.css';
 
-const Recipes = ({ user }) => {
+const Recipes = ({ user, userId, token }) => {
 	// Fetch the recipes that was searched by using the params
 	// Need to create an method in API file to fetch the recipes
 	// Set recipes to state
@@ -16,6 +16,7 @@ const Recipes = ({ user }) => {
 
 	const [foundRecipes, setFoundRecipes] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
+
 	// const [userData, setUserData] = useState(null);
 	// const [userFavorites, setUserFavorites] = useState([]);
 	// const [testLike, setTestLike] = useState(['663158158e036292a64fd6eb']);
@@ -60,6 +61,7 @@ const Recipes = ({ user }) => {
 				setFoundRecipes(response);
 			})
 			.then(() => {
+				// console.log(user);
 				setIsLoading(false);
 			});
 	}, [recipe, user]);
@@ -68,6 +70,7 @@ const Recipes = ({ user }) => {
 		// console.log(e.target);
 		// console.log(userFavorites);
 		// console.log(e.target.getAttribute('value'));
+		// console.log('touched');
 	};
 
 	return (
@@ -81,6 +84,7 @@ const Recipes = ({ user }) => {
 						<div key={data._id} onClick={handleClick}>
 							{/* {data.name} {data.user.username} */}
 							{/* {data.imgUrl} */}
+							{/* <input id="heart" type="checkbox" /> */}
 
 							<Link to={`/recipes/${recipe}/${data._id}`}>
 								<RecipeCard
@@ -89,6 +93,9 @@ const Recipes = ({ user }) => {
 									image={data.imgUrl}
 									id={data._id}
 									user={user}
+									userId={userId}
+									token={token}
+
 									// isLiked={userFavorites.includes(data._id) ? true : false}
 								/>
 							</Link>
