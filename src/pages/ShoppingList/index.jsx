@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from 'react';
 import { useBeforeUnload } from 'react-router-dom';
 import './styles.css';
@@ -15,59 +16,69 @@ const ShoppingList = (props) => {
     
     if(propsLoaded && userRecipes.length === 0){
         
-        const localList = JSON.parse(localStorage.getItem("userList"));
-        
-        if(localList[props.userId].length > 0) {
-            
-            setRecipes(localList[props.userId]);
-        
-        } else {
-            let aux = props.user.recipes.map((recipe) => (
+        let aux = props.user.recipes.map((recipe) => (
                 // [Recipe, quantity]
                 [recipe, 1]
             ));
-
-            setRecipes(aux);
-        }
+        
+        const localList = JSON.parse(localStorage.getItem("userList"));
+        if(localList !== null) {
+            if(Object.keys(localList[props.userId]).length > 0) {
+                for(let i = 0; i < aux.length; i++) {
+                    aux[i][1] = localList[props.userId][aux[i][0]._id];
+                }
+            }
+        }  
+        setRecipes(aux);
     }
     
+    const updateLocalStorage = () => {
+        let localList = JSON.parse(localStorage.getItem("userList"));
+            
+        if(localList === null) {
+            if(Object.keys(localList[props.userId]).length > 0) {
+                let storedRecipes = {};
+                userRecipes.forEach((recipe) => {
+                    storedRecipes[recipe[0]._id] = recipe[1];
+                });
+
+                
+                localList[props.userId] = storedRecipes;
+
+                localStorage.setItem("userList", JSON.stringify(localList));
+            }
+        }
+    };
+
     useBeforeUnload(
         useCallback(() => {
-            //Pull local storage list
-            // populate with all current values
-            // Put it back
-            
-            const localList = JSON.parse(localStorage.getItem("userList"));
-            if(localList) {
-                localList[props.userId] = userRecipes;
-            }
+            let storedRecipes = {};
+            userRecipes.forEach((recipe) => {
+                storedRecipes[recipe[0]._id] = recipe[1];
+            });
+
+            let localList = JSON.parse(localStorage.getItem("userList"));
+            localList[props.userId] = storedRecipes;
 
             localStorage.setItem("userList", JSON.stringify(localList));
         }, [userRecipes])
     );
 
-    useEffect(() => {
-        
-        if(propsLoaded) {
-            console.log("USE EFFECT")
-            getShoppingList();
-        }        
-
+    //Use effect that renders the shopping list when the userRecipes array is updated
+    useEffect(() => {    
+        if(propsLoaded) getShoppingList();
+        //updateLocalStorage();
     }, [userRecipes]);
     
      
     // This works btw
     const getRecipes = (recipeIndex, newQuantity) => {
         
-        setRecipes(userRecipes.map((recipe, i) => recipeIndex == i ? [recipe[0], newQuantity] : recipe   ))
+        setRecipes(userRecipes.map((recipe, i) => recipeIndex == i ? [recipe[0], newQuantity] : recipe))
+        updateLocalStorage();
     }
 
-    const getShoppingList = () => {
-        
-        //console.log("getShoppingList > Props: ", props.user.recipes)
-        console.log("getShoppingList > userRecipes ", userRecipes);
-        
-            
+    const getShoppingList = () => {        
         // Consolidate ingredients into one array of objects
         // Each object is keyed with the ingredient name and has a value of the total amount and unit
         let shoppingList = {};
@@ -95,9 +106,6 @@ const ShoppingList = (props) => {
                         let newAmount = parseInt(userRecipes[i][0].ingredients[j].amount) * userRecipes[i][1];
                         shoppingList[userRecipes[i][0].ingredients[j].ingredient].amount += newAmount;
                     }
-                } else {
-                    console.log("ELSE: ", userRecipes[i][0].ingredients[j].ingredient, userRecipes[i][1]);
-                
                 }
             }
         }//End of loop
@@ -112,7 +120,6 @@ const ShoppingList = (props) => {
         
         //console.log("SHOPPING LIST ARRAY: ", shoppingListArray);
         setShoppingList(shoppingListArray);
-    
     }
   
     return (
