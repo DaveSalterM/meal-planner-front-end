@@ -1,55 +1,46 @@
 // import React from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import { FaRegStar } from 'react-icons/fa';
-import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa6';
+import API from '../../../utils/API';
 // import burger from './burger.jpg';
 // import { Link } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
 import './styles.css';
 
-const RecipeCard = ({ image, id, user }) => {
-	// const handleClick = (e) => {
-	// 	e.preventDefault();
-	// 	// console.log('?', e.target);
-	// 	// console.log(e.target.getAttribute('value'));
-	// 	console.log(id);
-	// 	// console.log('clicked');
-	// };
+const RecipeCard = ({ image, id, user, userId, token }) => {
 	const [userFavorites, setUserFavorites] = useState([]);
-	// const [isLiked, setIsLiked] = useState()
 
 	useEffect(() => {
 		// console.log(user);
-		if (user.favorites !== undefined) {
-			setUserFavorites(user.favorites);
+		if (userId !== 0) {
+			API.getOneUser(userId).then((data) => {
+				setUserFavorites(data.favorites);
+			});
 		}
-	}, [user]);
+	}, [userId]);
 
 	const handleLike = (e) => {
 		e.preventDefault();
-		console.log('liked');
+		API.likeRecipe(userId, { recipeId: id }, token).then(() => {
+			setUserFavorites([...userFavorites, id]);
+		});
 	};
 
 	const handleUnlike = (e) => {
 		e.preventDefault();
-		console.log('unliked');
+		API.unlikeRecipe(userId, { recipeId: id }, token).then(() => {
+			setUserFavorites(
+				userFavorites.filter((recipeId) => {
+					recipeId !== id;
+				})
+			);
+		});
 	};
 
 	return (
 		<div className="card-container">
 			<div className="img-card">
 				<div className="favorite-button">
-					{/* {isLiked ? (
-						<FaStar onClick={handleClick} value={id} />
-					) : (
-						<FaRegStar className="test-star" onClick={handleClick} value={id} />
-					)} */}
-					{/* {isLiked ? (
-						<AiFillHeart onClick={handleUnlike} />
-					) : (
-						<AiOutlineHeart onClick={handleLike} />
-					)} */}
 					{userFavorites.includes(id) ? (
 						<AiFillHeart onClick={handleUnlike} />
 					) : (
