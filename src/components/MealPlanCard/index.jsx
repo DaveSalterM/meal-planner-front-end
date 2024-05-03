@@ -19,7 +19,7 @@ const MealPlanCard = (props) => {
                     <li key={index} className='plan-li'>
                         
                         
-                        <Link to={'/recipes/recipedish' + recipe._id} key={index} className='plan-link'>
+                        <Link to={'/recipes/recipedish/' + recipe._id} key={index} className='plan-link'>
                             {`${recipe.name}`}
                         </Link>
                         <div className="plan-delete" onClick={() => handleDeleteRecipe(recipe)} >
