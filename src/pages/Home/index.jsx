@@ -7,7 +7,6 @@ const Home = (props) => {
 	// console.log('Home page props: ', props);
 	return (
 		<div>
-			Home
 			<Searchbar />
 			{/* <div>
 				<RecipeCard />
