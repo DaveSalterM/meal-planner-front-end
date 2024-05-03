@@ -6,6 +6,7 @@ import API from '../../../utils/API';
 
 // import FavoritesButton from '../../components/FavoriteBtn';
 import RecipeCard from '../../components/RecipeCard';
+import Searchbar from '../../components/Searchbar';
 import './styles.css';
 
 const Recipes = ({ user, userId, token }) => {
@@ -75,39 +76,41 @@ const Recipes = ({ user, userId, token }) => {
 
 	return (
 		<div>
-			Recipes: {recipe}
 			{isLoading ? (
 				<h1>Loading...</h1>
 			) : (
-				<div className="recipe-container">
-					{foundRecipes.map((data) => (
-						<div key={data._id} onClick={handleClick}>
-							{/* {data.name} {data.user.username} */}
-							{/* {data.imgUrl} */}
-							{/* <input id="heart" type="checkbox" /> */}
+				<>
+					<Searchbar />
+					<div className="recipe-container">
+						{foundRecipes.map((data) => (
+							<div key={data._id} onClick={handleClick}>
+								{/* {data.name} {data.user.username} */}
+								{/* {data.imgUrl} */}
+								{/* <input id="heart" type="checkbox" /> */}
 
-							<Link to={`/recipes/${recipe}/${data._id}`}>
-								<RecipeCard
-									image={data.imgUrl}
-									id={data._id}
-									user={user}
-									userId={userId}
-									token={token}
-								/>
-							</Link>
-
-							<div className="name-link">
-								<Link to={`/recipes/${recipe}/${data._id}`}>
-									<h1>{data.name}</h1>
+								<Link to={`/recipes/recipedish/${data._id}`}>
+									<RecipeCard
+										image={data.imgUrl}
+										id={data._id}
+										user={user}
+										userId={userId}
+										token={token}
+									/>
 								</Link>
-							</div>
-							<p>By: {data.user.username}</p>
-							{/* <h1>{recipeName}</h1>
+
+								<div className="name-link">
+									<Link to={`/recipes/${recipe}/${data._id}`}>
+										<h1>{data.name}</h1>
+									</Link>
+								</div>
+								<p>By: {data.user.username}</p>
+								{/* <h1>{recipeName}</h1>
 							<p>By: {user}</p> */}
-							{/* {data._id} */}
-						</div>
-					))}
-				</div>
+								{/* {data._id} */}
+							</div>
+						))}
+					</div>
+				</>
 			)}
 		</div>
 	);
