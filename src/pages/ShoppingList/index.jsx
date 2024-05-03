@@ -5,7 +5,6 @@ import { useBeforeUnload } from 'react-router-dom';
 import './styles.css';
 
 const ShoppingList = (props) => {
-    
     const [userRecipes, setRecipes] = useState([]);
     const [shoppingList, setShoppingList] = useState([]);
     
