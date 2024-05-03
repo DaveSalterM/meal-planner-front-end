@@ -1,6 +1,6 @@
 .recipe-page {
 	display: flex;
-	/* justify-content: center; */
+	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	background-color: #c4b594;
@@ -11,13 +11,11 @@
 	justify-content: center;
 	align-items: center;
 	width: 1000px;
-	
 }
 
-/* .recipe-form form {
-	justify-content: center;
-	align-items: center;
-} */
+.recipe-form form {
+	padding: 30px;
+}
 
 .ingredient-field {
 	margin-bottom: 0.5rem;
@@ -164,6 +162,7 @@
 input{
 	border-color: lightgray;
 	border-style: double;
+	border-width: 1px;
 }
 
 input.upload-image{
