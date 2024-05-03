@@ -38,8 +38,9 @@
 
 .image-buttons button {
 	margin: 10px 40px;
-	padding: 10px;
-	border-radius: 10px;
+	padding: 10px 10px 25px;
+	border-radius: 4px;
+
 }
 
 .recipe-data-container {
@@ -87,7 +88,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 5px;
+	margin-bottom: 20px;
 }
 
 .review-header h2 {
@@ -95,7 +96,7 @@
 }
 
 .review-header button {
-	padding: 10px 20px;
+	padding: 10px 10px 30px;
 	font-size: 20px;
 }
 
@@ -123,5 +124,10 @@
 }
 
 .review-form input {
-	margin: 0;
+	margin: 10px;
+}
+
+.review-form-visible button{
+	padding: 5px 10px;
+	margin-bottom: 15px;
 }
