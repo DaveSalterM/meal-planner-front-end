@@ -1,0 +1,8 @@
+.day-radio-btn {
+	display: flex;
+	align-items: center;
+}
+
+.day-radio-btn input {
+	margin-right: 10px;
+}

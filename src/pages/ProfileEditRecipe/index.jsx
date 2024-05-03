@@ -2,10 +2,10 @@ import './styles.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-// import EditRecipe from '../../components/EditRecipe';
+import EditRecipe from '../../components/EditRecipe';
 <h1>Profile</h1>
 
-const Profile = (props) => {
+const ProfileEditRecipe = (props) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -15,7 +15,7 @@ const Profile = (props) => {
     };
 
     return (
-       <div>
+       <div className='entirepage'>
         <div className='sidebar-column'>
            <ul className="sidebar">
 					<li id="side-item">
@@ -24,11 +24,10 @@ const Profile = (props) => {
                     <li id="side-item">
 						Change Password
 					</li>
-					<Link to={`/editrecipes`}>
+					
                     <li id="side-item">
 						Edit Recipes
 					</li>
-                    </Link>
 					<li id="side-item">
 						Your Recipes
 					</li>
@@ -40,12 +39,10 @@ const Profile = (props) => {
 				</ul>
 			</div>
             <div className='test'>
-                <h1>Hi there</h1>
-        
+                <EditRecipe/>
             </div>
             </div>
     
     );
 };
-
-export default Profile;
+export default ProfileEditRecipe;

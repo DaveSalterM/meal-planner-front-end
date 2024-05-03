@@ -1,35 +1,94 @@
 // import React from 'react';
 import { useEffect, useState } from 'react';
-import { FaRegStar } from 'react-icons/fa';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import API from '../../../utils/API';
-
 import ReviewCard from '../../components/ReviewCard';
+import CustomToast from '../../components/Toast';
 import './styles.css';
+
+// toast.configure();
 
 const SingleRecipePage = ({ id, user, userId, token }) => {
 	const { recipeId } = useParams();
 
+	const [selectedDay, setSelectedDay] = useState(null);
+	const [toastKey, setToastKey] = useState(true);
 	const [recipeData, setRecipeData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [recipeReviews, setRecipeReviews] = useState([]);
+	const [userFavorites, setUserFavorites] = useState([]);
 	const [showReview, setShowReview] = useState(false);
 	const [reviewContent, setReviewContent] = useState('');
-	const [refresh, setRefresh] = useState(true);
+	// const [refresh, setRefresh] = useState(true);
 
 	useEffect(() => {
 		// console.log(recipeId);
 		API.getSingleRecipe(recipeId)
 			.then((response) => {
+				// console.log(userId);
 				setRecipeData(response);
-				// console.log(response);
+				// console.log(response.reviews);
+				setRecipeReviews(response.reviews);
 			})
-			// .then(() => setRecipeReviews(recipeData.reviews))
-			.then(() => setIsLoading(false));
-	}, [recipeId, refresh]);
+			.then(() => {
+				if (userId !== 0) {
+					API.getOneUser(userId).then((data) => {
+						setUserFavorites(data.favorites);
+						console.log(userId);
+						console.log(data.favorites);
+					});
+				}
 
-	const handleClick = () => {
-		// console.log(recipeReviews);
+				// setIsLoading(false);
+			})
+			.then(() => setIsLoading(false));
+	}, [recipeId, userId]);
+
+	const handleShoppingList = () => {
+		console.log('shop');
+	};
+
+	const handleToastSubmit = () => {
+		console.log('submitted');
+
+		console.log(selectedDay);
+		toast.dismiss();
+	};
+
+	const handleMealPlan = () => {
+		// console.log('meal');
+		// toast('Meal plan', {
+		// 	position: toast.POSITION.BOTTOM_CENTER,
+		// });
+		// toast('WORKS');
+		// setToastKey(!toastKey);
+		toast(
+			<CustomToast
+				// key={toastKey}
+				userId={userId}
+				recipeId={recipeId}
+				token={token}
+			/>
+		);
+	};
+
+	const handleLike = () => {
+		API.likeRecipe(userId, { recipeId: recipeData._id }, token).then(() => {
+			setUserFavorites([...userFavorites, recipeData._id]);
+		});
+	};
+
+	const handleUnlike = () => {
+		API.unlikeRecipe(userId, { recipeId: recipeData._id }, token).then(() => {
+			setUserFavorites(
+				userFavorites.filter((recipeId) => {
+					recipeId !== recipeData._id;
+				})
+			);
+		});
 	};
 
 	const handleShowReview = () => {
@@ -40,7 +99,6 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 		const content = e.target.value;
 		// console.log(content);
 		setReviewContent(content);
-		console.log(token);
 	};
 
 	const handleReviewSubmit = (e) => {
@@ -48,11 +106,16 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 		API.createReview(
 			{ content: reviewContent, recipeId: recipeId },
 			token
-		).then((data) => {
+		).then(() => {
+			setRecipeReviews([
+				...recipeReviews,
+				{
+					content: reviewContent,
+					user: user.username,
+				},
+			]);
 			setReviewContent('');
 			setShowReview(false);
-			setRefresh(!refresh);
-			console.log(data);
 		});
 	};
 
@@ -72,7 +135,12 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 						<div className="serv-cal-star">
 							<p>{recipeData.servings} serving</p>
 							<p>{recipeData.calories} calories</p>
-							<FaRegStar />
+							{userFavorites.includes(recipeData._id) ? (
+								<AiFillHeart className="likes-button" onClick={handleUnlike} />
+							) : (
+								<AiOutlineHeart onClick={handleLike} className="likes-button" />
+							)}
+							{/* <AiOutlineHeart onClick={handleLike} className="likes-button" /> */}
 						</div>
 					</div>
 					<div className="recipe-data-container">
@@ -80,10 +148,12 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 							<div className="image-buttons">
 								<img src={recipeData.imgUrl} alt="" />
 								<div>
-									<button type="button" onClick={handleClick}>
+									<button type="button" onClick={handleShoppingList}>
 										Add to shopping list
 									</button>
-									<button type="button">Add to meal plan</button>
+									<button type="button" onClick={handleMealPlan}>
+										Add to meal plan
+									</button>
 								</div>
 							</div>
 						</div>
@@ -124,13 +194,14 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 								<input
 									placeholder="Enter your review"
 									type="text"
+									value={reviewContent}
 									onChange={handleReviewChange}
 								/>
 								<button>Submit</button>
 							</form>
 							<div>
-								{recipeData.reviews.map((review) => (
-									<div key={review._id} className="review-card">
+								{recipeReviews.map((review, i) => (
+									<div key={review._id || i} className="review-card">
 										<ReviewCard
 											content={review.content}
 											user={review.user.username}
@@ -140,6 +211,17 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 							</div>
 						</div>
 					</div>
+					<ToastContainer
+						position="bottom-center"
+						autoClose={false}
+						newestOnTop={false}
+						closeOnClick={false}
+						rtl={false}
+						pauseOnFocusLoss
+						draggable={false}
+						theme="light"
+						transition:Bounce
+					/>
 				</>
 			)}
 		</div>
