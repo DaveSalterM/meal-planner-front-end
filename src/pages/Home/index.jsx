@@ -1,5 +1,5 @@
 // import React from 'react';
-// import RecipeCard from '../../components/RecipeCard';
+import RecipeCard from '../../components/RecipeCard';
 import Searchbar from '../../components/Searchbar';
 import './styles.css';
 
@@ -8,9 +8,9 @@ const Home = (props) => {
 	return (
 		<div>
 			<Searchbar />
-			{/* <div>
-				<RecipeCard />
-			</div> */}
+			<div>
+				{/* <RecipeCard /> */}
+			</div>
 		</div>
 	);
 };
