@@ -41,7 +41,6 @@
 	margin: 10px 40px;
 	padding: 10px;
 	border-radius: 4px;
-
 }
 
 .recipe-data-container {
@@ -130,7 +129,10 @@
 	margin: 10px;
 }
 
-.review-form-visible button{
+.review-form-visible button {
 	padding: 5px 10px;
 	margin-bottom: 15px;
+}
+.likes-button {
+	cursor: pointer;
 }
