@@ -1,6 +1,5 @@
 import './styles.css';
 import { Link } from 'react-router-dom';
-import { FaTrashAlt } from 'react-icons/fa';
 
 const MealPlanCard = (props) => {
     
@@ -10,20 +9,16 @@ const MealPlanCard = (props) => {
     
     const populateRecipes = () => {
         
-        //const userRecipes = props.user.mealPlan[props.day];
-        const userRecipes = props.user.recipes;
+        const userMealPlan = props.user.meal_plan;
+        //const userRecipes = props.user.recipes;
         
-        if (userRecipes) {
-            
-            const listRecipes = userRecipes.map((recipe, index) => (   
+        if (userMealPlan) {
+            const listRecipes = userMealPlan[props.dayIndex].recipes.map((recipe, index) => (   
                     <li key={index} className='plan-li'>
-                        
-                        
                         <Link to={'/recipes/recipedish/' + recipe._id} key={index} className='plan-link'>
                             {`${recipe.name}`}
                         </Link>
                         <div className="plan-delete" onClick={() => handleDeleteRecipe(recipe)} >
-                            {/* <FaTrashAlt id="trash-button" /> */}
                             x
                         </div>
                     </li>
