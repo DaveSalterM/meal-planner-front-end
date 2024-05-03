@@ -1,0 +1,177 @@
+.recipe-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background-color: #c4b594;
+	height: auto;
+}
+.recipe-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 1000px;
+}
+
+.recipe-form form {
+	padding: 30px;
+}
+
+.ingredient-field {
+	margin-bottom: 0.5rem;
+}
+
+.submit-btn {
+	display: flex;
+	flex-direction: column;
+}
+
+.submit-btn button {
+	width: 100%;
+	height: 30px;
+	border-radius: 5px;
+	background-color:#289945
+}
+
+.unit-dropdown {
+	width: 3rem;
+}
+
+.ingredient-field,
+.instruction-field {
+	display: flex;
+	width: 100%;
+	margin-bottom: 0.5rem
+}
+
+.myControlClassName {
+	padding: 4px 15px 4px 5px !important;
+}
+
+.dropdown-menu {
+	/* width: 65px;
+	text-align: center; */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.myArrowClassName {
+	right: 4px !important;
+	top: 11px !important;
+}
+
+.myMenuClassName {
+	width: 65px !important;
+}
+.ingredient-name, .amount-input{
+	margin-right: 10px;
+}
+
+.instruction-input {
+	width: 500px;
+	height: 24px;
+	border-radius: 5px;
+}
+.calorie-input {
+	width: 80px;
+}
+
+.recipe-field{
+	width: 99%;
+	height: 24px;
+	border-radius: 5px;
+}
+
+.calorie-input,
+.ingredient-name,
+.amount-input {
+	height: 24px;
+	border-radius: 5px;
+}
+
+.delete-button {
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+#trash-button {
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	margin-left: 0.5rem
+}
+
+#trash-button:hover {
+	cursor: pointer;
+}
+
+.upload-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.upload-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.recipe{
+	background-color: white;
+    display: block;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 550px;
+    width: 100%;
+}
+
+.recipe-border{
+	border-bottom: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: black;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+.button-create{
+	margin-top: 0.5rem;
+	border-radius: 5px;
+	background-color:#289945 ;
+	width: 80px;
+	height: 30px;
+}
+
+.upload-image{
+	border-radius: 4px;
+	margin: 2px 0px
+}
+
+.upload-form{
+	margin-bottom: 1rem;
+}
+
+.header-create-recipe{
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	color: white
+}
+.header-names{
+	margin-bottom: 0.3rem
+}
+
+input{
+	border-color: lightgray;
+	border-style: double;
+	border-width: 1px;
+}
+
+input.upload-image{
+	border-color: lightgray;
+	border-style: none;
+	padding-top: 5px;
+}
+
+#upload-image{
+	border-color: lightgray;
+	border-style: none;
+}
