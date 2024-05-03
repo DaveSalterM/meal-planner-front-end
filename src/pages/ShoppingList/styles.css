@@ -1,11 +1,12 @@
 .shop-card {
-	display: flex;
+	display: inline-block;
 	flex-wrap: column;
 	justify-content: center;
 	border: 1px solid #ccc;
-	width: 500px;
+	width: 28rem;
 	margin: 10px;
-	border-radius: 5px;
+	border-radius: 10px;
+	padding:15px 15px 20px 0px;
 }
 
 .shop-ul {
@@ -16,10 +17,46 @@
 .shop-li {
 	list-style-type: none;
 	display: block;
-	padding: 10px;
-	margin: 10px;
-	width: 100%;
+	padding: 8px;
+	margin: 8px;
+	width: 25rem;
 	border: 1px solid #ccc;
-	border-radius: 4px;
+	border-radius: 5px;
 	box-sizing: border-box;
+	float: right;
+}
+
+.shop-title{
+	font-size: 32px;
+	margin: 5px 3rem;
+}
+.shop-card input {
+	width: 50px;
+	height: 20px;
+	padding: 0px 5px;
+	float: right;
+	border-radius: 4px;
+}
+
+.shop-card, .shop-li, .shop-title, .shop-ul, .shop-header {
+	height: auto;
+    background-color: white;
+}
+
+.right {
+	
+    background-image: url("https://tanglewoodmoms.com/wp-content/uploads/2019/07/iStock-836782568.jpg");
+    object-fit: none;
+    z-index: 0;
+	background-position: left 105% bottom 0%;
+	background-repeat: no-repeat;
+	background-size: 1500px;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .right{
+        visibility: hidden;
+    }
+
 }

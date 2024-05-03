@@ -9,7 +9,7 @@
 #banner {
 	display: flex;
 	background-color: var(--header-background-color);
-	height: 80px;
+	height: 10vh;
 	justify-content: space-between;
 	z-index: 100;
 }

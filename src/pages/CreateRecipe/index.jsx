@@ -76,7 +76,7 @@ const CreateRecipe = (props) => {
 			}
 			// Get the number amount
 			const amount = onchangeVal[i]['amount'];
-			if (['g', 'lb'].includes(unit) && ['g', 'lb'].includes(value)) {
+			if (['g','oz', 'lb'].includes(unit) && ['g', 'oz', 'lb'].includes(value)) {
 				// let convertNum = numericQuantity(amount, { round: false });
 				let convertNum = numericQuantity(amount);
 				console.log('convert', convertNum);
@@ -86,8 +86,8 @@ const CreateRecipe = (props) => {
 				onchangeVal[i]['amount'] = `${unitConv}`;
 				setIngredients(onchangeVal);
 			} else if (
-				['cup', 'tsp', 'Tbs', 'gal'].includes(unit) &&
-				['cup', 'tsp', 'Tbs', 'gal'].includes(value)
+				['fl-oz', 'cup', 'tsp', 'Tbs', 'gal'].includes(unit) &&
+				['fl-oz', 'cup', 'tsp', 'Tbs', 'gal'].includes(value)
 			) {
 				let convertNum = numericQuantity(amount, { round: false });
 				let unitConv = convert(convertNum).from(unit).to(value);
@@ -174,10 +174,9 @@ const CreateRecipe = (props) => {
 
 	return (
 		<div className="recipe-page">
-			<h1 className='header-create-recipe'>Create Your Recipe!</h1>
 			<div className="recipe-form">
-				<form  class= 'recipe' onSubmit={submitHandler}>
-				
+				<form  className= 'recipe' onSubmit={submitHandler}>
+				<h1 className='header-create-recipe'>Create Your Recipe!</h1>
 					<h2 className='header-names'>Recipe Name</h2>
 					<input
 						className="recipe-field"
@@ -222,7 +221,9 @@ const CreateRecipe = (props) => {
 											Select
 										</option>
 										<option value="g">g</option>
+										<option value="oz">oz</option>
 										<option value="lb">lb</option>
+										<option value="fl-oz">fl-oz</option>
 										<option value="cup">cup</option>
 										<option value="tsp">tsp</option>
 										<option value="Tbs">tbsp</option>
