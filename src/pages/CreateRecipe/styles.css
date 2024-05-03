@@ -6,6 +6,10 @@
 	background-color: #c4b594;
 	height: auto;
 }
+
+.recipe-page h1{
+	color: black;
+}
 .recipe-form {
 	display: flex;
 	justify-content: center;
