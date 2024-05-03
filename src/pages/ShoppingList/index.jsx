@@ -217,6 +217,7 @@ const ShoppingList = (props) => {
                 </div>
             </div>
             </div>
+            <div className="split right" />
             </>
     );
 }
