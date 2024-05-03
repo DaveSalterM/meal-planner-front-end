@@ -24,19 +24,31 @@
 	text-align: center;
 }
 
+.recipe-header p{
+	display: flex;
+	justify-content: space-between;
+	padding: 5px;
+	margin: 15px 5px;
+	background-color: white;
+	width: fit-content;
+	border-radius: 5px;
+	font-style: italic;
+}
+
 .serv-cal-star {
 	display: flex;
 	align-items: flex-end;
-	margin: 0px 5rem;
+	margin: 10px 5rem;
+	font-size: 20px;
 }
 
 .serv-cal-star p{
 	display: flex;
 	background-color: white;
-	padding: 5px 10px 5px 10px;
+	padding: 5px 10px 3px 10px;
 	margin: 0px -3px;
 	border-radius: 5px;
-
+	font-style: normal;
 }
 
 /* Applies to direct children of .serv-cal-star class */
@@ -130,20 +142,24 @@
 }
 
 .review-card {
-	border: 1px solid gray;
+	border: 2px solid #289945;
+	background-color: white;
 	border-radius: 5px;
 	box-shadow: 0 0 2px;
 	padding: 10px;
 	margin: 30px 0px;
 }
 
+.review-card div{
+margin-top: 10px;
+font-style: italic;
+}
+
 .review-form {
-	/* margin-bottom: 20px; */
 	display: none;
 }
 
 .review-form-visible {
-	/* margin-bottom: 20px; */
 	display: visible;
 }
 
@@ -151,15 +167,34 @@
 	margin: 10px;
 }
 
+.review-form-visible input {
+	height: 45px;
+	border-radius: 5px;
+}
+
 .review-form-visible button {
 	padding: 5px 10px;
-	margin-bottom: 15px;
+	margin-bottom: 5px;
 }
 .likes-button {
 	cursor: pointer;
 	background-color: white;
 	padding: 6px;
 	border-radius: 5px;
+}
+.Toastify__toast{
+	width: 400px;
+	margin-bottom: 15vh;
+	margin-left: -10vw;
+	border-style: solid;
+	border-width: 5px;
+	border-color: #289945;
+	padding: 20px 40px;
+	font-size: 20px;
+}
+
+.Toastify__toast button{
+	padding: 5px 10px;
 }
 
 @media screen and (max-width: 768px) {
@@ -187,4 +222,9 @@
 		flex-direction: column;
 	}
 
+	.Toastify__toast{
+		width: 300px;
+		margin-bottom: 5vh;
+		margin-left: 5vw;
+	}
 }
