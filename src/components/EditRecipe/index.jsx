@@ -7,7 +7,8 @@ import { FaTrashAlt } from 'react-icons/fa';
 import API from '../../../utils/API';
 import './styles.css';
 
-const CreateRecipe = (props) => {
+
+const EditRecipe = (props) => {
 	const token = props.token;
 	// console.log('Create Recipe: ', props.user);
 
@@ -176,7 +177,8 @@ const CreateRecipe = (props) => {
 		<div className="recipe-page">
 			<div className="recipe-form">
 				<form  className= 'recipe' onSubmit={submitHandler}>
-				<h1 className='header-create-recipe'>Create Your Recipe!</h1>
+				<h1 className='header-create-recipe'>Edit Your Recipe!</h1>
+				
 					<h2 className='header-names'>Recipe Name</h2>
 					<input
 						className="recipe-field"
@@ -302,4 +304,4 @@ const CreateRecipe = (props) => {
 	);
 };
 
-export default CreateRecipe;
+export default EditRecipe;

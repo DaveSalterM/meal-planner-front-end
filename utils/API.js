@@ -104,6 +104,17 @@ const API = {
 			},
 		}).then((res) => res.json());
 	},
+	// Add to meal plan
+	addToMealPlan: (userId, mealPlanData, token) => {
+		return fetch(`${URL_PREFIX}/api/users/${userId}/mealplan`, {
+			method: 'POST',
+			body: JSON.stringify(mealPlanData),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		}).then((res) => res.json());
+	},
 };
 
 export default API;

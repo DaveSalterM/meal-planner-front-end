@@ -6,10 +6,6 @@
 	background-color: #c4b594;
 	height: auto;
 }
-
-.recipe-page h1{
-	color: black;
-}
 .recipe-form {
 	display: flex;
 	justify-content: center;
@@ -18,8 +14,7 @@
 }
 
 .recipe-form form {
-	padding: 25px;
-	margin: 15px;
+	padding: 30px;
 }
 
 .ingredient-field {
@@ -83,7 +78,7 @@
 }
 
 .recipe-field{
-	width: 99%;
+	width: 96%;
 	height: 24px;
 	border-radius: 5px;
 }
@@ -156,9 +151,9 @@
 }
 
 .header-create-recipe{
-	margin: 10px;
-	color: white;
-	margin-bottom: 20px;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	color: white
 }
 .header-names{
 	margin-bottom: 0.3rem
@@ -179,9 +174,4 @@ input.upload-image{
 #upload-image{
 	border-color: lightgray;
 	border-style: none;
-}
-
-.header-create-recipe{
-	color: black;
-	text-align: center;
 }
