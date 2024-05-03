@@ -1,16 +1,21 @@
 // import React from 'react';
 import { useEffect, useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-
 import { useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import API from '../../../utils/API';
-
 import ReviewCard from '../../components/ReviewCard';
+import CustomToast from '../../components/Toast';
 import './styles.css';
+
+// toast.configure();
 
 const SingleRecipePage = ({ id, user, userId, token }) => {
 	const { recipeId } = useParams();
 
+	const [selectedDay, setSelectedDay] = useState(null);
+	const [toastKey, setToastKey] = useState(true);
 	const [recipeData, setRecipeData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [recipeReviews, setRecipeReviews] = useState([]);
@@ -42,10 +47,32 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 			.then(() => setIsLoading(false));
 	}, [recipeId, userId]);
 
-	const handleClick = () => {
-		// console.log(recipeReviews);
-		// console.log(recipeData);
-		console.log(recipeData);
+	const handleShoppingList = () => {
+		console.log('shop');
+	};
+
+	const handleToastSubmit = () => {
+		console.log('submitted');
+
+		console.log(selectedDay);
+		toast.dismiss();
+	};
+
+	const handleMealPlan = () => {
+		// console.log('meal');
+		// toast('Meal plan', {
+		// 	position: toast.POSITION.BOTTOM_CENTER,
+		// });
+		// toast('WORKS');
+		// setToastKey(!toastKey);
+		toast(
+			<CustomToast
+				// key={toastKey}
+				userId={userId}
+				recipeId={recipeId}
+				token={token}
+			/>
+		);
 	};
 
 	const handleLike = () => {
@@ -121,10 +148,12 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 							<div className="image-buttons">
 								<img src={recipeData.imgUrl} alt="" />
 								<div>
-									<button type="button" onClick={handleClick}>
+									<button type="button" onClick={handleShoppingList}>
 										Add to shopping list
 									</button>
-									<button type="button">Add to meal plan</button>
+									<button type="button" onClick={handleMealPlan}>
+										Add to meal plan
+									</button>
 								</div>
 							</div>
 						</div>
@@ -182,6 +211,17 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 							</div>
 						</div>
 					</div>
+					<ToastContainer
+						position="bottom-center"
+						autoClose={false}
+						newestOnTop={false}
+						closeOnClick={false}
+						rtl={false}
+						pauseOnFocusLoss
+						draggable={false}
+						theme="light"
+						transition:Bounce
+					/>
 				</>
 			)}
 		</div>
