@@ -6,6 +6,7 @@
 	width: 28rem;
 	margin: 10px;
 	border-radius: 10px;
+	padding:15px 15px 20px 0px;
 }
 
 .shop-ul {
@@ -31,7 +32,7 @@
 }
 .shop-card input {
 	width: 1.75rem;
-	height: auto;
+	height: 20px;
 	padding: 0px 5px;
 	float: right;
 	border-radius: 4px;
@@ -47,7 +48,7 @@
     background-image: url("https://tanglewoodmoms.com/wp-content/uploads/2019/07/iStock-836782568.jpg");
     object-fit: none;
     z-index: 0;
-	background-position: left 15% bottom 75%;
+	background-position: left 105% bottom 0%;
 	background-repeat: no-repeat;
 	background-size: 1500px;
 }
