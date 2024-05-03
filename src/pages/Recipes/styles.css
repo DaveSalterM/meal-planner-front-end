@@ -7,10 +7,17 @@
 }
 
 .recipe-container img {
-background-color: white;
-object-fit: cover;
-
+	background-color: white;
+	object-fit: cover;
+	border-style: unset;
 }
+
+.recipe-container div {
+	margin-top: 10px;
+	text-align: center;
+	border-style: none;
+}
+
 .recipe-container a {
 	text-decoration: none;
 	
@@ -23,12 +30,13 @@ object-fit: cover;
 
 .recipe-container h1 {
 	width: fit-content;
+	background-color: white;
+	padding: 10px;
+	border-radius: 10px;
+	width: 380px;
+	margin-top: 5px;
 }
 
 .name-link {
 	display: inline-block;
 }
-
-/* .name-link a {
-	width: fit-content;
-} */

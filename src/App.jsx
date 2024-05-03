@@ -145,7 +145,9 @@ function App() {
 				/>
 				<Route
 					path="/recipes/:recipe/:recipeId"
-					element={<SingleRecipePage userId={userId} token={token} />}
+					element={
+						<SingleRecipePage user={user} userId={userId} token={token} />
+					}
 				/>
 				{/* =======
 				<Route path="/" element={<Home user={user} userId={userId} token={token}/>} />

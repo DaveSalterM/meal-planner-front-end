@@ -1,3 +1,4 @@
+
 .recipe-data ul,
 .recipe-data ol {
 	margin-left: 1.5rem;
@@ -6,14 +7,36 @@
 .recipe-header {
 	display: flex;
 	justify-content: space-between;
-	padding: 20px;
-	margin-bottom: 40px;
+	padding: 15px;
+	margin-bottom: 1rem;
+	margin-left: 5rem;
+}
+
+.recipe-header h1{
+	display: flex;
+	flex-direction: column;
+	font-size: 5rem;
+	background-color: white;
+	border-radius: 15px;
+	padding: 15px;
+	width: 40vw;
+	min-width: 300px;
+	text-align: center;
 }
 
 .serv-cal-star {
 	display: flex;
 	align-items: flex-end;
-	/* margin: 0px 10px; */
+	margin: 0px 5rem;
+}
+
+.serv-cal-star p{
+	display: flex;
+	background-color: white;
+	padding: 5px 10px 5px 10px;
+	margin: 0px -3px;
+	border-radius: 5px;
+
 }
 
 /* Applies to direct children of .serv-cal-star class */
@@ -39,20 +62,19 @@
 
 .image-buttons button {
 	margin: 10px 40px;
-	padding: 10px 10px 25px;
+	padding: 10px;
 	border-radius: 4px;
-
 }
 
 .recipe-data-container {
 	display: flex;
 	justify-content: space-around;
+	flex-wrap: wrap;
 	margin-bottom: 50px;
 }
 
 .recipe-ingredients,
 .recipe-instructions {
-	border: 1px solid black;
 	margin: 0px 10px;
 	padding: 20px;
 	border-radius: 10px;
@@ -76,7 +98,6 @@
 .ingredients-instruction-container {
 	display: flex;
 }
-
 .review-section {
 	display: flex;
 	justify-content: center;
@@ -98,7 +119,7 @@
 }
 
 .review-header button {
-	padding: 10px 10px 30px;
+	padding: 10px;
 	font-size: 20px;
 	border-radius: 5px;
 }
@@ -130,7 +151,40 @@
 	margin: 10px;
 }
 
-.review-form-visible button{
+.review-form-visible button {
 	padding: 5px 10px;
 	margin-bottom: 15px;
+}
+.likes-button {
+	cursor: pointer;
+	background-color: white;
+	padding: 6px;
+	border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .image-buttons img {
+		width: 50%;
+    }
+	.recipe-header{
+		margin-left: 0px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.recipe-header h1{
+		font-size: 2rem;
+		background-color: white;
+		border-radius: 15px;
+		padding: 5px;
+		max-width: 200px;
+		text-align: center;
+	}
+
+	.ingredients-instruction-container {
+		display: flex;
+		flex-direction: column;
+	}
+
 }
