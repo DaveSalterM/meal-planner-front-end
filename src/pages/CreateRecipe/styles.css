@@ -14,7 +14,8 @@
 }
 
 .recipe-form form {
-	padding: 30px;
+	padding: 25px;
+	margin: 15px;
 }
 
 .ingredient-field {
@@ -151,9 +152,9 @@
 }
 
 .header-create-recipe{
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	color: white
+	margin: 10px;
+	color: white;
+	margin-bottom: 20px;
 }
 .header-names{
 	margin-bottom: 0.3rem
@@ -174,4 +175,9 @@ input.upload-image{
 #upload-image{
 	border-color: lightgray;
 	border-style: none;
+}
+
+.header-create-recipe{
+	color: black;
+	text-align: center;
 }
