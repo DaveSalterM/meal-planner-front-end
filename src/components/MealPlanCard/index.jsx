@@ -4,6 +4,10 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 const MealPlanCard = (props) => {
     
+    const handleDeleteRecipe = (recipe) => {
+        console.log("Delete Recipe:",recipe.name, "from",props.day);
+    }
+    
     const populateRecipes = () => {
         
         //const userRecipes = props.user.mealPlan[props.day];
@@ -11,16 +15,19 @@ const MealPlanCard = (props) => {
         
         if (userRecipes) {
             
-            console.log("User Recipes",  userRecipes)
             const listRecipes = userRecipes.map((recipe, index) => (   
                     <li key={index} className='plan-li'>
-                        <Link to={'/recipes/' + recipe._id} key={index} className='plan-link'>
+                        
+                        
+                        <Link to={'/recipes/recipedish' + recipe._id} key={index} className='plan-link'>
                             {`${recipe.name}`}
                         </Link>
-                        
+                        <div className="plan-delete" onClick={() => handleDeleteRecipe(recipe)} >
+                            {/* <FaTrashAlt id="trash-button" /> */}
+                            x
+                        </div>
                     </li>
             ));
-            console.log("List Recipes",  listRecipes);
             return listRecipes;
         }
     }

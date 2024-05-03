@@ -28,7 +28,17 @@
     height: 100%;
 }
 
+.plan-delete {
+    color: red;
+    cursor: pointer;
+    display: none;
+}
+
 .plan-link {
 	text-decoration: none;
     color: black;
+}
+
+.plan-link:hover + .plan-delete, .plan-delete:hover { 
+    display: inline;
 }
