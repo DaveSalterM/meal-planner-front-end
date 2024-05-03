@@ -1,0 +1,7 @@
+.entirepage{
+    display: flex;
+}
+.test{
+    justify-content: center;
+    width: 100vw;
+}
