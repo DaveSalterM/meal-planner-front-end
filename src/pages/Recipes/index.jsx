@@ -88,15 +88,11 @@ const Recipes = ({ user, userId, token }) => {
 
 							<Link to={`/recipes/${recipe}/${data._id}`}>
 								<RecipeCard
-									// recipeName={data.name}
-									// user={data.user.username}
 									image={data.imgUrl}
 									id={data._id}
 									user={user}
 									userId={userId}
 									token={token}
-
-									// isLiked={userFavorites.includes(data._id) ? true : false}
 								/>
 							</Link>
 

@@ -125,3 +125,7 @@
 .review-form input {
 	margin: 0;
 }
+
+.likes-button {
+	cursor: pointer;
+}
