@@ -1,11 +1,17 @@
-input{
-    height: 25px;
-    border-radius: 4px;
+input {
+    height: 30px;
+    border-radius: 5px;
+    padding: 0px 10px;
 }
 
-button{
+button {
     border-style: none;
     border-radius: 4px;
     background-color: lightgrey;
+    padding: 0 5px;
 }
 
+.searchbar-form input{
+width: 25%;
+margin: 0px 5px;
+}
