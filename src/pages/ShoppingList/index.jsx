@@ -12,9 +12,7 @@ const ShoppingList = (props) => {
     // Stores user recipes from props
     // But functions as a boolean to check if props have loaded
     let propsLoaded = props.user.recipes;
-    console.log('propsLoaded: ', props.user.recipes)
     if(propsLoaded && userRecipes.length === 0){
-        console.log('passed with prop: ', props.user.recipes)
         let aux = props.user.recipes.map((recipe) => (
                 // [Recipe, quantity]
                 [recipe, 1]
@@ -37,7 +35,6 @@ const ShoppingList = (props) => {
             });
             localStorage.setItem("userList", JSON.stringify(localList));
         }
-        console.log('aux: ', aux)
         setRecipes(aux);
     }
     
@@ -61,7 +58,6 @@ const ShoppingList = (props) => {
         }
         
     };
-
 
     // Function converts all unit measurements in shopping list to appropriate display units
     // Called in getShoppingList after the for loops
@@ -107,7 +103,7 @@ const ShoppingList = (props) => {
         return shoppingList;
     }
 
-
+    // Function to update local storage when the user navigates away from the page
     useBeforeUnload(
         useCallback(() => {
             
@@ -122,17 +118,27 @@ const ShoppingList = (props) => {
         }, [userRecipes])
     );
 
+
 	//Use effect that renders the shopping list when the userRecipes array is updated
 	useEffect(() => {
 		if (propsLoaded) getShoppingList();
 		if (propsLoaded) updateLocalStorage();
 	}, [userRecipes]);
 
+
+	// This works btw
+	const getRecipes = (recipeIndex, newQuantity) => {
+		setRecipes(
+			userRecipes.map((recipe, i) =>
+				recipeIndex == i ? [recipe[0], newQuantity] : recipe
+			)
+		);
+	};
+
     const getShoppingList = () => {        
         // Consolidate ingredients into one array of objects
         // Each object is keyed with the ingredient name and has a value of the total amount and unit
         let shoppingList = {};
-        console.log('userRecipes: ', userRecipes)
         // Loop through each recipe
         for (let i = 0; i < userRecipes.length; i++) {
             
@@ -154,7 +160,6 @@ const ShoppingList = (props) => {
                     } else { 
                         
                         //Create amount by multiplying the ingredient amount by the recipe quantity
-                        console.log(userRecipes[i][0].ingredients[j].ingredient, userRecipes[i][1])
                         let newAmount = parseInt(userRecipes[i][0].ingredients[j].amount) * userRecipes[i][1];
                         shoppingList[userRecipes[i][0].ingredients[j].ingredient].amount += newAmount;
                     }
@@ -162,8 +167,8 @@ const ShoppingList = (props) => {
             }
         }//End of for loop
 
+        // Convert the units of items in the shopping list
         shoppingList = convertUnits(shoppingList);
-        console.log('shoppingList: ', shoppingList)
 
         // Convert the shopping list object into an array of JSX elements
         const shoppingListArray = Object.entries(shoppingList).map(([ingredient, { amount, unit }]) => (
@@ -173,7 +178,6 @@ const ShoppingList = (props) => {
             </li>
         ));
         
-        console.log("SHOPPING LIST ARRAY: ", shoppingListArray);
         setShoppingList(shoppingListArray);
     }
   
@@ -216,16 +220,4 @@ const ShoppingList = (props) => {
             </>
     );
 }
-
-	// This works btw
-	const getRecipes = (recipeIndex, newQuantity) => {
-		setRecipes(
-			userRecipes.map((recipe, i) =>
-				recipeIndex == i ? [recipe[0], newQuantity] : recipe
-			)
-		);
-	};
-
-	
-
 export default ShoppingList;
