@@ -93,7 +93,7 @@ const ShoppingList = (props) => {
                 shoppingList[ingredient] = {"amount": convertedAmount.val, "unit": convertedAmount.unit};
             
             // Converts all other units to best unit
-            } else if (shoppingList[ingredient].unit !== "lb") { 
+            } else if (shoppingList[ingredient].unit !== "lb" && shoppingList[ingredient].unit !== "oz") { 
                 convertedAmount = convert(shoppingList[ingredient].amount).from(shoppingList[ingredient].unit).toBest({exclude: ['in3','ft3','yd3', 'qt', 'pnt', 'oz', 'lb', 't']});
                 shoppingList[ingredient] = {"amount": convertedAmount.val, "unit": convertedAmount.unit};
             }
