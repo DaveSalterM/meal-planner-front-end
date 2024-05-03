@@ -3,8 +3,8 @@
 const ReviewCard = ({ content, user }) => {
 	return (
 		<>
-			{content}
-			<div>{user}</div>
+			"{content}"
+			<div>-{user}</div>
 		</>
 	);
 };

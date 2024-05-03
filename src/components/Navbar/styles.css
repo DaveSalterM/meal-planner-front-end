@@ -42,3 +42,11 @@
 	color: var(--header-text-color);
 	font-weight: bold;
 }
+
+@media screen and (max-width: 768px) {
+    #banner {
+		font-size: 60%;
+		width: 105%;
+		padding-right: 100px;
+	}
+}
