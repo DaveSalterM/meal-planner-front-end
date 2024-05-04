@@ -40,7 +40,7 @@ const Profile = (props) => {
 				</ul>
 			</div>
             <div className='test'>
-                <h1>Hi there</h1>
+                
         
             </div>
             </div>

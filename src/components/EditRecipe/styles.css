@@ -189,3 +189,18 @@ input.upload-image{
 		font-size: x-small;
 	}
 }
+
+@media screen and (max-width: 431px) {
+    
+	.recipe-page {
+		scale: 40%;
+	}
+	.recipe-form {
+		width: auto;
+	}
+
+	.sidebar{
+		font-size: x-small;
+	}
+
+}
