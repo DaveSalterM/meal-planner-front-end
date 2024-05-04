@@ -18,6 +18,7 @@ const CustomToast = ({ userId, recipeId, token }) => {
 			{ recipeId: recipeId, dayOfWeek: selectedDay },
 			token
 		).then(() => toast.dismiss());
+		window.location.reload();
 	};
 
 	return (

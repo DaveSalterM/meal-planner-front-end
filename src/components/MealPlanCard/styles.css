@@ -1,0 +1,44 @@
+.plan-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 40rem;
+    margin: 10px;
+    height: 10rem;
+    
+}
+
+.plan-card-header {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    padding: 10px;
+    padding-left: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.plan-card-body {
+    height: 6rem;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+.plan-ul {
+    overflow: auto;
+    height: 100%;
+}
+
+.plan-delete {
+    color: red;
+    cursor: pointer;
+    display: none;
+}
+
+.plan-link {
+	text-decoration: none;
+    color: black;
+}
+
+.plan-link:hover + .plan-delete, .plan-delete:hover { 
+    display: inline;
+}

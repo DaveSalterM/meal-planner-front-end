@@ -180,3 +180,16 @@ input.upload-image {
 .edit-recipe-layout {
 	display: flex;
 }
+
+@media screen and (max-width: 768px) {
+	.recipe-page {
+		scale: 70%;
+	}
+	.recipe-form {
+		width: auto;
+	}
+
+	.sidebar {
+		font-size: x-small;
+	}
+}

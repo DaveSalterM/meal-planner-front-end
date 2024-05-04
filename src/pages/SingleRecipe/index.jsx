@@ -116,7 +116,7 @@ const SingleRecipePage = ({ user, userId, token }) => {
 					<div className="recipe-header">
 						<div>
 							<h1>{recipeData.name}</h1>
-							<p>{recipeData.user.username}</p>
+							<p>-{recipeData.user.username}</p>
 						</div>
 						<div className="serv-cal-star">
 							<p>{recipeData.servings} serving</p>
@@ -200,6 +200,7 @@ const SingleRecipePage = ({ user, userId, token }) => {
 					<ToastContainer
 						position="bottom-center"
 						autoClose={false}
+						limit={1}
 						newestOnTop={false}
 						closeOnClick={false}
 						rtl={false}

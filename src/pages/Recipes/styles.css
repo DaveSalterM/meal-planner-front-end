@@ -3,6 +3,7 @@
 	display: grid;
 	grid-template-columns: 400px 400px 400px 400px;
 	justify-content: space-evenly;
+	gap: 10px;
 
 }
 
@@ -39,4 +40,12 @@
 
 .name-link {
 	display: inline-block;
+}
+
+@media screen and (max-width: 768px) {
+    .recipe-container {
+	scale: 90%;
+	display: flex;
+	flex-direction: column;
+	}
 }
