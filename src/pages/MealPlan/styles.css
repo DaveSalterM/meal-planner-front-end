@@ -4,3 +4,12 @@
   align-items: center;
   margin-top: 20px;
 }
+
+@media screen and (max-width: 768px) {
+
+  .meal-plan {
+   scale: 60%;
+   margin: -50% 0 0 5px;
+  }
+
+}

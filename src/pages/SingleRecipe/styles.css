@@ -220,6 +220,7 @@ font-style: italic;
 	.ingredients-instruction-container {
 		display: flex;
 		flex-direction: column;
+		gap: 10px;
 	}
 
 	.Toastify__toast{
