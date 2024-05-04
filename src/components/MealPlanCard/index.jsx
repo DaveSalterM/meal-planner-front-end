@@ -1,10 +1,25 @@
+import API from '../../../utils/API';
 import './styles.css';
 import { Link } from 'react-router-dom';
+//import { useEffect, useState } from 'react';
+
 
 const MealPlanCard = (props) => {
     
+    //const [listMealPlan, setListMealPlan] = useState([]);
+
     const handleDeleteRecipe = (recipe) => {
         console.log("Delete Recipe:",recipe.name, "from",props.day);
+        console.log("User prop", props.user._id);
+        console.log("token", props.token);
+        API.removeFromMealPlan(
+            props.user._id,
+            { recipeId: recipe._id, dayOfWeek: props.day },
+            props.token
+        ).then((response) => {
+            console.log('Recipe removed from meal plan:', response);
+            window.location.reload();
+        });
     }
     
     const populateRecipes = () => {
@@ -24,12 +39,18 @@ const MealPlanCard = (props) => {
                         </div>
                     </li> 
                 ));
+                console.log("listRecipes", listRecipes)
                 return listRecipes;
+                // setListMealPlan(listRecipes);
+                // console.log("listMealPlan", listMealPlan)
             }
         }
+        console.log("=======================")
     }
     
-
+    // useEffect(() => {
+    //     populateRecipes();
+    // }, [listMealPlan]);
 
     return (    
         <div className='plan-card'>
