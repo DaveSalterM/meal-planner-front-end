@@ -12,8 +12,8 @@ const MealPlanCard = (props) => {
         const userMealPlan = props.user.meal_plan;
         //const userRecipes = props.user.recipes;
         
-        if (userMealPlan) {
-            if (userMealPlan[props.dayIndex].recipes.length !== 0) {
+        if (userMealPlan !== undefined) {
+            if (userMealPlan[props.dayIndex].recipes !== undefined) {
                 const listRecipes = userMealPlan[props.dayIndex].recipes.map((recipe, index) => (   
                     <li key={index} className='plan-li'>
                         <Link to={'/recipes/recipedish/' + recipe._id} key={index} className='plan-link'>
