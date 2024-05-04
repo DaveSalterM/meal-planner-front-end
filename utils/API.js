@@ -128,6 +128,37 @@ const API = {
 			},
 		}).then((res) => res.json());
 	},
+
+	// Add to shopping list
+	addToShoppingList: (userId, recipeId, token) => {
+		return fetch(`${URL_PREFIX}/api/users/${userId}/shoppinglist`, {
+			method: 'POST',
+			body: JSON.stringify(recipeId),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		}).then((res) => res.json());
+	},
+
+	// Update recipe
+	updateRecipe: (recipeId, recipeData, token) => {
+		return fetch(`${URL_PREFIX}/api/recipes/recipe/${recipeId}`, {
+			method: 'PUT',
+			body: JSON.stringify(recipeData),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		}).then((res) => res.json());
+	},
+
+	// Get user's favorites
+	getUserFavorites: (userId) => {
+		return fetch(`${URL_PREFIX}/api/users/${userId}/favorites`).then((res) =>
+			res.json()
+		);
+	},
 };
 
 export default API;
