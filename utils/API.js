@@ -115,6 +115,19 @@ const API = {
 			},
 		}).then((res) => res.json());
 	},
+
+	// Remove from meal plan
+	removeFromMealPlan: (userId, mealPlanData, token) => {
+		console.log('mealPlanData:', mealPlanData);
+		return fetch(`${URL_PREFIX}/api/users/${userId}/mealplan`, {
+			method: 'DELETE',
+			body: JSON.stringify(mealPlanData),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		}).then((res) => res.json());
+	},
 };
 
 export default API;
