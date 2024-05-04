@@ -20,6 +20,8 @@ const CreateRecipe = (props) => {
 	// const [instructions, setInstructions] = useState([{ instruction: '' }]);
 	const [instructions, setInstructions] = useState(['']);
 	const [calories, setCalories] = useState('');
+	const [servings, setServings] = useState('');
+
 	const [image, setImage] = useState(null);
 	// const [userObj, setUserObj] = useState({})
 
@@ -76,7 +78,10 @@ const CreateRecipe = (props) => {
 			}
 			// Get the number amount
 			const amount = onchangeVal[i]['amount'];
-			if (['g','oz', 'lb'].includes(unit) && ['g', 'oz', 'lb'].includes(value)) {
+			if (
+				['g', 'oz', 'lb'].includes(unit) &&
+				['g', 'oz', 'lb'].includes(value)
+			) {
 				// let convertNum = numericQuantity(amount, { round: false });
 				let convertNum = numericQuantity(amount);
 				console.log('convert', convertNum);
@@ -124,11 +129,19 @@ const CreateRecipe = (props) => {
 		// console.log(formData);
 	};
 
+	// const handleCaloriesChange = (e) => {
+	// 	const { value } = e.target;
+	// 	let onchangeVal = [...calories];
+	// 	onchangeVal = value;
+	// 	setCalories(onchangeVal);
+	// };
 	const handleCaloriesChange = (e) => {
+		setCalories(e.target.value);
+	};
+
+	const handleServingsChange = (e) => {
 		const { value } = e.target;
-		let onchangeVal = [...calories];
-		onchangeVal = value;
-		setCalories(onchangeVal);
+		setServings(value);
 	};
 
 	const handleDeleteInstruction = (i) => {
@@ -145,11 +158,7 @@ const CreateRecipe = (props) => {
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
-		// console.log(recipeName);
-		// console.log('======================================');
-		// console.log(...ingredients);
-		// console.log('======================================');
-		// console.log(...instructions);
+
 		const formData = new FormData();
 		formData.append('image', image);
 		const { imageUrl } = await API.uploadImage(formData);
@@ -162,6 +171,7 @@ const CreateRecipe = (props) => {
 					ingredients: ingredients,
 					instructions: instructions,
 					calories: calories,
+					servings: servings,
 					imgUrl: imageUrl,
 				},
 				token
@@ -175,18 +185,17 @@ const CreateRecipe = (props) => {
 	return (
 		<div className="recipe-page">
 			<div className="recipe-form">
-				<form  className= 'recipe' onSubmit={submitHandler}>
-				<h1 className='header-create-recipe'>Create Your Recipe!</h1>
-					<h2 className='header-names'>Recipe Name</h2>
+				<form className="recipe" onSubmit={submitHandler}>
+					<h1 className="header-create-recipe">Create Your Recipe!</h1>
+					<h2 className="header-names">Recipe Name</h2>
 					<input
 						className="recipe-field"
 						name="recipe"
 						value={recipeName}
 						onChange={handleRecipeChange}
 					/>
-					<div className='recipe-border'>
-					</div>
-					<h2 className='header-names'>Ingredients</h2>
+					<div className="recipe-border"></div>
+					<h2 className="header-names">Ingredients</h2>
 					{ingredients.map((val, i) => (
 						<div key={i}>
 							{/* <h3>Ingredient {i + 1}</h3> */}
@@ -244,11 +253,15 @@ const CreateRecipe = (props) => {
 							</div>
 						</div>
 					))}
-					<button className="button-create" type="button" onClick={handleClickIngredient}>
+					<button
+						className="button-create"
+						type="button"
+						onClick={handleClickIngredient}
+					>
 						+ Add More
 					</button>
-					<div className= "recipe-border"></div>
-					<h2 className='header-names'>Instructions</h2>
+					<div className="recipe-border"></div>
+					<h2 className="header-names">Instructions</h2>
 					{instructions.map((val, i) => (
 						<div key={i}>
 							<div className="instruction-field">
@@ -276,22 +289,57 @@ const CreateRecipe = (props) => {
 						</div>
 					))}
 
-					<button className="button-create" type="button" onClick={handleClickInstruction}>
+					<button
+						className="button-create"
+						type="button"
+						onClick={handleClickInstruction}
+					>
 						+ Add More
 					</button>
-					<div className= "recipe-border"></div>
-					<h2 className='header-names'>Calories</h2>
-					<input
+					<div className="recipe-border"></div>
+					{/* <h2 className='header-names'>Calories</h2> */}
+					{/* <input
 						name="calories"
 						value={calories}
 						onChange={handleCaloriesChange}
 						className="calorie-input"
-					/>
-					<div className= "recipe-border"></div>
-					<h2 className='header-names'>Upload</h2>
+					/> */}
+					<div>
+						<div>
+							<h2 className="header-names">Calories</h2>
+							<input
+								name="calories"
+								value={calories}
+								onChange={handleCaloriesChange}
+								className="calorie-input"
+							/>
+						</div>
+						{/* <input
+									placeholder="Enter your review"
+									// type="text"
+									// value={calories}
+									// onChange={handleCaloriesChange}
+								/> */}
+						<div>
+							<h2 className="header-names">Servings</h2>
+							<input
+								name="servings"
+								value={servings}
+								onChange={handleServingsChange}
+								className="calorie-input"
+							/>
+						</div>
+					</div>
+
+					<div className="recipe-border"></div>
+					<h2 className="header-names">Upload</h2>
 					<div className="upload-form">
 						<label>Upload an image of the food:</label>
-						<input className= "upload-image" type="file" onChange={handleImageChange} />
+						<input
+							className="upload-image"
+							type="file"
+							onChange={handleImageChange}
+						/>
 					</div>
 					<div className="submit-btn">
 						<button>Submit</button>

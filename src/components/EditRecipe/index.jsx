@@ -1,16 +1,33 @@
 import convert from 'convert-units';
 import fracty from 'fracty';
 import { numericQuantity } from 'numeric-quantity';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-dropdown/style.css';
 import { FaTrashAlt } from 'react-icons/fa';
+import { useParams } from 'react-router-dom';
 import API from '../../../utils/API';
+import ProfileLayout from '../ProfileLayout';
+
 import './styles.css';
 
-
-const EditRecipe = (props) => {
-	const token = props.token;
+const EditRecipe = ({ token }) => {
+	const { recipeId } = useParams();
+	// const token = props.token;
 	// console.log('Create Recipe: ', props.user);
+
+	useEffect(() => {
+		// console.log(recipeId);
+		API.getSingleRecipe(recipeId)
+			.then((response) => {
+				setIngredients(response.ingredients);
+				setInstructions(response.instructions);
+				setRecipeName(response.name);
+				setImage(response.imgUrl);
+				setCalories(response.calories);
+				setServings(response.servings);
+			})
+			.then(() => setIsLoading(false));
+	}, [recipeId]);
 
 	const regex =
 		/^(\d*)(\s{0,1}(\d{0,1})(\/?)(\d{0,1})|(\.\d{0,2})|\/(\d{0,1}))$/;
@@ -18,11 +35,11 @@ const EditRecipe = (props) => {
 	const [ingredients, setIngredients] = useState([
 		{ ingredient: '', amount: '', unit: 'Select' },
 	]);
-	// const [instructions, setInstructions] = useState([{ instruction: '' }]);
 	const [instructions, setInstructions] = useState(['']);
 	const [calories, setCalories] = useState('');
+	const [servings, setServings] = useState('');
 	const [image, setImage] = useState(null);
-	// const [userObj, setUserObj] = useState({})
+	const [isLoading, setIsLoading] = useState(true);
 
 	const handleClickIngredient = (e) => {
 		e.preventDefault();
@@ -43,7 +60,6 @@ const EditRecipe = (props) => {
 	};
 
 	const handleIngredientChange = (e, i) => {
-		// console.log(e.target);
 		const { name, value } = e.target;
 		const onchangeVal = [...ingredients];
 		onchangeVal[i][name] = value;
@@ -56,7 +72,6 @@ const EditRecipe = (props) => {
 		if (regex.test(value)) {
 			onchangeVal[i][name] = value;
 		}
-		// console.log(onchangeVal);
 		setIngredients(onchangeVal);
 	};
 
@@ -77,7 +92,10 @@ const EditRecipe = (props) => {
 			}
 			// Get the number amount
 			const amount = onchangeVal[i]['amount'];
-			if (['g','oz', 'lb'].includes(unit) && ['g', 'oz', 'lb'].includes(value)) {
+			if (
+				['g', 'oz', 'lb'].includes(unit) &&
+				['g', 'oz', 'lb'].includes(value)
+			) {
 				// let convertNum = numericQuantity(amount, { round: false });
 				let convertNum = numericQuantity(amount);
 				console.log('convert', convertNum);
@@ -116,20 +134,16 @@ const EditRecipe = (props) => {
 	};
 
 	const handleImageChange = (e) => {
-		// console.log(e.target.files);
-		// console.log(e.target.files[0]);
-		// const formData = new FormData();
 		setImage(e.target.files[0]);
-
-		// formData.append('image', file);
-		// console.log(formData);
 	};
 
 	const handleCaloriesChange = (e) => {
+		setCalories(e.target.value);
+	};
+
+	const handleServingsChange = (e) => {
 		const { value } = e.target;
-		let onchangeVal = [...calories];
-		onchangeVal = value;
-		setCalories(onchangeVal);
+		setServings(value);
 	};
 
 	const handleDeleteInstruction = (i) => {
@@ -146,160 +160,206 @@ const EditRecipe = (props) => {
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
-		// console.log(recipeName);
-		// console.log('======================================');
-		// console.log(...ingredients);
-		// console.log('======================================');
-		// console.log(...instructions);
 		const formData = new FormData();
 		formData.append('image', image);
 		const { imageUrl } = await API.uploadImage(formData);
 
 		try {
 			e.preventDefault();
-			const newRecipe = await API.createRecipe(
+			const updatedRecipe = await API.updateRecipe(
+				recipeId,
 				{
 					name: recipeName,
 					ingredients: ingredients,
 					instructions: instructions,
 					calories: calories,
+					servings: servings,
 					imgUrl: imageUrl,
 				},
 				token
 			);
-			// console.log('IT WORKS!!!');
 		} catch (error) {
 			console.log(error);
 		}
+
+		// try {
+		// 	e.preventDefault();
+		// 	const newRecipe = await API.createRecipe(
+		// 		{
+		// 			name: recipeName,
+		// 			ingredients: ingredients,
+		// 			instructions: instructions,
+		// 			calories: calories,
+		// 			imgUrl: imageUrl,
+		// 		},
+		// 		token
+		// 	);
+		// 	// console.log('IT WORKS!!!');
+		// } catch (error) {
+		// 	console.log(error);
+		// }
 	};
 
 	return (
-		<div className="recipe-page">
-			<div className="recipe-form">
-				<form  className= 'recipe' onSubmit={submitHandler}>
-				<h1 className='header-create-recipe'>Edit Your Recipe!</h1>
-				
-					<h2 className='header-names'>Recipe Name</h2>
-					<input
-						className="recipe-field"
-						name="recipe"
-						value={recipeName}
-						onChange={handleRecipeChange}
-					/>
-					<div className='recipe-border'>
-					</div>
-					<h2 className='header-names'>Ingredients</h2>
-					{ingredients.map((val, i) => (
-						<div key={i}>
-							{/* <h3>Ingredient {i + 1}</h3> */}
-							<div className="ingredient-field">
-								<div>
-									<h3>Ingredient {i + 1}</h3>
-									<input
-										name="ingredient"
-										value={val.ingredient}
-										onChange={(e) => handleIngredientChange(e, i)}
-										className="ingredient-name"
-									/>
-								</div>
-								<div>
-									<h3>Amount</h3>
-									<input
-										name="amount"
-										value={val.amount}
-										// onChange={(e) => handleIngredientChange(e, i)}
-										onChange={(e) => handleAmountChange(e, i)}
-										className="amount-input"
-									/>
-								</div>
-								<div className="dropdown-menu">
-									<h3>Units</h3>
+		<div className="edit-recipe-layout">
+			<ProfileLayout />
+			{isLoading ? (
+				<h1>Loading...</h1>
+			) : (
+				<div className="recipe-page">
+					<div className="recipe-form">
+						<form className="recipe" onSubmit={submitHandler}>
+							<h1 className="header-create-recipe">Edit Your Recipe!</h1>
 
-									<select
-										defaultValue=""
-										onChange={(e) => handleUnitChange(e, i)}
-									>
-										<option value="" disabled hidden>
-											Select
-										</option>
-										<option value="g">g</option>
-										<option value="oz">oz</option>
-										<option value="lb">lb</option>
-										<option value="fl-oz">fl-oz</option>
-										<option value="cup">cup</option>
-										<option value="tsp">tsp</option>
-										<option value="Tbs">tbsp</option>
-										<option value="gal">gal</option>
-									</select>
-								</div>
+							<h2 className="header-names">Recipe Name</h2>
+							<input
+								className="recipe-field"
+								name="recipe"
+								value={recipeName}
+								onChange={handleRecipeChange}
+							/>
+							<div className="recipe-border"></div>
+							<h2 className="header-names">Ingredients</h2>
+							{ingredients.map((val, i) => (
+								<div key={i}>
+									<div className="ingredient-field">
+										<div>
+											<h3>Ingredient {i + 1}</h3>
+											<input
+												name="ingredient"
+												value={val.ingredient}
+												onChange={(e) => handleIngredientChange(e, i)}
+												className="ingredient-name"
+											/>
+										</div>
+										<div>
+											<h3>Amount</h3>
+											<input
+												name="amount"
+												value={val.amount}
+												onChange={(e) => handleAmountChange(e, i)}
+												className="amount-input"
+											/>
+										</div>
+										<div className="dropdown-menu">
+											<h3>Units</h3>
 
-								{i !== 0 ? (
-									<div
-										// type="button"
-										className="delete-button"
-										onClick={() => handleDeleteIngredient(i)}
-									>
-										{/* <FaTrashAlt /> */}
-										<FaTrashAlt id="trash-button" />
+											<select
+												// defaultValue=""
+												defaultValue={val.unit}
+												onChange={(e) => handleUnitChange(e, i)}
+											>
+												<option value="" disabled hidden>
+													Select
+												</option>
+												<option value="g">g</option>
+												<option value="oz">oz</option>
+												<option value="lb">lb</option>
+												<option value="fl-oz">fl-oz</option>
+												<option value="cup">cup</option>
+												<option value="tsp">tsp</option>
+												<option value="Tbs">tbsp</option>
+												<option value="gal">gal</option>
+											</select>
+										</div>
+
+										{i !== 0 ? (
+											<div
+												className="delete-button"
+												onClick={() => handleDeleteIngredient(i)}
+											>
+												<FaTrashAlt id="trash-button" />
+											</div>
+										) : null}
 									</div>
-								) : null}
-							</div>
-						</div>
-					))}
-					<button className="button-create" type="button" onClick={handleClickIngredient}>
-						+ Add More
-					</button>
-					<div className= "recipe-border"></div>
-					<h2 className='header-names'>Instructions</h2>
-					{instructions.map((val, i) => (
-						<div key={i}>
-							<div className="instruction-field">
+								</div>
+							))}
+							<button
+								className="button-create"
+								type="button"
+								onClick={handleClickIngredient}
+							>
+								+ Add More
+							</button>
+							<div className="recipe-border"></div>
+							<h2 className="header-names">Instructions</h2>
+							{instructions.map((val, i) => (
+								<div key={i}>
+									<div className="instruction-field">
+										<div>
+											<h3>Instruction {i + 1}</h3>
+											<input
+												name="instruction"
+												// value={val.instruction}
+												value={val}
+												onChange={(e) => handleInstructionChange(e, i)}
+												className="instruction-input"
+											/>
+										</div>
+
+										{i !== 0 ? (
+											<div
+												className="delete-button"
+												onClick={() => handleDeleteInstruction(i)}
+											>
+												<FaTrashAlt id="trash-button" />
+											</div>
+										) : null}
+									</div>
+								</div>
+							))}
+
+							<button
+								className="button-create"
+								type="button"
+								onClick={handleClickInstruction}
+							>
+								+ Add More
+							</button>
+							<div className="recipe-border"></div>
+							<div>
 								<div>
-									<h3>Instruction {i + 1}</h3>
+									<h2 className="header-names">Calories</h2>
 									<input
-										name="instruction"
-										value={val.instruction}
-										onChange={(e) => handleInstructionChange(e, i)}
-										className="instruction-input"
+										name="calories"
+										value={calories}
+										onChange={handleCaloriesChange}
+										className="calorie-input"
 									/>
 								</div>
-
-								{i !== 0 ? (
-									<div
-										// type="button"
-										className="delete-button"
-										onClick={() => handleDeleteInstruction(i)}
-									>
-										{/* <FaTrashAlt /> */}
-										<FaTrashAlt id="trash-button" />
-									</div>
-								) : null}
+								{/* <input
+									placeholder="Enter your review"
+									// type="text"
+									// value={calories}
+									// onChange={handleCaloriesChange}
+								/> */}
+								<div>
+									<h2 className="header-names">Servings</h2>
+									<input
+										name="servings"
+										value={servings}
+										onChange={handleServingsChange}
+										className="calorie-input"
+									/>
+								</div>
 							</div>
-						</div>
-					))}
-
-					<button className="button-create" type="button" onClick={handleClickInstruction}>
-						+ Add More
-					</button>
-					<div className= "recipe-border"></div>
-					<h2 className='header-names'>Calories</h2>
-					<input
-						name="calories"
-						value={calories}
-						onChange={handleCaloriesChange}
-						className="calorie-input"
-					/>
-					<div className= "recipe-border"></div>
-					<h2 className='header-names'>Upload</h2>
-					<div className="upload-form">
-						<label>Upload an image of the food:</label>
-						<input className= "upload-image" type="file" onChange={handleImageChange} />
+							<div className="recipe-border"></div>
+							<h2 className="header-names">Upload</h2>
+							<div className="upload-form">
+								<label>Upload an image of the food:</label>
+								<input
+									className="upload-image"
+									type="file"
+									onChange={handleImageChange}
+								/>
+							</div>
+							<div className="submit-btn">
+								<button>Submit</button>
+							</div>
+						</form>
 					</div>
-					<div className="submit-btn">
-						<button>Submit</button>
-					</div>
-				</form>
-			</div>
+				</div>
+			)}
 		</div>
 	);
 };

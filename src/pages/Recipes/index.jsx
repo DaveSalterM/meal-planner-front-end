@@ -99,7 +99,7 @@ const Recipes = ({ user, userId, token }) => {
 								</Link>
 
 								<div className="name-link">
-									<Link to={`/recipes/${recipe}/${data._id}`}>
+									<Link to={`/recipes/recipedish/${data._id}`}>
 										<h1>{data.name}</h1>
 									</Link>
 								</div>

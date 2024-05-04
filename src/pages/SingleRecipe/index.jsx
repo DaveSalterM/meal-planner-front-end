@@ -11,11 +11,9 @@ import './styles.css';
 
 // toast.configure();
 
-const SingleRecipePage = ({ id, user, userId, token }) => {
+const SingleRecipePage = ({ user, userId, token }) => {
 	const { recipeId } = useParams();
 
-	const [selectedDay, setSelectedDay] = useState(null);
-	const [toastKey, setToastKey] = useState(true);
 	const [recipeData, setRecipeData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [recipeReviews, setRecipeReviews] = useState([]);
@@ -35,10 +33,8 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 			})
 			.then(() => {
 				if (userId !== 0) {
-					API.getOneUser(userId).then((data) => {
-						setUserFavorites(data.favorites);
-						console.log(userId);
-						console.log(data.favorites);
+					API.getUserFavorites(userId).then((data) => {
+						setUserFavorites(data);
 					});
 				}
 
@@ -48,23 +44,13 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 	}, [recipeId, userId]);
 
 	const handleShoppingList = () => {
-		console.log('shop');
-	};
-
-	const handleToastSubmit = () => {
-		console.log('submitted');
-
-		console.log(selectedDay);
-		toast.dismiss();
+		// console.log(recipeId);
+		API.addToShoppingList(userId, { recipeId: recipeId }, token).then(() =>
+			console.log('SUBMITTED')
+		);
 	};
 
 	const handleMealPlan = () => {
-		// console.log('meal');
-		// toast('Meal plan', {
-		// 	position: toast.POSITION.BOTTOM_CENTER,
-		// });
-		// toast('WORKS');
-		// setToastKey(!toastKey);
 		toast(
 			<CustomToast
 				// key={toastKey}
@@ -108,11 +94,11 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 			token
 		).then(() => {
 			setRecipeReviews([
-				...recipeReviews,
 				{
 					content: reviewContent,
-					user: user.username,
+					user: user,
 				},
+				...recipeReviews,
 			]);
 			setReviewContent('');
 			setShowReview(false);

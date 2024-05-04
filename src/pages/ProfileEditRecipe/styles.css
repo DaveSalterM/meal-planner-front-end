@@ -1,10 +1,16 @@
-.entirepage{
-    display: flex;
+.entirepage {
+	display: flex;
 }
-.test{
-    justify-content: center;
-    width: 100vw;
+.test {
+	justify-content: center;
+	width: 100vw;
 }
+
+.name-and-edit {
+	display: flex;
+	justify-content: space-between;
+}
+
 
 @media screen and (max-width: 431px) {
     

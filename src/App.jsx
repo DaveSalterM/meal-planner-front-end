@@ -14,6 +14,8 @@ import Home from './pages/Home/index.jsx';
 import MealPlan from './pages/MealPlan/index.jsx';
 import ShoppingList from './pages/ShoppingList/index.jsx';
 // >>>>>>> dev
+import EditRecipe from './components/EditRecipe/index.jsx';
+import Favorites from './components/Favorites/index.jsx';
 import Login from './pages/Login/index.jsx';
 import Profile from './pages/Profile/index.jsx';
 import ProfileEditRecipe from './pages/ProfileEditRecipe/index.jsx';
@@ -157,7 +159,23 @@ function App() {
 				<Route path="/createrecipe" element={<CreateRecipe user={user} userId={userId} token={token}/>} />
 				<Route path="/login" element={<Login handleLogin={handleLogin} handleSignup={handleSignup} userId={userId}/>} />
 >>>>>>> dev */}
-				<Route path="/editrecipes" element={<ProfileEditRecipe />} />
+				<Route
+					path="/profile/favorites"
+					element={<Favorites user={user} userId={userId} token={token} />}
+				></Route>
+				<Route
+					path="/profile/editrecipes"
+					element={
+						<ProfileEditRecipe user={user} userId={userId} token={token} />
+					}
+				/>
+				<Route
+					path="/profile/editrecipes/:recipeId"
+					element={
+						// <ProfileEditRecipe user={user} userId={userId} token={token} />
+						<EditRecipe token={token} />
+					}
+				/>
 				<Route path="*" element={<h1>notFound</h1>} />
 			</Routes>
 		</Router>
