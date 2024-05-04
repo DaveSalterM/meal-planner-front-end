@@ -18,20 +18,23 @@ const ShoppingList = (props) => {
             ));
         
         const localList = JSON.parse(localStorage.getItem("userList"));
-        // console.log('localList: ', localList)
-        // console.log('localList: ', localList[props.userId])
-        if(localList !== null) {
+        
+        console.log('Check localList: ', localList)
+        if(localList !== undefined) {
+            console.log("made it here", localList)
             if(localList[props.userId] !== undefined) {
                 for(let i = 0; i < aux.length; i++) {
                     aux[i][1] = localList[props.userId][aux[i][0]._id];
                 }
-            }
-        }  else {
+                console.log('IF localList: ', localList)
+            }  else {
             let localList = {};
             localList[props.userId] = {};
+            console.log('ELSE localList: ', localList)
             aux.forEach((recipe) => {
                 localList[props.userId][recipe[0]._id] = 1;
             });
+            }   
             localStorage.setItem("userList", JSON.stringify(localList));
         }
         setRecipes(aux);

@@ -12,8 +12,9 @@ const MealPlanCard = (props) => {
         const userMealPlan = props.user.meal_plan;
         //const userRecipes = props.user.recipes;
         
-        if (userMealPlan) {
-            const listRecipes = userMealPlan[props.dayIndex].recipes.map((recipe, index) => (   
+        if (userMealPlan !== undefined) {
+            if (userMealPlan[props.dayIndex].recipes !== undefined) {
+                const listRecipes = userMealPlan[props.dayIndex].recipes.map((recipe, index) => (   
                     <li key={index} className='plan-li'>
                         <Link to={'/recipes/recipedish/' + recipe._id} key={index} className='plan-link'>
                             {`${recipe.name}`}
@@ -21,9 +22,10 @@ const MealPlanCard = (props) => {
                         <div className="plan-delete" onClick={() => handleDeleteRecipe(recipe)} >
                             x
                         </div>
-                    </li>
-            ));
-            return listRecipes;
+                    </li> 
+                ));
+                return listRecipes;
+            }
         }
     }
     
