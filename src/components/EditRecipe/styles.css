@@ -175,3 +175,17 @@ input.upload-image{
 	border-color: lightgray;
 	border-style: none;
 }
+
+@media screen and (max-width: 768px) {
+    
+	.recipe-page {
+		scale: 70%;
+	}
+	.recipe-form {
+		width: auto;
+	}
+
+	.sidebar{
+		font-size: x-small;
+	}
+}
