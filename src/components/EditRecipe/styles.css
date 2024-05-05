@@ -11,6 +11,7 @@
 	justify-content: center;
 	align-items: center;
 	width: 1000px;
+    margin-left: 21.875rem;
 }
 
 .recipe-form form {
@@ -192,4 +193,19 @@ input.upload-image {
 	.sidebar {
 		font-size: x-small;
 	}
+}
+
+@media screen and (max-width: 431px) {
+    
+	.recipe-page {
+		scale: 40%;
+	}
+	.recipe-form {
+		width: auto;
+	}
+
+	.sidebar{
+		font-size: x-small;
+	}
+
 }

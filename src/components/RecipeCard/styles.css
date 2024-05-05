@@ -35,6 +35,7 @@
 	font-size: 40px;
 	right: 10px;
 	z-index: 999;
+	color: rgb(255, 64, 96);
 }
 
 .favorite-button input {

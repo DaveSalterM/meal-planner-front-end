@@ -32,11 +32,14 @@ const ProfileEditRecipe = ({ user, userId, token }) => {
 	return (
 		<div className="entirepage">
 			<div className="sidebar-column">
-				<ul className="sidebar">
-					<li id="side-item">Favorites</li>
+            <ul className="sidebar">
+					<Link to={'/profile/favorites'}>
+						<li id="side-item">Favorites</li>
+					</Link>
 					<li id="side-item">Change Password</li>
-					<li id="side-item">Edit Recipes</li>
-					<li id="side-item">Your Recipes</li>
+					<Link to={`/profile/editrecipes`}>
+						<li id="side-item">Your Recipes</li>
+					</Link>
 					<li id="side-items" className="sidebars" onClick={handleLogout}>
 						Logout
 					</li>
@@ -47,7 +50,7 @@ const ProfileEditRecipe = ({ user, userId, token }) => {
 			) : (
 				<div className="test">
 					{userRecipes.map((recipe) => (
-						<div key={recipe._id}>
+						<div className='card' key={recipe._id}>
 							<Link to={`/recipes/recipedish/${recipe._id}`}>
 								<RecipeCard
 									image={recipe.imgUrl}
