@@ -180,7 +180,12 @@ function App() {
 				<Route
 					path="/profile/editrecipes"
 					element={
-						<ProfileEditRecipe user={user} userId={userId} token={token} />
+						<ProfileEditRecipe
+							logout={logout}
+							user={user}
+							userId={userId}
+							token={token}
+						/>
 					}
 				/>
 				<Route

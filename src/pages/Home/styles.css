@@ -18,13 +18,29 @@ button {
 
 .best-recipe-container {
 	display: grid;
-	grid-template-columns: 400px 400px 400px 400px;
-	justify-content: space-evenly;
+	/* grid-template-columns: 400px 400px 400px 400px; */
+	grid-template-columns: repeat(auto-fit, minmax(400px, 0.5fr));
+	/* justify-content: space-evenly; */
+	justify-items: center;
 	gap: 10px;
+}
+
+/* .best-recipe-container img {
+	object-fit: contain;
+	border-style: unset;
+} */
+.best-recipe-container img {
+	object-fit: cover;
+	/* background-color: white; */
 }
 
 .recipe-card-container {
 	margin-bottom: 10px;
+}
+
+.recipe-card-container a {
+	display: block;
+	width: 400px;
 }
 
 .home-title {
