@@ -26,53 +26,24 @@ const Recipes = ({ user, userId, token }) => {
 
 	// MAYBE PASS THE USER PROPS TO THE RECIPE CARD SO THAT IT CHECKS IF IT IS LIKE THERE?????
 	useEffect(() => {
-		// API.getSearchedRecipe(recipe).then((data) => console.log(data));
-		// API.getSearchedRecipe(recipe)
-		// 	.then((response) => setFoundRecipes(response))
-		// 	.then(() => {
-		// 		console.log(user);
-		// 		console.log(userId);
-		// 		console.log(user.favorites);
-
-		// 		// console.log('not logged in');
-		// 	})
-		// 	.then(() => setIsLoading(false));
-
-		// API.getSearchedRecipe(recipe)
-		// 	.then((response) => {
-		// 		// setUserData(user);
-		// 		console.log('user: ', user);
-		// 		console.log(user.favorites);
-		// 		setFoundRecipes(response);
-		// 	})
-		// 	.then(() => {
-		// 		if (user.favorites === undefined) {
-		// 			setUserFavorites([]);
-		// 		} else {
-		// 			setUserFavorites(user.favorites);
-		// 		}
-		// 	})
-		// 	.then(() => {
-		// 		setIsLoading(false);
-		// 		console.log(isLoading);
-		// 	});
-
 		API.getSearchedRecipe(recipe)
 			.then((response) => {
 				setFoundRecipes(response);
 			})
 			.then(() => {
 				// console.log(user);
+				// console.log(userId);
 				setIsLoading(false);
 			});
 	}, [recipe, user]);
 
-	const handleClick = () => {
-		// console.log(e.target);
-		// console.log(userFavorites);
-		// console.log(e.target.getAttribute('value'));
-		// console.log('touched');
-	};
+	// const handleClick = (e) => {
+
+	// 	// console.log(e.target);
+	// 	// console.log(userFavorites);
+	// 	// console.log(e.target.getAttribute('value'));
+	// 	// console.log('touched');
+	// };
 
 	return (
 		<div>
@@ -83,11 +54,7 @@ const Recipes = ({ user, userId, token }) => {
 					<Searchbar />
 					<div className="recipe-container">
 						{foundRecipes.map((data) => (
-							<div key={data._id} onClick={handleClick}>
-								{/* {data.name} {data.user.username} */}
-								{/* {data.imgUrl} */}
-								{/* <input id="heart" type="checkbox" /> */}
-
+							<div key={data._id}>
 								<Link to={`/recipes/recipedish/${data._id}`}>
 									<RecipeCard
 										image={data.imgUrl}
@@ -99,14 +66,11 @@ const Recipes = ({ user, userId, token }) => {
 								</Link>
 
 								<div className="name-link">
-									<Link to={`/recipes/${recipe}/${data._id}`}>
+									<Link to={`/recipes/recipedish/${data._id}`}>
 										<h1>{data.name}</h1>
 									</Link>
 								</div>
 								<p>By: {data.user.username}</p>
-								{/* <h1>{recipeName}</h1>
-							<p>By: {user}</p> */}
-								{/* {data._id} */}
 							</div>
 						))}
 					</div>

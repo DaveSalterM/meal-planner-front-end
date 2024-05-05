@@ -79,3 +79,19 @@ h1{
     background-color: #5fcf4e;
   }
   
+  @media screen and (max-width: 768px) {
+
+    .left {
+      width: 60%;
+      padding: 40px 40px 40px 20px;
+  }
+  
+    .user-form {
+      scale: 130%;
+    }
+
+    .centered {
+      top: 30%;
+  }
+
+}

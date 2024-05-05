@@ -1,6 +1,8 @@
 // import React from 'react';
 import { useEffect, useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,11 +13,10 @@ import './styles.css';
 
 // toast.configure();
 
-const SingleRecipePage = ({ id, user, userId, token }) => {
+const SingleRecipePage = ({ user, userId, token }) => {
 	const { recipeId } = useParams();
+	const navigate = useNavigate();
 
-	const [selectedDay, setSelectedDay] = useState(null);
-	const [toastKey, setToastKey] = useState(true);
 	const [recipeData, setRecipeData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [recipeReviews, setRecipeReviews] = useState([]);
@@ -35,10 +36,8 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 			})
 			.then(() => {
 				if (userId !== 0) {
-					API.getOneUser(userId).then((data) => {
-						setUserFavorites(data.favorites);
-						console.log(userId);
-						console.log(data.favorites);
+					API.getUserFavorites(userId).then((data) => {
+						setUserFavorites(data);
 					});
 				}
 
@@ -56,40 +55,50 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 	};
 
 	const handleMealPlan = () => {
-		// console.log('meal');
-		// toast('Meal plan', {
-		// 	position: toast.POSITION.BOTTOM_CENTER,
-		// });
-		// toast('WORKS');
-		// setToastKey(!toastKey);
-		toast(
-			<CustomToast
-				// key={toastKey}
-				userId={userId}
-				recipeId={recipeId}
-				token={token}
-			/>
-		);
+		if (userId === 0) {
+			navigate('/login');
+		} else {
+			toast(
+				<CustomToast
+					// key={toastKey}
+					userId={userId}
+					recipeId={recipeId}
+					token={token}
+				/>
+			);
+		}
 	};
 
 	const handleLike = () => {
-		API.likeRecipe(userId, { recipeId: recipeData._id }, token).then(() => {
-			setUserFavorites([...userFavorites, recipeData._id]);
-		});
+		if (userId === 0) {
+			navigate('/login');
+		} else {
+			API.likeRecipe(userId, { recipeId: recipeData._id }, token).then(() => {
+				setUserFavorites([...userFavorites, recipeData._id]);
+			});
+		}
 	};
 
 	const handleUnlike = () => {
-		API.unlikeRecipe(userId, { recipeId: recipeData._id }, token).then(() => {
-			setUserFavorites(
-				userFavorites.filter((recipeId) => {
-					recipeId !== recipeData._id;
-				})
-			);
-		});
+		if (userId === 0) {
+			navigate('/login');
+		} else {
+			API.unlikeRecipe(userId, { recipeId: recipeData._id }, token).then(() => {
+				setUserFavorites(
+					userFavorites.filter((recipeId) => {
+						recipeId !== recipeData._id;
+					})
+				);
+			});
+		}
 	};
 
 	const handleShowReview = () => {
-		setShowReview(true);
+		if (userId === 0) {
+			navigate('/login');
+		} else {
+			setShowReview(true);
+		}
 	};
 
 	const handleReviewChange = (e) => {
@@ -105,11 +114,11 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 			token
 		).then(() => {
 			setRecipeReviews([
-				...recipeReviews,
 				{
 					content: reviewContent,
-					user: user.username,
+					user: user,
 				},
+				...recipeReviews,
 			]);
 			setReviewContent('');
 			setShowReview(false);

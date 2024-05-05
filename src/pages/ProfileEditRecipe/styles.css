@@ -1,7 +1,34 @@
-.entirepage{
-    display: flex;
+.entirepage {
+	display: flex;
 }
-.test{
-    justify-content: center;
-    width: 100vw;
+.test {
+	justify-content: center;
+	width: 100vw;
+}
+
+.name-and-edit {
+	display: flex;
+	justify-content: space-between;
+}
+
+.card{
+    margin: 1rem
+}
+.sidebar a{
+    text-decoration: none;
+}
+
+@media screen and (max-width: 431px) {
+    
+	.recipe-page {
+		scale: 40%;
+	}
+	.recipe-form {
+		width: auto;
+	}
+
+	#side-item{
+		font-size: 0.3rem;
+	}
+
 }
