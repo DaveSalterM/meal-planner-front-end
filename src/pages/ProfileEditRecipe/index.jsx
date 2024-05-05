@@ -7,7 +7,7 @@ import RecipeCard from '../../components/RecipeCard';
 import './styles.css';
 <h1>Profile</h1>;
 
-const ProfileEditRecipe = ({ user, userId, token }) => {
+const ProfileEditRecipe = ({ user, userId, token, logout }) => {
 	const navigate = useNavigate();
 
 	const [userRecipes, setUserRecipes] = useState([]);
@@ -25,14 +25,14 @@ const ProfileEditRecipe = ({ user, userId, token }) => {
 
 	const handleLogout = () => {
 		// Perform logout logic here
-		// props.logout();
-		// navigate('/login');
+		logout();
+		navigate('/login');
 	};
 
 	return (
 		<div className="entirepage">
 			<div className="sidebar-column">
-            <ul className="sidebar">
+				<ul className="sidebar">
 					<Link to={'/profile/favorites'}>
 						<li id="side-item">Favorites</li>
 					</Link>
@@ -50,7 +50,7 @@ const ProfileEditRecipe = ({ user, userId, token }) => {
 			) : (
 				<div className="test">
 					{userRecipes.map((recipe) => (
-						<div className='card' key={recipe._id}>
+						<div className="card" key={recipe._id}>
 							<Link to={`/recipes/recipedish/${recipe._id}`}>
 								<RecipeCard
 									image={recipe.imgUrl}

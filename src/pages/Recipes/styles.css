@@ -9,15 +9,17 @@
 .recipe-container {
 	/* display: flex; */
 	display: grid;
-	grid-template-columns: 400px 400px 400px 400px;
+	/* grid-template-columns: 400px 400px 400px 400px; */
+	grid-template-columns: repeat(auto-fit, minmax(400px, 0.5fr));
+
 	justify-content: space-evenly;
 	gap: 10px;
 }
 
 .recipe-container img {
-	background-color: white;
-	/* object-fit: cover; */
-	object-fit: contain;
+	/* background-color: white; */
+	object-fit: cover;
+	/* object-fit: contain; */
 	border-style: unset;
 }
 
