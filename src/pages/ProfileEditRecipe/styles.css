@@ -26,9 +26,26 @@
 	.recipe-form {
 		width: auto;
 	}
-
+    .test{
+        width: 40%;
+        display: flex;
+flex-direction: column;
+margin-top: -19rem;
+margin-left: 1rem;
+        /* justify-content: space-evenly */
+    }
 	#side-item{
 		font-size: 0.3rem;
 	}
+    .card{
+        margin: 0.1rem;
+       
+}
+.card-container{
+min-height: 150px;
 
+}
+.name-and-edit {
+	font-size: 7px;
+}
 }
