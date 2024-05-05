@@ -16,7 +16,8 @@
 
 .recipe-container img {
 	background-color: white;
-	object-fit: cover;
+	/* object-fit: cover; */
+	object-fit: contain;
 	border-style: unset;
 }
 
