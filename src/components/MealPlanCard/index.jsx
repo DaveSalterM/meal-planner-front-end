@@ -1,6 +1,7 @@
 import API from '../../../utils/API';
 import './styles.css';
 import { Link } from 'react-router-dom';
+import { FaTrashAlt } from 'react-icons/fa';
 //import { useEffect, useState } from 'react';
 
 
@@ -9,9 +10,9 @@ const MealPlanCard = (props) => {
     //const [listMealPlan, setListMealPlan] = useState([]);
 
     const handleDeleteRecipe = (recipe) => {
-        console.log("Delete Recipe:",recipe.name, "from",props.day);
-        console.log("User prop", props.user._id);
-        console.log("token", props.token);
+        // console.log("Delete Recipe:",recipe.name, "from",props.day);
+        // console.log("User prop", props.user._id);
+        // console.log("token", props.token);
         API.removeFromMealPlan(
             props.user._id,
             { recipeId: recipe._id, dayOfWeek: props.day },
@@ -34,9 +35,7 @@ const MealPlanCard = (props) => {
                         <Link to={'/recipes/recipedish/' + recipe._id} key={index} className='plan-link'>
                             {`${recipe.name}`}
                         </Link>
-                        <div className="plan-delete" onClick={() => handleDeleteRecipe(recipe)} >
-                            x
-                        </div>
+                        <FaTrashAlt className="plan-delete" onClick={() => handleDeleteRecipe(recipe)} />
                     </li> 
                 ));
                 console.log("listRecipes", listRecipes)

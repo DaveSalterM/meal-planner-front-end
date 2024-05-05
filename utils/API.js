@@ -141,6 +141,18 @@ const API = {
 		}).then((res) => res.json());
 	},
 
+	removeFromShoppingList: (userId, shoppingListData, token) => {
+		console.log('Shopping List', shoppingListData);
+		return fetch(`${URL_PREFIX}/api/users/${userId}/shoppinglist`, {
+			method: 'DELETE',
+			body: JSON.stringify(shoppingListData),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		}).then((res) => res.json());
+	},
+
 	// Update recipe
 	updateRecipe: (recipeId, recipeData, token) => {
 		return fetch(`${URL_PREFIX}/api/recipes/recipe/${recipeId}`, {

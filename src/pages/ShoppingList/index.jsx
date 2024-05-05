@@ -1,7 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import convert from 'convert-units';
+import API from '../../../utils/API';
 import { useCallback, useEffect, useState } from 'react';
 import { useBeforeUnload } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { FaTrashAlt } from 'react-icons/fa';
 import './styles.css';
 
 const ShoppingList = (props) => {
@@ -146,6 +149,18 @@ const ShoppingList = (props) => {
 		);
 	};
 
+    const handleDeleteRecipe = (recipe) => {
+        console.log('Delete Recipe:', recipe[0]);
+        API.removeFromShoppingList(
+            props.user._id,
+            { recipeId: recipe[0]._id },
+            props.token
+        ).then((response) => {
+            console.log('Recipe removed from shopping list:', response);
+            window.location.reload();
+        });
+    };
+
     const renderShoppingList = () => {        
         // Consolidate ingredients into one array of objects
         // Each object is keyed with the ingredient name and has a value of the total amount and unit
@@ -202,8 +217,13 @@ const ShoppingList = (props) => {
                         <ul className="shop-ul"> {
                             
                             userRecipes.map((recipe, index) => (
+                                
                                 <li className="shop-li" key={recipe[0]._id}>
-                                    {recipe[0].name} 
+                                      
+                                    <Link to={'/recipes/recipedish/' + recipe[0]._id} key={index} className='shop-link'>
+                                        {`${recipe[0].name}`}
+                                    </Link>
+                                    <FaTrashAlt className="shop-delete" onClick={() => handleDeleteRecipe(recipe)} />
                                     <input
                                         type="number"
                                         value={userRecipes[index][1]}
