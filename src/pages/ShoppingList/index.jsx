@@ -10,13 +10,14 @@ const ShoppingList = (props) => {
     
     // Stores user recipes from props
     // But functions as a boolean to check if props have loaded
-    let propsLoaded = props.user.recipes;
+    let propsLoaded = props.user.shopping_list;
+    let getList = props.user.shopping_list;
     if(propsLoaded && userRecipes.length === 0){
-        let aux = props.user.recipes.map((recipe) => (
+        let aux = getList.map((recipe) => (
                 // [Recipe, quantity]
                 [recipe, 1]
             ));
-        
+        console.log(props.user);
         const localList = JSON.parse(localStorage.getItem("userList"));
         
         console.log('Check localList: ', localList)
@@ -24,9 +25,15 @@ const ShoppingList = (props) => {
             console.log("made it here", localList)
             if(localList[props.userId] !== undefined) {
                 for(let i = 0; i < aux.length; i++) {
+                    if(localList[props.userId][aux[i][0]._id] === undefined) {
+                        console.log('quantity undefined')
+                        aux[i][1] = 1;
+                    } else {
                     aux[i][1] = localList[props.userId][aux[i][0]._id];
+                    }
                 }
-                console.log('IF localList: ', localList)
+                console.log("IF aux:", aux)
+                if(aux.length !== 0) setRecipes(aux);
             }  else {
             let localList = {};
             localList[props.userId] = {};
@@ -37,13 +44,14 @@ const ShoppingList = (props) => {
             }   
             localStorage.setItem("userList", JSON.stringify(localList));
         }
-        setRecipes(aux);
+        
+        if(aux.length !== 0) setRecipes(aux);
     }
     
     const updateLocalStorage = () => {
         let localList = JSON.parse(localStorage.getItem("userList"));
             
-        
+        console.log('update localList: ', localList)
         if(localList !== null) {
             
             if(localList[props.userId] !== undefined) {
@@ -123,8 +131,9 @@ const ShoppingList = (props) => {
 
 	//Use effect that renders the shopping list when the userRecipes array is updated
 	useEffect(() => {
-		if (propsLoaded) getShoppingList();
+		if (propsLoaded) renderShoppingList();
 		if (propsLoaded) updateLocalStorage();
+        console.log('userRecipes: ', userRecipes);
 	}, [userRecipes]);
 
 
@@ -137,7 +146,7 @@ const ShoppingList = (props) => {
 		);
 	};
 
-    const getShoppingList = () => {        
+    const renderShoppingList = () => {        
         // Consolidate ingredients into one array of objects
         // Each object is keyed with the ingredient name and has a value of the total amount and unit
         let shoppingList = {};

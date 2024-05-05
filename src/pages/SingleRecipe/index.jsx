@@ -47,14 +47,11 @@ const SingleRecipePage = ({ user, userId, token }) => {
 	}, [recipeId, userId]);
 
 	const handleShoppingList = () => {
-		if (userId === 0) {
-			navigate('/login');
-		} else {
-			// console.log(recipeId);
-			API.addToShoppingList(userId, { recipeId: recipeId }, token).then(() =>
-				console.log('SUBMITTED')
-			);
-		}
+		// console.log(recipeId);
+		API.addToShoppingList(userId, { recipeId: recipeId }, token).then(() =>
+			console.log('SUBMITTED', user),
+			window.location.reload()
+		);
 	};
 
 	const handleMealPlan = () => {
