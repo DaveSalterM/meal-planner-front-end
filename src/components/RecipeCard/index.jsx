@@ -65,10 +65,6 @@ const RecipeCard = ({ image, id, user, userId, token }) => {
 				</div>
 				<img src={image} alt="burger" />
 			</div>
-
-			{/* <h1>{recipeName}</h1>
-			<p>By: {user}</p> */}
-			{/* <img src="http://localhost:3001/uploads/image-1714443178086.jpg" alt="" /> */}
 		</div>
 	);
 };

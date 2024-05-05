@@ -17,8 +17,10 @@ import ShoppingList from './pages/ShoppingList/index.jsx';
 // >>>>>>> dev
 import EditRecipe from './components/EditRecipe/index.jsx';
 import Favorites from './components/Favorites/index.jsx';
+import PageNotExist from './pages/404/index.jsx';
 import ChangePassword from './pages/ChangePassword/index.jsx';
 import Login from './pages/Login/index.jsx';
+import NoRecipe from './pages/NoRecipe/index.jsx';
 import Profile from './pages/Profile/index.jsx';
 import ProfileEditRecipe from './pages/ProfileEditRecipe/index.jsx';
 import Recipes from './pages/Recipes/index.jsx';
@@ -188,7 +190,8 @@ function App() {
 						<EditRecipe token={token} />
 					}
 				/>
-				<Route path="*" element={<h1>notFound</h1>} />
+				<Route path="/notfound/:recipe" element={<NoRecipe />}></Route>
+				<Route path="*" element={<PageNotExist />} />
 			</Routes>
 		</Router>
 	);

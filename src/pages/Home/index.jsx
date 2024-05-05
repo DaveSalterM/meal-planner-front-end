@@ -27,25 +27,29 @@ const Home = ({ user, userId, token }) => {
 			) : (
 				<>
 					<Searchbar />
-					<h1>Featured Recipes</h1>
 					<div>
+						<h1 className="home-title">Featured Recipes</h1>
+					</div>
+					<div className="best-recipe-container">
 						{bestRecipes.map((data) => (
-							<div key={data._id}>
-								<Link to={`/recipes/recipedish/${data._id}`}>
-									<RecipeCard
-										image={data.imgUrl}
-										id={data._id}
-										user={user}
-										userId={userId}
-										token={token}
-									/>
-								</Link>
-								<div className="name-link">
+							<div key={data._id} className="recipe-card-container">
+								<div>
 									<Link to={`/recipes/recipedish/${data._id}`}>
-										<h1>{data.name}</h1>
+										<RecipeCard
+											image={data.imgUrl}
+											id={data._id}
+											user={user}
+											userId={userId}
+											token={token}
+										/>
 									</Link>
+									<div className="name-link">
+										<Link to={`/recipes/recipedish/${data._id}`}>
+											<h1>{data.name}</h1>
+										</Link>
+									</div>
+									<p>By: {data.user.username}</p>
 								</div>
-								<p>By: {data.user.username}</p>
 							</div>
 						))}
 					</div>
