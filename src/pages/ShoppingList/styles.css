@@ -14,6 +14,23 @@
 	display: block;
 	flex-wrap: wrap;
 }
+
+.shop-delete {
+    color: red;
+    cursor: pointer;
+    display: none;
+}
+
+.shop-link {
+	text-decoration: none;
+    color: black;
+}
+
+.shop-link:hover + .shop-delete, .shop-delete:hover { 
+    display: inline;
+	cursor: pointer;
+}
+
 .shop-li {
 	list-style-type: none;
 	display: block;
@@ -52,6 +69,8 @@
 	background-repeat: no-repeat;
 	background-size: 1500px;
 }
+
+
 
 @media screen and (max-width: 768px) {
     
