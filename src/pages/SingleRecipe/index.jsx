@@ -48,14 +48,11 @@ const SingleRecipePage = ({ id, user, userId, token }) => {
 	}, [recipeId, userId]);
 
 	const handleShoppingList = () => {
-		console.log('shop');
-	};
-
-	const handleToastSubmit = () => {
-		console.log('submitted');
-
-		console.log(selectedDay);
-		toast.dismiss();
+		// console.log(recipeId);
+		API.addToShoppingList(userId, { recipeId: recipeId }, token).then(() =>
+			console.log('SUBMITTED', user),
+			window.location.reload()
+		);
 	};
 
 	const handleMealPlan = () => {
