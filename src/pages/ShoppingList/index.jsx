@@ -16,6 +16,7 @@ const ShoppingList = (props) => {
     let propsLoaded = props.user.shopping_list;
     let getList = props.user.shopping_list;
     if(propsLoaded && userRecipes.length === 0){
+        console.log('Check getList:', userRecipes);
         let aux = getList.map((recipe) => (
                 // [Recipe, quantity]
                 [recipe, 1]
@@ -24,9 +25,9 @@ const ShoppingList = (props) => {
         const localList = JSON.parse(localStorage.getItem("userList"));
         
         console.log('Check localList: ', localList)
-        if(localList !== undefined) {
+        if(localList !== null) {
             console.log("made it here", localList)
-            if(localList[props.userId] !== undefined) {
+            if(props.userId in localList) {
                 for(let i = 0; i < aux.length; i++) {
                     if(localList[props.userId][aux[i][0]._id] === undefined) {
                         console.log('quantity undefined')
@@ -38,7 +39,7 @@ const ShoppingList = (props) => {
                 console.log("IF aux:", aux)
                 if(aux.length !== 0) setRecipes(aux);
             }  else {
-            let localList = {};
+            //let localList = {};
             localList[props.userId] = {};
             console.log('ELSE localList: ', localList)
             aux.forEach((recipe) => {
@@ -46,10 +47,14 @@ const ShoppingList = (props) => {
             });
             }   
             localStorage.setItem("userList", JSON.stringify(localList));
+        } else {
+        let newList = {};
+        newList[props.userId] = {};
+        console.log('ELSE aux:', newList)
+        localStorage.setItem("userList", JSON.stringify(newList));
         }
-        
         if(aux.length !== 0) setRecipes(aux);
-    }
+    } 
     
     const updateLocalStorage = () => {
         let localList = JSON.parse(localStorage.getItem("userList"));
@@ -67,7 +72,6 @@ const ShoppingList = (props) => {
                 localStorage.setItem("userList", JSON.stringify(localList));
             
             }
-        
         }
         
     };
