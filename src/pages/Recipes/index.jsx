@@ -1,7 +1,7 @@
 // import React from 'react';
 import { useEffect, useState } from 'react';
 // import { FaRegStar } from 'react-icons/fa';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import API from '../../../utils/API';
 
 // import FavoritesButton from '../../components/FavoriteBtn';
@@ -14,13 +14,11 @@ const Recipes = ({ user, userId, token }) => {
 	// Need to create an method in API file to fetch the recipes
 	// Set recipes to state
 	// Render recipes to cards
+	const navigate = useNavigate();
 
 	const [foundRecipes, setFoundRecipes] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
-
-	// const [userData, setUserData] = useState(null);
-	// const [userFavorites, setUserFavorites] = useState([]);
-	// const [testLike, setTestLike] = useState(['663158158e036292a64fd6eb']);
+	const [hasRecipe, setHasRecipe] = useState(true);
 
 	const { recipe } = useParams();
 
@@ -28,7 +26,12 @@ const Recipes = ({ user, userId, token }) => {
 	useEffect(() => {
 		API.getSearchedRecipe(recipe)
 			.then((response) => {
+				if (response.length === 0) {
+					// setHasRecipe(false);
+					navigate(`/notfound/${recipe}`, { replace: true });
+				}
 				setFoundRecipes(response);
+				// console.log(response.length === 0);
 			})
 			.then(() => {
 				// console.log(user);
@@ -52,28 +55,30 @@ const Recipes = ({ user, userId, token }) => {
 			) : (
 				<>
 					<Searchbar />
-					<div className="recipe-container">
-						{foundRecipes.map((data) => (
-							<div key={data._id}>
-								<Link to={`/recipes/recipedish/${data._id}`}>
-									<RecipeCard
-										image={data.imgUrl}
-										id={data._id}
-										user={user}
-										userId={userId}
-										token={token}
-									/>
-								</Link>
-
-								<div className="name-link">
+					<>
+						<div className="recipe-container">
+							{foundRecipes.map((data) => (
+								<div key={data._id} className="recipe-card-container">
 									<Link to={`/recipes/recipedish/${data._id}`}>
-										<h1>{data.name}</h1>
+										<RecipeCard
+											image={data.imgUrl}
+											id={data._id}
+											user={user}
+											userId={userId}
+											token={token}
+										/>
 									</Link>
+
+									<div className="name-link">
+										<Link to={`/recipes/recipedish/${data._id}`}>
+											<h1>{data.name}</h1>
+										</Link>
+									</div>
+									<p>By: {data.user.username}</p>
 								</div>
-								<p>By: {data.user.username}</p>
-							</div>
-						))}
-					</div>
+							))}
+						</div>
+					</>
 				</>
 			)}
 		</div>
