@@ -17,11 +17,11 @@ const Profile = (props) => {
 		<div>
 			<div className="sidebar-column">
 				<ul className="sidebar">
-					<Link to={'/profile/favorites'}>
+					<Link to={'/profile/favorites'} style={{ textDecoration: 'none' }}>
 						<li id="side-item">Favorites</li>
 					</Link>
 					<li id="side-item">Change Password</li>
-					<Link to={`/profile/editrecipes`}>
+					<Link to={`/profile/editrecipes`} style={{ textDecoration: 'none' }}>
 						<li id="side-item">Your Recipes</li>
 					</Link>
 					<li id="side-items" className="sidebars" onClick={handleLogout}>
