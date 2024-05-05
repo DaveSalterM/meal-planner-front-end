@@ -3,6 +3,7 @@
 // import viteLogo from '/vite.svg';
 import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+
 import API from '../utils/API.js';
 import './App.css';
 import Navbar from './components/Navbar/index.jsx';
@@ -16,6 +17,7 @@ import ShoppingList from './pages/ShoppingList/index.jsx';
 // >>>>>>> dev
 import EditRecipe from './components/EditRecipe/index.jsx';
 import Favorites from './components/Favorites/index.jsx';
+import ChangePassword from './pages/ChangePassword/index.jsx';
 import Login from './pages/Login/index.jsx';
 import Profile from './pages/Profile/index.jsx';
 import ProfileEditRecipe from './pages/ProfileEditRecipe/index.jsx';
@@ -29,7 +31,7 @@ function App() {
 	const [token, setToken] = useState('');
 	const [user, setUser] = useState({});
 	// >>>>>>> dev
-
+	// const navigate = useNavigate();
 	//Pulls token from local storage
 	// Uses API.checkToken to verify if it's valid
 	// IF it is, setToken and setUserId
@@ -87,13 +89,16 @@ function App() {
 	// Passes object to API.login
 	// API.login returns a promise
 	// Sets token and userId to local storage
-	const handleLogin = (obj) => {
+	const handleLogin = (e, obj) => {
 		API.login(obj).then((data) => {
-			// console.log(data);
-			setUserId(data.user._id);
-			setToken(data.token);
-			localStorage.setItem('token', data.token);
-			localStorage.setItem('userId', data.user._id);
+			if (!data.msg) {
+				setUserId(data.user._id);
+				setToken(data.token);
+				localStorage.setItem('token', data.token);
+				localStorage.setItem('userId', data.user._id);
+			} else {
+				e.preventDefault();
+			}
 		});
 	};
 
@@ -114,7 +119,10 @@ function App() {
 				{/* Pass token and userId to all pages that require user to be logged in */}
 				{/* ============================ *IMPORTANT ============================ */}
 				{/* <<<<<<< HEAD */}
-				<Route path="/" element={<Home userId={userId} token={token} />} />
+				<Route
+					path="/"
+					element={<Home user={user} userId={userId} token={token} />}
+				/>
 				<Route
 					path="profile"
 					element={<Profile logout={logout} userId={userId} token={token} />}
@@ -162,6 +170,10 @@ function App() {
 				<Route
 					path="/profile/favorites"
 					element={<Favorites user={user} userId={userId} token={token} />}
+				></Route>
+				<Route
+					path="/profile/changepassword"
+					element={<ChangePassword userId={userId} />}
 				></Route>
 				<Route
 					path="/profile/editrecipes"
