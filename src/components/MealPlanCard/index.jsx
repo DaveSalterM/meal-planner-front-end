@@ -38,13 +38,11 @@ const MealPlanCard = (props) => {
                         <FaTrashAlt className="plan-delete" onClick={() => handleDeleteRecipe(recipe)} />
                     </li> 
                 ));
-                console.log("listRecipes", listRecipes)
                 return listRecipes;
                 // setListMealPlan(listRecipes);
                 // console.log("listMealPlan", listMealPlan)
             }
         }
-        console.log("=======================")
     }
     
     // useEffect(() => {

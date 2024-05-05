@@ -9,6 +9,7 @@ const Profile = (props) => {
 
 	const handleLogout = () => {
 		// Perform logout logic here
+		console.log('Logging out...');
 		props.logout();
 		navigate('/login'); // Redirect to login page after logout
 	};
