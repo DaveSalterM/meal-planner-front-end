@@ -17,24 +17,25 @@ const Profile = (props) => {
 		<div>
 			<div className="sidebar-column">
 				<ul className="sidebar">
-					<Link to={'/profile/favorites'}>
+					<Link to={'/profile/favorites'} style={{ textDecoration: 'none' }}>
 						<li id="side-item">Favorites</li>
 					</Link>
 					<li id="side-item">Change Password</li>
-					<Link to={`/profile/editrecipes`}>
-						<li id="side-item">Edit Recipes</li>
+					<Link to={`/profile/editrecipes`} style={{ textDecoration: 'none' }}>
+						<li id="side-item">Your Recipes</li>
 					</Link>
-					<li id="side-item">Your Recipes</li>
 					<li id="side-items" className="sidebars" onClick={handleLogout}>
 						Logout
 					</li>
 				</ul>
 			</div>
-			<div className="test">
-				<h1>Hi there</h1>
-			</div>
-		</div>
-	);
+            <div className='test'>
+                
+        
+            </div>
+            </div>
+    
+    );
 };
 
 export default Profile;

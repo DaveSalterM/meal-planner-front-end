@@ -41,7 +41,9 @@
 .name-link {
 	display: inline-block;
 }
-
+.name-link a{
+	text-decoration: none;
+}
 @media screen and (max-width: 768px) {
     .recipe-container {
 	scale: 90%;
