@@ -20,7 +20,8 @@ button {
 	display: grid;
 	/* grid-template-columns: 400px 400px 400px 400px; */
 	grid-template-columns: repeat(auto-fit, minmax(400px, 0.5fr));
-	justify-content: space-evenly;
+	/* justify-content: space-evenly; */
+	justify-items: center;
 	gap: 10px;
 }
 
@@ -35,6 +36,11 @@ button {
 
 .recipe-card-container {
 	margin-bottom: 10px;
+}
+
+.recipe-card-container a {
+	display: block;
+	width: 400px;
 }
 
 .home-title {

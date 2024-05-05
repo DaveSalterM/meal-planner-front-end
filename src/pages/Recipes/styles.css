@@ -11,8 +11,8 @@
 	display: grid;
 	/* grid-template-columns: 400px 400px 400px 400px; */
 	grid-template-columns: repeat(auto-fit, minmax(400px, 0.5fr));
-
-	justify-content: space-evenly;
+	justify-items: center;
+	/* justify-content: space-evenly; */
 	gap: 10px;
 }
 
@@ -25,7 +25,7 @@
 
 .recipe-container div {
 	margin-top: 10px;
-	text-align: center;
+	/* text-align: center; */
 	border-style: none;
 }
 
