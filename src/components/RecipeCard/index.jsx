@@ -1,5 +1,6 @@
 // import React from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 import API from '../../../utils/API';
 // import burger from './burger.jpg';
 // import { Link } from 'react-router-dom';
@@ -9,6 +10,8 @@ import './styles.css';
 
 const RecipeCard = ({ image, id, user, userId, token }) => {
 	const [userFavorites, setUserFavorites] = useState([]);
+	const navigate = useNavigate();
+
 	// const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -23,21 +26,31 @@ const RecipeCard = ({ image, id, user, userId, token }) => {
 	}, [userId]);
 
 	const handleLike = (e) => {
-		e.preventDefault();
-		API.likeRecipe(userId, { recipeId: id }, token).then(() => {
-			setUserFavorites([...userFavorites, id]);
-		});
+		if (userId === 0) {
+			e.preventDefault();
+			navigate('/login');
+		} else {
+			e.preventDefault();
+			API.likeRecipe(userId, { recipeId: id }, token).then(() => {
+				setUserFavorites([...userFavorites, id]);
+			});
+		}
 	};
 
 	const handleUnlike = (e) => {
-		e.preventDefault();
-		API.unlikeRecipe(userId, { recipeId: id }, token).then(() => {
-			setUserFavorites(
-				userFavorites.filter((recipeId) => {
-					recipeId !== id;
-				})
-			);
-		});
+		if (userId === 0) {
+			e.preventDefault();
+			navigate('/login');
+		} else {
+			e.preventDefault();
+			API.unlikeRecipe(userId, { recipeId: id }, token).then(() => {
+				setUserFavorites(
+					userFavorites.filter((recipeId) => {
+						recipeId !== id;
+					})
+				);
+			});
+		}
 	};
 
 	return (

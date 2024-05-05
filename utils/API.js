@@ -18,8 +18,8 @@ const API = {
 	// userobj = {username: "username", password: "password"}
 	// fetch sent to backend :
 	login: (userObj) => {
-		console.log('Logging in with credentials ');
-		console.log('API.jsx userObj: ', userObj);
+		// console.log('Logging in with credentials ');
+		// console.log('API.jsx userObj: ', userObj);
 		return fetch(`${URL_PREFIX}/api/users/login`, {
 			method: 'POST',
 			body: JSON.stringify(userObj),
@@ -141,6 +141,18 @@ const API = {
 		}).then((res) => res.json());
 	},
 
+	removeFromShoppingList: (userId, shoppingListData, token) => {
+		console.log('Shopping List', shoppingListData);
+		return fetch(`${URL_PREFIX}/api/users/${userId}/shoppinglist`, {
+			method: 'DELETE',
+			body: JSON.stringify(shoppingListData),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		}).then((res) => res.json());
+	},
+
 	// Update recipe
 	updateRecipe: (recipeId, recipeData, token) => {
 		return fetch(`${URL_PREFIX}/api/recipes/recipe/${recipeId}`, {
@@ -158,6 +170,22 @@ const API = {
 		return fetch(`${URL_PREFIX}/api/users/${userId}/favorites`).then((res) =>
 			res.json()
 		);
+	},
+
+	// Update user password
+	updatePassword: (userId, passwordData) => {
+		return fetch(`${URL_PREFIX}/api/users/${userId}`, {
+			method: 'PUT',
+			body: JSON.stringify(passwordData),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((res) => res);
+	},
+
+	// Get most liked recipes
+	getSortedRecipes: () => {
+		return fetch(`${URL_PREFIX}/api/recipes`).then((res) => res.json());
 	},
 };
 
