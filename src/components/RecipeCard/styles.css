@@ -45,15 +45,3 @@
 /* .test-star {
 	color: red;
 } */
-
-@media screen and (max-width: 431px) {
-	.card-container{
-		width: 100px;
-		height: 100px;
-		justify-content: space-between;
-	}
-	.img-card {
-		width: 150px;
-		height: 150px;
-	}
-}
