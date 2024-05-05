@@ -30,9 +30,9 @@ const Favorites = ({ user, userId, token }) => {
 			{isLoading ? (
 				<h1>Loading</h1>
 			) : (
-				<div>
+				<div className='favorites'>
 					{userFavorites.map((favorite) => (
-						<div key={favorite._id}>
+						<div className='hi' key={favorite._id}>
 							<Link to={`/recipes/recipedish/${favorite._id}`}>
 								<RecipeCard
 									image={favorite.imgUrl}

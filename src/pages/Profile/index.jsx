@@ -22,9 +22,8 @@ const Profile = (props) => {
 					</Link>
 					<li id="side-item">Change Password</li>
 					<Link to={`/profile/editrecipes`}>
-						<li id="side-item">Edit Recipes</li>
+						<li id="side-item">Your Recipes</li>
 					</Link>
-					<li id="side-item">Your Recipes</li>
 					<li id="side-items" className="sidebars" onClick={handleLogout}>
 						Logout
 					</li>
