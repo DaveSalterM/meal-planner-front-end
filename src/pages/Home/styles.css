@@ -44,11 +44,14 @@ button {
 }
 
 .home-title {
-	margin-left: 55px;
+	margin-left: 45px;
 	margin-top: 30px;
 	margin-bottom: 30px;
 	width: fit-content;
-	border-bottom: 1px solid black;
+	/* border-bottom: 1px solid black; */
+	background-color: white;
+	padding: 15px;
+	border-radius: 10px;
 }
 
 @media screen and (max-width: 768px) {
