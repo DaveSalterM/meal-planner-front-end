@@ -24,16 +24,21 @@ const Login = (props) => {
 	};
 
 	// Login Handler
-	const loginHandler = (e) => {
+	const loginHandler = async (e) => {
 		e.preventDefault();
-		const username = e.target.username.value;
-		const password = e.target.password.value;
-		const result = props.handleLogin(e, { username, password });
 
-		if (!result) {
-			passToast();
-		} else {
-			navigate('/');
+		try {
+			const username = e.target.username.value;
+			const password = e.target.password.value;
+			const result = await props.handleLogin(e, { username, password });
+
+			if (!result) {
+				passToast();
+			} else {
+				navigate('/');
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
