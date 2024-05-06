@@ -48,8 +48,8 @@ const SingleRecipePage = ({ user, userId, token }) => {
 
 	const handleShoppingList = () => {
 		// console.log(recipeId);
-		API.addToShoppingList(userId, { recipeId: recipeId }, token).then(() =>
-			console.log('SUBMITTED', user),
+		API.addToShoppingList(userId, { recipeId: recipeId }, token).then(
+			() => console.log('SUBMITTED', user),
 			window.location.reload()
 		);
 	};
@@ -220,7 +220,7 @@ const SingleRecipePage = ({ user, userId, token }) => {
 					<ToastContainer
 						position="bottom-center"
 						autoClose={false}
-						limit={1}
+						limit={2}
 						newestOnTop={false}
 						closeOnClick={false}
 						rtl={false}
