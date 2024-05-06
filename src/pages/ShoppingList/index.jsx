@@ -12,62 +12,86 @@ const ShoppingList = (props) => {
     const [shoppingList, setShoppingList] = useState([]);
     
     // Stores user recipes from props
-    // But functions as a boolean to check if props have loaded
-    let propsLoaded = props.user.shopping_list;
+    // Also used as a boolean to check if props have loaded
     let getList = props.user.shopping_list;
-    if(propsLoaded && userRecipes.length === 0){
-        console.log('Check getList:', userRecipes);
+    
+    // IF props have loaded AND userRecipes state is empty
+    if(getList && userRecipes.length === 0){
+        
+        // Populate an auxilary array with the recipes and initialize their quantities
         let aux = getList.map((recipe) => (
                 // [Recipe, quantity]
                 [recipe, 1]
             ));
-        console.log(props.user);
+
+        // Get the user's shopping list from local storage
         const localList = JSON.parse(localStorage.getItem("userList"));
         
-        console.log('Check localList: ', localList)
+        // Check IF there is a shopping list in local storage
+        // ELSE create a new list in local storage
         if(localList !== null) {
-            console.log("made it here", localList)
+            
+            // Check IF user has an entry in the shopping list under their user ID
+            // ELSE create a new entry in the shopping list under their user ID
             if(props.userId in localList) {
+                
+                // Loop through the auxilary array and update the quantities of the recipes
                 for(let i = 0; i < aux.length; i++) {
+                    
+                    // IF recipe does not have a tied quantity, initialize it to 1
+                    // ELSE set the quantity to the stored quantity
                     if(localList[props.userId][aux[i][0]._id] === undefined) {
-                        console.log('quantity undefined')
                         aux[i][1] = 1;
                     } else {
                     aux[i][1] = localList[props.userId][aux[i][0]._id];
                     }
                 }
-                console.log("IF aux:", aux)
+
+                // Set the userRecipes state to the updated auxilary array
+                // Gets caught in an infinite loop without the if statement
                 if(aux.length !== 0) setRecipes(aux);
+            
             }  else {
-            //let localList = {};
-            localList[props.userId] = {};
-            console.log('ELSE localList: ', localList)
-            aux.forEach((recipe) => {
-                localList[props.userId][recipe[0]._id] = 1;
-            });
-            }   
+            
+                //ELSE create a new entry in the shopping list under their user ID
+                // Also initializes quantities for each recipe to 1
+                localList[props.userId] = {};
+                aux.forEach((recipe) => {
+                    localList[props.userId][recipe[0]._id] = 1;
+                });
+            }
+            
+            // Update the local storage with the updated quantities
             localStorage.setItem("userList", JSON.stringify(localList));
+        
         } else {
-        let newList = {};
-        newList[props.userId] = {};
-        console.log('ELSE aux:', newList)
-        localStorage.setItem("userList", JSON.stringify(newList));
+            
+            // ELSE create a new list in local storage
+            let newList = {};
+            newList[props.userId] = {};
+            localStorage.setItem("userList", JSON.stringify(newList));
         }
+        
+        // Set the userRecipes state to the updated auxilary array
+        // Gets caught in an infinite loop without the if statement
         if(aux.length !== 0) setRecipes(aux);
     } 
     
+    // Updates the quantities of the recipes into local storage
     const updateLocalStorage = () => {
         let localList = JSON.parse(localStorage.getItem("userList"));
-            
-        console.log('update localList: ', localList)
+        
+        // Two if statements to check if the user has a shopping list and if the user has a local storage
         if(localList !== null) {
-            
             if(localList[props.userId] !== undefined) {
+                
+                // Updates the quantities of the recipes in the local storage to match the userRecipes state
                 let storedRecipes = {};
                 userRecipes.forEach((recipe) => {
                     storedRecipes[recipe[0]._id] = recipe[1];
                 });
                 
+                // Stores updated quantities under the user's ID in the local storage
                 localList[props.userId] = storedRecipes;
                 localStorage.setItem("userList", JSON.stringify(localList));
             
@@ -80,6 +104,7 @@ const ShoppingList = (props) => {
     // Called in getShoppingList after the for loops
     const convertUnits = (shoppingList) => {
         
+        // Initialize
         let convertedAmount = {
             val: 0,
             unit: ""
@@ -138,13 +163,12 @@ const ShoppingList = (props) => {
 
 	//Use effect that renders the shopping list when the userRecipes array is updated
 	useEffect(() => {
-		if (propsLoaded) renderShoppingList();
-		if (propsLoaded) updateLocalStorage();
-        console.log('userRecipes: ', userRecipes);
+		if (getList) renderShoppingList();
+		if (getList) updateLocalStorage();
 	}, [userRecipes]);
 
 
-	// This works btw
+	// Update the quantity of a recipe in the userRecipes array
 	const getRecipes = (recipeIndex, newQuantity) => {
 		setRecipes(
 			userRecipes.map((recipe, i) =>
@@ -153,14 +177,13 @@ const ShoppingList = (props) => {
 		);
 	};
 
+    // Remove a recipe from shopping list
     const handleDeleteRecipe = (recipe) => {
-        console.log('Delete Recipe:', recipe[0]);
         API.removeFromShoppingList(
             props.user._id,
             { recipeId: recipe[0]._id },
             props.token
-        ).then((response) => {
-            console.log('Recipe removed from shopping list:', response);
+        ).then(() => {
             window.location.reload();
         });
     };
