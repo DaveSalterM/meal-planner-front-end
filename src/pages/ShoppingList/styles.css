@@ -79,9 +79,8 @@
 
 
 @media screen and (max-width: 768px) {
-    
-    .right{
-        visibility: hidden;
-    }
+    #shop-container{
+		margin: 0 0 0 5%;
+	}
 
 }
