@@ -81,6 +81,10 @@ h1{
   
   @media screen and (max-width: 768px) {
 
+    .right{
+      visibility: hidden;
+    }
+
     .left {
       width: 60%;
       padding: 40px 40px 40px 20px;
