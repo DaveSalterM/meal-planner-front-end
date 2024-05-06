@@ -6,7 +6,7 @@
 	width: 28rem;
 	margin: 10px;
 	border-radius: 10px;
-	padding:15px 15px 20px 0px;
+	padding: 15px 15px 20px 0px;
 }
 
 #shop-container {
@@ -22,18 +22,21 @@
 }
 
 .shop-delete {
-    color: red;
-    cursor: pointer;
-    display: none;
+	margin-left: 20px;
+	color: red;
+	cursor: pointer;
+	/* display: none; */
 }
 
 .shop-link {
+	font-size: 24px;
 	text-decoration: none;
-    color: black;
+	color: black;
 }
 
-.shop-link:hover + .shop-delete, .shop-delete:hover { 
-    display: inline;
+.shop-link:hover + .shop-delete,
+.shop-delete:hover {
+	display: inline;
 	cursor: pointer;
 }
 
@@ -49,7 +52,7 @@
 	float: right;
 }
 
-.shop-title{
+.shop-title {
 	font-size: 32px;
 	margin: 5px 3rem;
 }
@@ -61,27 +64,27 @@
 	border-radius: 4px;
 }
 
-.shop-card, .shop-li, .shop-title, .shop-ul, .shop-header {
+.shop-card,
+.shop-li,
+.shop-title,
+.shop-ul,
+.shop-header {
 	height: auto;
-    background-color: white;
+	background-color: white;
 }
 
 .right {
-	
-    background-image: url("https://tanglewoodmoms.com/wp-content/uploads/2019/07/iStock-836782568.jpg");
-    object-fit: none;
-    z-index: 0;
+	background-image: url('https://tanglewoodmoms.com/wp-content/uploads/2019/07/iStock-836782568.jpg');
+	object-fit: none;
+	z-index: 0;
 	background-position: left 105% bottom 0%;
 	background-repeat: no-repeat;
 	background-size: 1500px;
 }
 
-
-
 @media screen and (max-width: 768px) {
-    #shop-container{
+	#shop-container {
 		margin: 0 0 0 2%;
 		scale: 90%;
 	}
-
 }
