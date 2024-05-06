@@ -204,6 +204,7 @@
 @media screen and (max-width: 768px) {
 	.image-buttons img {
 		width: 50%;
+		height: 50%;
 	}
 	.recipe-header {
 		margin-left: 0px;

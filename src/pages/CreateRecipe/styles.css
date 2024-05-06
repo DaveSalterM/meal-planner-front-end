@@ -205,6 +205,10 @@ input.upload-image {
 	font-size: 12px;
 }
 
+.recipe-form {
+	margin-left: 0px !important;
+}
+
 @media screen and (max-width: 768px) {
 	.recipe-form {
 		scale: 80%;

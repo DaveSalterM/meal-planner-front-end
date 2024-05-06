@@ -1,3 +1,11 @@
+.meal-plan h1{
+  background-color: white;
+  text-align: center;
+  border-radius: 10px;
+  width: 620px;
+  padding: 10px;
+}
+
 .meal-plan {
   display: flex;
   flex-direction: column;
