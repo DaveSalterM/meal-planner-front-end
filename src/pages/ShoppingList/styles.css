@@ -9,6 +9,12 @@
 	padding:15px 15px 20px 0px;
 }
 
+#shop-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
 .shop-ul {
 	list-style-type: none;
 	display: block;

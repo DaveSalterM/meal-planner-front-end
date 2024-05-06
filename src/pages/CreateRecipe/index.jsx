@@ -4,12 +4,16 @@ import { numericQuantity } from 'numeric-quantity';
 import { useState } from 'react';
 import 'react-dropdown/style.css';
 import { FaTrashAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import API from '../../../utils/API';
 import './styles.css';
 
 const CreateRecipe = (props) => {
 	const token = props.token;
 	// console.log('Create Recipe: ', props.user);
+	const navigate = useNavigate();
 
 	const regex =
 		/^(\d*)(\s{0,1}(\d{0,1})(\/?)(\d{0,1})|(\.\d{0,2})|\/(\d{0,1}))$/;
@@ -129,12 +133,6 @@ const CreateRecipe = (props) => {
 		// console.log(formData);
 	};
 
-	// const handleCaloriesChange = (e) => {
-	// 	const { value } = e.target;
-	// 	let onchangeVal = [...calories];
-	// 	onchangeVal = value;
-	// 	setCalories(onchangeVal);
-	// };
 	const handleCaloriesChange = (e) => {
 		setCalories(e.target.value);
 	};
@@ -156,29 +154,54 @@ const CreateRecipe = (props) => {
 		setIngredients(deleteVal);
 	};
 
+	const catchErrors = () => {
+		if (
+			recipeName &&
+			ingredients[0].ingredient &&
+			ingredients[0].amount &&
+			ingredients[0].unit !== 'Select' &&
+			instructions.length !== 0
+		) {
+			return true;
+		} else {
+			// Show toast saying something missing
+			toast.error('Enter all required input fields!');
+			return false;
+		}
+	};
+
 	const submitHandler = async (e) => {
 		e.preventDefault();
 
-		const formData = new FormData();
-		formData.append('image', image);
-		const { imageUrl } = await API.uploadImage(formData);
+		// const formData = new FormData();
+		// formData.append('image', image);
+		// const { imageUrl } = await API.uploadImage(formData);
 
-		try {
+		const errorFree = catchErrors();
+
+		if (errorFree) {
+			try {
+				e.preventDefault();
+				const formData = new FormData();
+				formData.append('image', image);
+				const { imageUrl } = await API.uploadImage(formData);
+				const newRecipe = await API.createRecipe(
+					{
+						name: recipeName,
+						ingredients: ingredients,
+						instructions: instructions,
+						calories: calories,
+						servings: servings,
+						imgUrl: imageUrl,
+					},
+					token
+				).then(() => navigate('/'));
+				// console.log('IT WORKS!!!');
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
 			e.preventDefault();
-			const newRecipe = await API.createRecipe(
-				{
-					name: recipeName,
-					ingredients: ingredients,
-					instructions: instructions,
-					calories: calories,
-					servings: servings,
-					imgUrl: imageUrl,
-				},
-				token
-			);
-			// console.log('IT WORKS!!!');
-		} catch (error) {
-			console.log(error);
 		}
 	};
 
@@ -297,38 +320,28 @@ const CreateRecipe = (props) => {
 						+ Add More
 					</button>
 					<div className="recipe-border"></div>
-					{/* <h2 className='header-names'>Calories</h2> */}
-					{/* <input
-						name="calories"
-						value={calories}
-						onChange={handleCaloriesChange}
-						className="calorie-input"
-					/> */}
+					<div className="calories-section">
+						<h2 className="header-names">
+							Calories <p>(optional)</p>
+						</h2>
+						<input
+							name="calories"
+							value={calories}
+							onChange={handleCaloriesChange}
+							className="calorie-input"
+						/>
+					</div>
+
 					<div>
-						<div>
-							<h2 className="header-names">Calories</h2>
-							<input
-								name="calories"
-								value={calories}
-								onChange={handleCaloriesChange}
-								className="calorie-input"
-							/>
-						</div>
-						{/* <input
-									placeholder="Enter your review"
-									// type="text"
-									// value={calories}
-									// onChange={handleCaloriesChange}
-								/> */}
-						<div>
-							<h2 className="header-names">Servings</h2>
-							<input
-								name="servings"
-								value={servings}
-								onChange={handleServingsChange}
-								className="calorie-input"
-							/>
-						</div>
+						<h2 className="header-names">
+							Servings <p>(optional)</p>
+						</h2>
+						<input
+							name="servings"
+							value={servings}
+							onChange={handleServingsChange}
+							className="calorie-input"
+						/>
 					</div>
 
 					<div className="recipe-border"></div>
@@ -346,6 +359,20 @@ const CreateRecipe = (props) => {
 					</div>
 				</form>
 			</div>
+			<ToastContainer
+				position="bottom-center"
+				autoClose={1000}
+				// autoClose={false}
+				hideProgressBar={true}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss={false}
+				draggable={false}
+				pauseOnHover={false}
+				theme="light"
+				transition:Flip
+			/>
 		</div>
 	);
 };

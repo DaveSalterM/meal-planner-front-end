@@ -213,7 +213,7 @@ const ShoppingList = (props) => {
   
     return (
         <>
-            <div>
+            <div id="shop-container">
                 <div className="shop-card">
                 <div className="shop-header">
                     <div className="shop-title">Recipes</div>
@@ -240,20 +240,20 @@ const ShoppingList = (props) => {
                         }</ul>
                     </div>
                 </div>
-            </div> 
+                </div> 
             
-            <div className="shop-card">
-                <div className="shop-header">
-                    <div className="shop-title">Shopping List</div>
-                    <div className="shop-body">
-                        {/* <ul className="shop-ul"> {getShoppingList()} </ul> */}
-                        <ul className="shop-ul"> {shoppingList} </ul>
+                <div className="shop-card">
+                    <div className="shop-header">
+                        <div className="shop-title">Shopping List</div>
+                        <div className="shop-body">
+                            {/* <ul className="shop-ul"> {getShoppingList()} </ul> */}
+                            <ul className="shop-ul"> {shoppingList} </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
-            <div className="split right" />
-            </>
+
+        </>
     );
 }
 export default ShoppingList;
