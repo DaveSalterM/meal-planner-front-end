@@ -8,9 +8,14 @@ import ProfileLayout from '../ProfileLayout';
 import RecipeCard from '../RecipeCard';
 import './styles.css';
 
-const Favorites = ({ user, userId, token }) => {
+const Favorites = ({ user, userId, token, logout }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [userFavorites, setUserFavorites] = useState(null);
+
+	// const handleLogout = () => {
+	// 	logout()
+	// 	navigate('/login')
+	// }
 
 	useEffect(() => {
 		if (userId !== 0 && Object.keys(user).length !== 0) {
@@ -26,13 +31,13 @@ const Favorites = ({ user, userId, token }) => {
 
 	return (
 		<div className="favorites-container">
-			<ProfileLayout />
+			<ProfileLayout logout={logout} />
 			{isLoading ? (
 				<h1>Loading</h1>
 			) : (
-				<div className='favorites'>
+				<div className="favorites">
 					{userFavorites.map((favorite) => (
-						<div className='hi' key={favorite._id}>
+						<div className="hi" key={favorite._id}>
 							<Link to={`/recipes/recipedish/${favorite._id}`}>
 								<RecipeCard
 									image={favorite.imgUrl}

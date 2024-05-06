@@ -171,11 +171,18 @@ function App() {
 >>>>>>> dev */}
 				<Route
 					path="/profile/favorites"
-					element={<Favorites user={user} userId={userId} token={token} />}
+					element={
+						<Favorites
+							user={user}
+							userId={userId}
+							token={token}
+							logout={logout}
+						/>
+					}
 				></Route>
 				<Route
 					path="/profile/changepassword"
-					element={<ChangePassword userId={userId} />}
+					element={<ChangePassword userId={userId} logout={logout} />}
 				></Route>
 				<Route
 					path="/profile/editrecipes"

@@ -50,7 +50,7 @@ const Navbar = (props) => {
 						<Link
 							key={1}
 							className="nav-link"
-							to={loggedIn ? '/profile/editrecipes' : '/login'}
+							to={loggedIn ? '/profile/favorites' : '/login'}
 						>
 							{loggedIn ? 'Profile' : 'Login'}
 						</Link>
