@@ -27,29 +27,32 @@ const SingleRecipePage = ({ user, userId, token }) => {
 
 	useEffect(() => {
 		// console.log(recipeId);
-		API.getSingleRecipe(recipeId)
-			.then((response) => {
-				// console.log(userId);
-				setRecipeData(response);
-				// console.log(response.reviews);
-				setRecipeReviews(response.reviews);
-			})
-			.then(() => {
-				if (userId !== 0) {
-					API.getUserFavorites(userId).then((data) => {
-						setUserFavorites(data);
-					});
-				}
+		if (recipeId) {
+			API.getSingleRecipe(recipeId)
+				.then((response) => {
+					// console.log(userId);
+					setRecipeData(response);
+					// console.log(response.reviews);
+					setRecipeReviews(response.reviews);
+				})
+				.then(() => {
+					if (userId !== 0) {
+						API.getUserFavorites(userId).then((data) => {
+							setUserFavorites(data);
+						});
+					}
 
-				// setIsLoading(false);
-			})
-			.then(() => setIsLoading(false));
+					// setIsLoading(false);
+				})
+				.then(() => setIsLoading(false));
+		}
 	}, [recipeId, userId]);
 
 	const handleShoppingList = () => {
 		// console.log(recipeId);
-		API.addToShoppingList(userId, { recipeId: recipeId }, token)
-		.then(() => window.location.reload());
+		API.addToShoppingList(userId, { recipeId: recipeId }, token).then(() =>
+			window.location.reload()
+		);
 	};
 
 	const handleMealPlan = () => {
