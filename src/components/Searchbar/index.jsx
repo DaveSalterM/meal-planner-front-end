@@ -14,7 +14,7 @@ const Searchbar = () => {
 
 	const submitForm = (e) => {
 		e.preventDefault();
-		console.log(search);
+		setSearch('');
 		navigateTo(`/recipes/${search}`);
 	};
 

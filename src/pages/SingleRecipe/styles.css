@@ -1,0 +1,235 @@
+.recipe-data ul,
+.recipe-data ol {
+	margin-left: 1.5rem;
+}
+
+.recipe-header {
+	display: flex;
+	justify-content: space-between;
+	padding: 15px;
+	margin-bottom: 1rem;
+	margin-left: 5rem;
+}
+
+.recipe-header h1 {
+	display: flex;
+	flex-direction: column;
+	font-size: 5rem;
+	background-color: white;
+	border-radius: 15px;
+	padding: 15px;
+	width: 40vw;
+	min-width: 300px;
+	text-align: center;
+}
+
+.recipe-header p {
+	display: flex;
+	justify-content: space-between;
+	padding: 5px;
+	margin: 15px 5px;
+	background-color: white;
+	width: fit-content;
+	border-radius: 5px;
+	font-style: italic;
+}
+
+.serv-cal-star {
+	display: flex;
+	align-items: flex-end;
+	margin: 10px 5rem;
+	font-size: 28px;
+}
+
+.serv-cal-star p {
+	display: flex;
+	background-color: white;
+	padding: 5px 10px 3px 10px;
+	margin: 0px -3px;
+	border-radius: 5px;
+	font-style: normal;
+}
+
+/* Applies to direct children of .serv-cal-star class */
+.serv-cal-star > * {
+	margin: 0px 10px;
+}
+
+.image-buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: fit-content;
+}
+.image-buttons img {
+	width: 800px;
+	height: 600px;
+	object-fit: contain;
+	border-radius: 15px;
+	background-color: white;
+}
+
+.image-buttons button:hover {
+	cursor: pointer;
+}
+
+.image-buttons button {
+	margin: 10px 40px;
+	padding: 10px;
+	border-radius: 4px;
+}
+
+.recipe-data-container {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	margin-bottom: 50px;
+}
+
+.recipe-ingredients,
+.recipe-instructions {
+	margin: 0px 10px;
+	padding: 20px;
+	border-radius: 10px;
+	width: 300px;
+	background-color: white;
+}
+
+.recipe-ingredients h2,
+.recipe-instructions h2 {
+	border-bottom: 1px solid black;
+	padding-bottom: 5px;
+	font-size: 32px;
+}
+
+.recipe-ingredients ul li,
+.recipe-instructions ol li {
+	margin: 30px 0px;
+	font-size: 21px;
+}
+
+.ingredients-instruction-container {
+	display: flex;
+}
+.review-section {
+	display: flex;
+	justify-content: center;
+}
+
+.review-container {
+	width: 800px;
+}
+
+.review-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.review-header h2 {
+	font-size: 2em;
+}
+
+.review-header button {
+	padding: 10px;
+	font-size: 20px;
+	border-radius: 5px;
+}
+
+.review-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.review-card {
+	border: 2px solid #289945;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 0 0 2px;
+	padding: 10px;
+	margin: 30px 0px;
+}
+
+.review-card div {
+	margin-top: 10px;
+	font-style: italic;
+}
+
+.review-form {
+	display: none;
+}
+
+.review-form-visible {
+	display: visible;
+}
+
+.review-form input {
+	margin: 10px;
+}
+
+.review-form-visible input {
+	height: 45px;
+	border-radius: 5px;
+}
+
+.review-form-visible button {
+	padding: 5px 10px;
+	margin-bottom: 5px;
+}
+.likes-button {
+	cursor: pointer;
+	background-color: white;
+	color: rgb(255, 64, 96);
+	padding: 6px;
+	border-radius: 5px;
+}
+
+.Toastify__toast {
+	width: 350px;
+	color: black;
+	margin-bottom: 15vh;
+	border-radius: 10px;
+	border-style: solid;
+	border-color: gray;
+	box-shadow: 0 0 15px;
+	padding: 20px 40px;
+	font-size: 20px;
+}
+
+.Toastify__toast button {
+	padding: 5px 10px;
+}
+
+@media screen and (max-width: 768px) {
+	.image-buttons img {
+		width: 50%;
+		height: 50%;
+	}
+	.recipe-header {
+		margin-left: 0px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.recipe-header h1 {
+		font-size: 2rem;
+		background-color: white;
+		border-radius: 15px;
+		padding: 5px;
+		max-width: 200px;
+		text-align: center;
+	}
+
+	.ingredients-instruction-container {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.Toastify__toast {
+		width: 300px;
+		margin-bottom: 5vh;
+		margin-left: 5vw;
+	}
+}

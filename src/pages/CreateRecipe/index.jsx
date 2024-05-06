@@ -1,28 +1,20 @@
 import convert from 'convert-units';
 import fracty from 'fracty';
 import { numericQuantity } from 'numeric-quantity';
-// <<<<<<< HEAD
-// import { useState } from 'react';
-// // import Dropdown from 'react-dropdown';
-// =======
 import { useState } from 'react';
-// import Dropdown from 'react-dropdown';
-// >>>>>>> dev
 import 'react-dropdown/style.css';
 import { FaTrashAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import API from '../../../utils/API';
 import './styles.css';
 
-// <<<<<<< HEAD
-// const CreateRecipe = () => {
-// 	const token =
-// 		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzA1NzM5MWU2ZDBkMTY1ZWFiODkzYSIsInVzZXJuYW1lIjoidGVzdFVzZXIyIiwiaWF0IjoxNzE0NDUyMzg2LCJleHAiOjE3MTQ0NTk1ODZ9.0JL6lL6VvpSMt22lY0i5au4MDcHQdNQO3sPavzZW7uc';
-// =======
 const CreateRecipe = (props) => {
 	const token = props.token;
-	console.log('Create Recipe: ', props.user);
-	//'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjlhZWFiMThmYjcxODNmNmZlMjNkOCIsInVzZXJuYW1lIjoidGVzdFVzZXIyIiwiaWF0IjoxNzE0NDE1MzgwLCJleHAiOjE3MTQ0MjI1ODB9.XqltrAe8mj8as9H2e-6zXcpun-wcDBWKunj6iH5tWcw';
-	// >>>>>>> dev
+	// console.log('Create Recipe: ', props.user);
+	const navigate = useNavigate();
+
 	const regex =
 		/^(\d*)(\s{0,1}(\d{0,1})(\/?)(\d{0,1})|(\.\d{0,2})|\/(\d{0,1}))$/;
 	const [recipeName, setRecipeName] = useState('');
@@ -32,6 +24,8 @@ const CreateRecipe = (props) => {
 	// const [instructions, setInstructions] = useState([{ instruction: '' }]);
 	const [instructions, setInstructions] = useState(['']);
 	const [calories, setCalories] = useState('');
+	const [servings, setServings] = useState('');
+
 	const [image, setImage] = useState(null);
 	// const [userObj, setUserObj] = useState({})
 
@@ -89,21 +83,20 @@ const CreateRecipe = (props) => {
 			// Get the number amount
 			const amount = onchangeVal[i]['amount'];
 			if (
-				// (unit === 'g' && value === 'lb') ||
-				// (unit === 'lb' && value === 'g')
-				['g', 'lb'].includes(unit) &&
-				['g', 'lb'].includes(value)
+				['g', 'oz', 'lb'].includes(unit) &&
+				['g', 'oz', 'lb'].includes(value)
 			) {
-				let convertNum = numericQuantity(amount, { round: false });
+				// let convertNum = numericQuantity(amount, { round: false });
+				let convertNum = numericQuantity(amount);
+				console.log('convert', convertNum);
 				let unitConv = convert(convertNum).from(unit).to(value);
+				// unitConv = unitConv.toFixed(2);
 				onchangeVal[i]['unit'] = value;
 				onchangeVal[i]['amount'] = `${unitConv}`;
 				setIngredients(onchangeVal);
 			} else if (
-				// unit === ('cup' || 'tsp' || 'Tbs' || 'gal') &&
-				// value === ('cup' || 'tsp' || 'Tbs' || 'gal')
-				['cup', 'tsp', 'Tbs', 'gal'].includes(unit) &&
-				['cup', 'tsp', 'Tbs', 'gal'].includes(value)
+				['fl-oz', 'cup', 'tsp', 'Tbs', 'gal'].includes(unit) &&
+				['fl-oz', 'cup', 'tsp', 'Tbs', 'gal'].includes(value)
 			) {
 				let convertNum = numericQuantity(amount, { round: false });
 				let unitConv = convert(convertNum).from(unit).to(value);
@@ -126,9 +119,7 @@ const CreateRecipe = (props) => {
 	const handleInstructionChange = (e, i) => {
 		const { value } = e.target;
 		const onchangeVal = [...instructions];
-		// onchangeVal[i][name] = value;
 		onchangeVal[i] = value;
-		// console.log(onchangeVal);
 		setInstructions(onchangeVal);
 	};
 
@@ -143,11 +134,12 @@ const CreateRecipe = (props) => {
 	};
 
 	const handleCaloriesChange = (e) => {
+		setCalories(e.target.value);
+	};
+
+	const handleServingsChange = (e) => {
 		const { value } = e.target;
-		let onchangeVal = [...calories];
-		onchangeVal = value;
-		// console.log(onchangeVal);
-		setCalories(onchangeVal);
+		setServings(value);
 	};
 
 	const handleDeleteInstruction = (i) => {
@@ -162,49 +154,71 @@ const CreateRecipe = (props) => {
 		setIngredients(deleteVal);
 	};
 
+	const catchErrors = () => {
+		if (
+			recipeName &&
+			ingredients[0].ingredient &&
+			ingredients[0].amount &&
+			ingredients[0].unit !== 'Select' &&
+			instructions.length !== 0
+		) {
+			return true;
+		} else {
+			// Show toast saying something missing
+			toast.error('Enter all required input fields!');
+			return false;
+		}
+	};
+
 	const submitHandler = async (e) => {
 		e.preventDefault();
-		// console.log(recipeName);
-		// console.log('======================================');
-		// console.log(...ingredients);
-		// console.log('======================================');
-		// console.log(...instructions);
-		const formData = new FormData();
-		formData.append('image', image);
-		const { imageUrl } = await API.uploadImage(formData);
 
-		try {
+		// const formData = new FormData();
+		// formData.append('image', image);
+		// const { imageUrl } = await API.uploadImage(formData);
+
+		const errorFree = catchErrors();
+
+		if (errorFree) {
+			try {
+				e.preventDefault();
+				const formData = new FormData();
+				formData.append('image', image);
+				const { imageUrl } = await API.uploadImage(formData);
+				const newRecipe = await API.createRecipe(
+					{
+						name: recipeName,
+						ingredients: ingredients,
+						instructions: instructions,
+						calories: calories,
+						servings: servings,
+						imgUrl: imageUrl,
+					},
+					token
+				).then(() => navigate('/'));
+				// console.log('IT WORKS!!!');
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
 			e.preventDefault();
-			const newRecipe = await API.createRecipe(
-				{
-					name: recipeName,
-					ingredients: ingredients,
-					instructions: instructions,
-					calories: calories,
-					imgUrl: imageUrl,
-				},
-				token
-			);
-			// console.log('IT WORKS!!!');
-		} catch (error) {
-			console.log(error);
 		}
 	};
 
 	return (
 		<div className="recipe-page">
-			<h1>Create Your Recipe!</h1>
 			<div className="recipe-form">
-				<form onSubmit={submitHandler}>
-					<h2>Recipe Name</h2>
+				<form className="recipe" onSubmit={submitHandler}>
+					<h1 className="header-create-recipe">Create Your Recipe!</h1>
+					<h2 className="header-names">Recipe Name</h2>
 					<input
 						className="recipe-field"
 						name="recipe"
 						value={recipeName}
 						onChange={handleRecipeChange}
 					/>
-
-					<h2>Ingredients</h2>
+					<div className="recipe-border"></div>
+					<h2 className="header-names">Ingredients</h2>
 					{ingredients.map((val, i) => (
 						<div key={i}>
 							{/* <h3>Ingredient {i + 1}</h3> */}
@@ -239,7 +253,9 @@ const CreateRecipe = (props) => {
 											Select
 										</option>
 										<option value="g">g</option>
+										<option value="oz">oz</option>
 										<option value="lb">lb</option>
+										<option value="fl-oz">fl-oz</option>
 										<option value="cup">cup</option>
 										<option value="tsp">tsp</option>
 										<option value="Tbs">tbsp</option>
@@ -260,11 +276,15 @@ const CreateRecipe = (props) => {
 							</div>
 						</div>
 					))}
-					<button type="button" onClick={handleClickIngredient}>
+					<button
+						className="button-create"
+						type="button"
+						onClick={handleClickIngredient}
+					>
 						+ Add More
 					</button>
-
-					<h2>Instructions</h2>
+					<div className="recipe-border"></div>
+					<h2 className="header-names">Instructions</h2>
 					{instructions.map((val, i) => (
 						<div key={i}>
 							<div className="instruction-field">
@@ -292,27 +312,67 @@ const CreateRecipe = (props) => {
 						</div>
 					))}
 
-					<button type="button" onClick={handleClickInstruction}>
+					<button
+						className="button-create"
+						type="button"
+						onClick={handleClickInstruction}
+					>
 						+ Add More
 					</button>
+					<div className="recipe-border"></div>
+					<div className="calories-section">
+						<h2 className="header-names">
+							Calories <p>(optional)</p>
+						</h2>
+						<input
+							name="calories"
+							value={calories}
+							onChange={handleCaloriesChange}
+							className="calorie-input"
+						/>
+					</div>
 
-					<h2>Calories</h2>
-					<input
-						name="calories"
-						value={calories}
-						onChange={handleCaloriesChange}
-					/>
+					<div>
+						<h2 className="header-names">
+							Servings <p>(optional)</p>
+						</h2>
+						<input
+							name="servings"
+							value={servings}
+							onChange={handleServingsChange}
+							className="calorie-input"
+						/>
+					</div>
 
-					<h2>Upload</h2>
+					<div className="recipe-border"></div>
+					<h2 className="header-names">Upload</h2>
 					<div className="upload-form">
 						<label>Upload an image of the food:</label>
-						<input type="file" onChange={handleImageChange} />
+						<input
+							className="upload-image"
+							type="file"
+							onChange={handleImageChange}
+						/>
 					</div>
 					<div className="submit-btn">
 						<button>Submit</button>
 					</div>
 				</form>
 			</div>
+			<ToastContainer
+				position="bottom-center"
+				autoClose={1000}
+				// autoClose={false}
+				hideProgressBar={true}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss={false}
+				draggable={false}
+				pauseOnHover={false}
+				theme="light"
+				transition:Flip
+			/>
 		</div>
 	);
 };

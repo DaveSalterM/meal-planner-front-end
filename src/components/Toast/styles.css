@@ -1,0 +1,28 @@
+.day-radio-btn {
+	display: flex;
+	align-items: center;
+}
+
+.day-radio-btn input {
+	margin-right: 10px;
+}
+
+.toast-header {
+	margin-bottom: 20px;
+}
+
+.toast-add-button {
+	margin-top: 20px;
+	background-color: #12bd3d;
+}
+
+.button-and-error {
+	display: flex;
+	align-items: flex-end;
+}
+
+.button-and-error p {
+	margin-left: 15px;
+	font-size: 15px;
+	color: rgb(211, 0, 0);
+}

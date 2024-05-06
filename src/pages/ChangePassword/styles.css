@@ -1,0 +1,48 @@
+.change-password-layout {
+	display: flex;
+}
+
+.password-container {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+}
+
+.password-form {
+	background-color: white;
+	display: block;
+	padding: 30px;
+	border-radius: 15px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	max-width: 550px;
+}
+
+.password-form input {
+	width: 300px;
+}
+
+.password-form h2 {
+	margin: 15px 0px 5px 0px;
+}
+
+.password-button {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+}
+
+@media screen and (max-width: 968px) {
+	.password-form{
+		scale: 80%;
+		align-items: flex-start;
+		justify-content: flex-start;
+
+	}
+}
+
+@media screen and (max-width: 568px) {
+	.password-form{
+		scale: 60%;
+	}
+}

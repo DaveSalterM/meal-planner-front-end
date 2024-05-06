@@ -1,11 +1,11 @@
 .card-container {
-	width: 500px;
-	min-height: 500px;
+	width: 400px;
+	min-height: 400px;
 }
 
 .img-card {
-	width: 500px;
-	height: 500px;
+	width: 400px;
+	height: 400px;
 	position: relative;
 	/* display: flex; */
 	/* justify-content: center; */
@@ -24,14 +24,25 @@
 .img-card img {
 	/* width: 500px; */
 	/* height: 500px; */
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
-	/* object-fit: cover; */
+	width: 400px;
+	height: 400px;
+	/* object-fit: contain; */
+	object-fit: cover;
+	/* object-fit: fill; */
 }
 
 .favorite-button {
 	position: absolute;
 	font-size: 40px;
 	right: 10px;
+	z-index: 999;
+	color: rgb(255, 64, 96);
 }
+
+.favorite-button input {
+	z-index: 999;
+}
+
+/* .test-star {
+	color: red;
+} */
