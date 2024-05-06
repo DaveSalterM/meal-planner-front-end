@@ -4,7 +4,7 @@
 .sidebar-column{
     display: flex;
     flex-direction: column;
-    width: 13rem;
+    width: 14rem;
     background-color: #289945;
     max-height: auto;
 }
@@ -13,8 +13,10 @@
     height: 90vh;
     text-align: center;
     cursor: pointer;
-    /* height: 16rem; */
 }
+
+
+
 #side-item{
 margin-top: 1.5rem;
 margin-bottom: 1.5rem;

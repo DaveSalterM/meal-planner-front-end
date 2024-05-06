@@ -64,8 +64,10 @@
 }
 .image-buttons img {
 	width: 800px;
+	height: 600px;
 	object-fit: contain;
 	border-radius: 15px;
+	background-color: white;
 }
 
 .image-buttons button:hover {
