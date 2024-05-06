@@ -7,23 +7,28 @@ import './styles.css';
 
 const CustomToast = ({ userId, recipeId, token }) => {
 	const [selectedDay, setSelectedDay] = useState(null);
+	const [showError, setShowError] = useState('none');
 
 	const handleChange = (e) => {
 		setSelectedDay(e.target.value);
 	};
 
 	const handleSubmit = () => {
-		API.addToMealPlan(
-			userId,
-			{ recipeId: recipeId, dayOfWeek: selectedDay },
-			token
-		).then(() => toast.dismiss());
-		window.location.reload();
+		if (!selectedDay) {
+			setShowError('');
+		} else {
+			API.addToMealPlan(
+				userId,
+				{ recipeId: recipeId, dayOfWeek: selectedDay },
+				token
+			).then(() => toast.dismiss());
+			window.location.reload();
+		}
 	};
 
 	return (
 		<div>
-			<h3>Days of week</h3>
+			<h3 className="toast-header">Days of week</h3>
 			<div className="day-radio-btn">
 				<input
 					type="radio"
@@ -114,8 +119,14 @@ const CustomToast = ({ userId, recipeId, token }) => {
 					<label htmlFor={day}>{day}</label>
 				</div>
 			))} */}
-
-			<button onClick={handleSubmit}>Add</button>
+			<div className="button-and-error">
+				<button className="toast-add-button" onClick={handleSubmit}>
+					Add
+				</button>
+				<p id="error" style={{ display: showError }}>
+					Choose a day!
+				</p>
+			</div>
 		</div>
 	);
 };
