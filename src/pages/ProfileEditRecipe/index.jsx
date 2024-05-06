@@ -4,6 +4,7 @@ import API from '../../../utils/API';
 import EditRecipe from '../../components/EditRecipe';
 import RecipeCard from '../../components/RecipeCard';
 
+import ProfileLayout from '../../components/ProfileLayout';
 import './styles.css';
 <h1>Profile</h1>;
 
@@ -23,19 +24,20 @@ const ProfileEditRecipe = ({ user, userId, token, logout }) => {
 		}
 	}, [userId, user]);
 
-	const handleLogout = () => {
-		// Perform logout logic here
-		logout();
-		navigate('/login');
-	};
+	// const handleLogout = () => {
+	// 	// Perform logout logic here
+	// 	logout();
+	// 	navigate('/login');
+	// };
 
 	return (
 		<div className="entirepage">
-			<div className="sidebar-column">
+			{/* <div className="sidebar-column">
 				<ul className="sidebar">
 					<Link to={'/profile/favorites'}>
 						<li id="side-item">Favorites</li>
 					</Link>
+
 					<li id="side-item">Change Password</li>
 					<Link to={`/profile/editrecipes`}>
 						<li id="side-item">Your Recipes</li>
@@ -44,7 +46,8 @@ const ProfileEditRecipe = ({ user, userId, token, logout }) => {
 						Logout
 					</li>
 				</ul>
-			</div>
+			</div> */}
+			<ProfileLayout logout={logout} />
 			{isLoading ? (
 				<h1>Loading...</h1>
 			) : (

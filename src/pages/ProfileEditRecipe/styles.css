@@ -45,10 +45,13 @@
 }
 
 @media screen and (max-width: 768px) {
-	.test {
-		flex-direction: column;
-		scale: 80%;
-		margin: -20% 25% 0 -5%;
+	.your-recipes-grid {
+		/* flex-direction: column; */
+		/* scale: 80%; */
+		/* margin: -20% 25% 0 -5%; */
+		/* grid-template-columns: repeat(auto-fit, minmax(300px, 0.5fr)); */
+
+		margin-right: 15px;
 	}
 
 	.recipe-form {
