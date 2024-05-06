@@ -48,24 +48,26 @@ const ProfileEditRecipe = ({ user, userId, token, logout }) => {
 			{isLoading ? (
 				<h1>Loading...</h1>
 			) : (
-				<div className="test">
+				<div className="your-recipes-grid">
 					{userRecipes.map((recipe) => (
 						<div className="card" key={recipe._id}>
-							<Link to={`/recipes/recipedish/${recipe._id}`}>
-								<RecipeCard
-									image={recipe.imgUrl}
-									id={recipe._id}
-									user={user}
-									userId={userId}
-									token={token}
-								/>
-							</Link>
-
-							<div className="name-and-edit">
-								<h1>{recipe.name}</h1>
-								<Link to={`/profile/editrecipes/${recipe._id}`}>
-									<button>Edit</button>
+							<div>
+								<Link to={`/recipes/recipedish/${recipe._id}`}>
+									<RecipeCard
+										image={recipe.imgUrl}
+										id={recipe._id}
+										user={user}
+										userId={userId}
+										token={token}
+									/>
 								</Link>
+
+								<div className="name-and-edit">
+									<h1>{recipe.name}</h1>
+									<Link to={`/profile/editrecipes/${recipe._id}`}>
+										<button>Edit</button>
+									</Link>
+								</div>
 							</div>
 						</div>
 					))}

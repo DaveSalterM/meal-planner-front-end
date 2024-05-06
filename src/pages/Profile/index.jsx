@@ -9,7 +9,7 @@ const Profile = (props) => {
 
 	const handleLogout = () => {
 		// Perform logout logic here
-		console.log('Logging out...');
+		// console.log('Logging out...');
 		props.logout();
 		navigate('/login'); // Redirect to login page after logout
 	};
@@ -30,13 +30,9 @@ const Profile = (props) => {
 					</li>
 				</ul>
 			</div>
-            <div className='test'>
-                
-        
-            </div>
-            </div>
-    
-    );
+			<div className="test"></div>
+		</div>
+	);
 };
 
 export default Profile;

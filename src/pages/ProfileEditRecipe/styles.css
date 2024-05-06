@@ -1,12 +1,17 @@
 .entirepage {
 	display: flex;
 }
-.test {
+.your-recipes-grid {
 	margin-left: 15px;
-	width: 100vw;
+	/* width: 100vw; */
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(400px, 0.5fr));
+	justify-items: center;
 }
 
 .name-and-edit {
+	width: 370px;
 	display: flex;
 	justify-content: space-between;
 	background-color: white;
@@ -21,37 +26,36 @@
 	border-radius: 4px;
 }
 
-.card{
-    margin: 1rem;
+.card {
+	margin: 1rem;
 	gap: 15px;
 }
 
-.card img{
+.card img {
 	object-fit: cover;
-    background-color: white;
+	background-color: white;
 }
 
-.img-card{
+.img-card {
 	border-style: none;
 }
 
-.sidebar a{
-    text-decoration: none;
+.sidebar a {
+	text-decoration: none;
 }
 
 @media screen and (max-width: 768px) {
-	.test{
+	.test {
 		flex-direction: column;
 		scale: 80%;
 		margin: -20% 25% 0 -5%;
 	}
-    
+
 	.recipe-form {
 		width: auto;
 	}
 
-	#side-item{
+	#side-item {
 		font-size: 0.3rem;
 	}
-
 }

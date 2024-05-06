@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import './styles.css';
 
-const ChangePassword = ({ userId }) => {
+const ChangePassword = ({ userId, logout }) => {
 	const navigate = useNavigate();
 
 	const [isLoading, setIsLoading] = useState(true);
@@ -80,7 +80,7 @@ const ChangePassword = ({ userId }) => {
 
 	return (
 		<div className="change-password-layout">
-			<ProfileLayout />
+			<ProfileLayout logout={logout} />
 			{isLoading ? (
 				<h1>Loading...</h1>
 			) : (
