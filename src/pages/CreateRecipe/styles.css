@@ -7,7 +7,7 @@
 	height: auto;
 }
 
-.recipe-page h1{
+.recipe-page h1 {
 	color: black;
 }
 .recipe-form {
@@ -35,7 +35,7 @@
 	width: 100%;
 	height: 30px;
 	border-radius: 5px;
-	background-color:#289945
+	background-color: #289945;
 }
 
 .unit-dropdown {
@@ -46,7 +46,7 @@
 .instruction-field {
 	display: flex;
 	width: 100%;
-	margin-bottom: 0.5rem
+	margin-bottom: 0.5rem;
 }
 
 .myControlClassName {
@@ -69,7 +69,8 @@
 .myMenuClassName {
 	width: 65px !important;
 }
-.ingredient-name, .amount-input{
+.ingredient-name,
+.amount-input {
 	margin-right: 10px;
 }
 
@@ -82,7 +83,7 @@
 	width: 80px;
 }
 
-.recipe-field{
+.recipe-field {
 	width: 99%;
 	height: 24px;
 	border-radius: 5px;
@@ -104,7 +105,7 @@
 	height: 30px;
 	width: 30px;
 	position: absolute;
-	margin-left: 0.5rem
+	margin-left: 0.5rem;
 }
 
 #trash-button:hover {
@@ -121,76 +122,92 @@
 	flex-direction: column;
 }
 
-.recipe{
+.recipe {
 	background-color: white;
-    display: block;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 550px;
-    width: 100%;
+	display: block;
+	padding: 20px;
+	border-radius: 15px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	max-width: 550px;
+	width: 100%;
 }
 
-.recipe-border{
+.recipe-border {
 	border-bottom: 3px;
 	border-bottom-style: solid;
 	border-bottom-color: black;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 }
-.button-create{
+.button-create {
 	margin-top: 0.5rem;
 	border-radius: 5px;
-	background-color:#289945 ;
+	background-color: #289945;
 	width: 80px;
 	height: 30px;
 }
 
-.upload-image{
+.upload-image {
 	border-radius: 4px;
-	margin: 2px 0px
+	margin: 2px 0px;
 }
 
-.upload-form{
+.upload-form {
 	margin-bottom: 1rem;
 }
 
-.header-create-recipe{
+.header-create-recipe {
 	margin: 10px;
 	color: white;
 	margin-bottom: 20px;
 }
-.header-names{
-	margin-bottom: 0.3rem
+.header-names {
+	margin-bottom: 0.3rem;
 }
 
-input{
+input {
 	border-color: lightgray;
 	border-style: double;
 	border-width: 1px;
 }
 
-input.upload-image{
+input.upload-image {
 	border-color: lightgray;
 	border-style: none;
 	padding-top: 5px;
 }
 
-#upload-image{
+#upload-image {
 	border-color: lightgray;
 	border-style: none;
 }
 
-.header-create-recipe{
+.header-create-recipe {
 	color: black;
 	text-align: center;
 }
 
+.calories-servings {
+	display: flex;
+}
+
+.calories-section {
+	margin-bottom: 10px;
+}
+
+.header-names {
+	display: flex;
+	align-items: center;
+}
+
+.header-names p {
+	margin-left: 7px;
+	font-size: 12px;
+}
+
 @media screen and (max-width: 768px) {
-    
 	.recipe-form {
 		scale: 150%;
 		margin: -25% 25% 0 0;
 	}
-
 }
