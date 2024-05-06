@@ -186,11 +186,15 @@ input.upload-image{
 	text-align: center;
 }
 
+.recipe-page .recipe-form{
+	margin-left: 0px;
+}
+
 @media screen and (max-width: 768px) {
     
 	.recipe-form {
-		scale: 150%;
-		margin: -25% 25% 0 0;
+		scale: 80%;
+		margin: -30% 0 0 0;
 	}
 
 }
