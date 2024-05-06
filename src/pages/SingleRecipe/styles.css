@@ -38,7 +38,7 @@
 	display: flex;
 	align-items: flex-end;
 	margin: 10px 5rem;
-	font-size: 20px;
+	font-size: 28px;
 }
 
 .serv-cal-star p {
@@ -180,9 +180,11 @@
 .likes-button {
 	cursor: pointer;
 	background-color: white;
+	color: rgb(255, 64, 96);
 	padding: 6px;
 	border-radius: 5px;
 }
+
 .Toastify__toast {
 	width: 350px;
 	color: black;
