@@ -4,13 +4,14 @@ import { numericQuantity } from 'numeric-quantity';
 import { useEffect, useState } from 'react';
 import 'react-dropdown/style.css';
 import { FaTrashAlt } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import API from '../../../utils/API';
 import ProfileLayout from '../ProfileLayout';
 
 import './styles.css';
 
 const EditRecipe = ({ token }) => {
+	const navigate = useNavigate();
 	const { recipeId } = useParams();
 	// const token = props.token;
 	// console.log('Create Recipe: ', props.user);
@@ -177,7 +178,9 @@ const EditRecipe = ({ token }) => {
 					imgUrl: imageUrl,
 				},
 				token
-			);
+			).then(() => {
+				navigate('/profile/editrecipes');
+			});
 		} catch (error) {
 			console.log(error);
 		}
